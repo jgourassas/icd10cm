@@ -1,0 +1,9 @@
+/* This file is for your main application css. */
+//@import "./phoenix.css";
+$css--reset: true;
+@import '../node_modules/carbon-components/scss/globals/scss/styles.scss';
+
+//@import 'node_modules/carbon-components/scss/components/card/card';
+
+$fa-font-path: "../node_modules/font-awesome/fonts";
+@import "../node_modules/font-awesome/scss/font-awesome.scss";

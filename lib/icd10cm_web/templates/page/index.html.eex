@@ -1,0 +1,130 @@
+<section class="phx-hero">
+  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
+  <p>Peace-of-mind from prototype to production</p>
+</section>
+
+<section class="row">
+  <article class="column">
+    <h2>Resources</h2>
+
+    <ul>
+    <span>
+  <i class="fa fa-home"
+    style="font-size:80px;color:#1b9e77;"></i>
+</span>
+<button
+  class="bx--btn bx--btn--primary"
+   type="button">
+  Button 1
+</button>
+<button
+  class="bx--btn bx--btn--primary"
+   type="button" disabled>
+  Button 2
+</button>
+<button
+  class="bx--btn bx--btn--secondary bx--btn--sm"
+   type="button">
+  Button 3
+</button>
+
+<!-- 
+  Copyright IBM Corp. 2016, 2018
+
+  This source code is licensed under the Apache-2.0 license found in the
+  LICENSE file in the root directory of this source tree.
+-->
+
+<button class="bx--btn bx--btn--primary" type="button" data-modal-target="#modal-rgj2247tsph">Show
+  modal</button>
+
+<div data-modal id="modal-rgj2247tsph" class="bx--modal " role="dialog"
+  aria-modal="true" aria-labelledby="modal-rgj2247tsph-label" aria-describedby="modal-rgj2247tsph-heading" tabindex="-1">
+  <div class="bx--modal-container bx--modal-container--lg">
+    <div class="bx--modal-header">
+      <p class="bx--modal-header__label bx--type-delta" id="modal-rgj2247tsph-label">Optional label</p>
+      <p class="bx--modal-header__heading bx--type-beta" id="modal-rgj2247tsph-heading">Modal heading</p>
+      <button class="bx--modal-close" type="button" data-modal-close aria-label="close modal"  data-modal-primary-focus>
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--modal-close__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12 4.7L11.3 4 8 7.3 4.7 4 4 4.7 7.3 8 4 11.3 4.7 12 8 8.7 11.3 12 12 11.3 8.7 8z"></path></svg>
+      </button>
+    </div>
+
+    <!-- Note: Modals with content that scrolls, at any viewport, requires `tabindex="0"` on the `bx--modal-content` element -->
+
+    <div class="bx--modal-content" >
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean id accumsan augue. Phasellus consequat augue
+        vitae
+        tellus tincidunt posuere. Curabitur justo urna, consectetur vel elit iaculis, ultrices condimentum risus. Nulla
+        facilisi.
+        Etiam venenatis molestie tellus. Quisque consectetur non risus eu rutrum. </p>
+
+          </div>
+    <div class="bx--modal-content--overflow-indicator"></div>
+
+  </div>
+  <!-- Note: focusable span allows for focus wrap feature within Modals -->
+  <span tabindex="0"></span>
+</div>
+
+<!-- 
+  Copyright IBM Corp. 2016, 2018
+
+  This source code is licensed under the Apache-2.0 license found in the
+  LICENSE file in the root directory of this source tree.
+-->
+
+<ul data-accordion class="bx--accordion">
+    <li data-accordion-item class="bx--accordion__item">
+      <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane1">
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
+        <div class="bx--accordion__title">Section 1 title</div>
+      </button>
+      <div id="pane1" class="bx--accordion__content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+    </li>
+    <li data-accordion-item class="bx--accordion__item">
+      <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane2">
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
+        <div class="bx--accordion__title">Section 2 title</div>
+      </button>
+      <div id="pane2" class="bx--accordion__content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+    </li>
+    <li data-accordion-item class="bx--accordion__item">
+      <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane3">
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
+        <div class="bx--accordion__title">Section 3 title</div>
+      </button>
+      <div id="pane3" class="bx--accordion__content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+    </li>
+    <li data-accordion-item class="bx--accordion__item">
+      <button class="bx--accordion__heading" aria-expanded="false" aria-controls="pane4">
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--accordion__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path></svg>
+        <div class="bx--accordion__title">Section 4 title</div>
+      </button>
+      <div id="pane4" class="bx--accordion__content">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+    </li>
+</ul>
+      <li>
+        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs--</a>
+      </li>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix">Source</a>
+      </li>
+      <li>
+        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
+      </li>
+    </ul>
+  </article>
+  
+</section>
