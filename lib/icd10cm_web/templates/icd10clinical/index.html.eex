@@ -1,0 +1,236 @@
+
+<svg class="icon">
+  <title>Add a new service</title>
+  <use xlink:href="/carbon-icons.svg#icon--add--glyph"></use>
+</svg>
+
+<div class="bx--grid">
+<div class="bx--row">
+<div class="bx--col bx--col--auto">
+
+ 
+
+ <div class="bx--data-table-container " data-table>
+    <div class="bx--data-table-header">
+      <h4 class="bx--data-table-header__title">ICD10-CM List</h4>
+      <p class="bx--data-table-header__description"></p>
+    </div>
+
+<div class="bx--row">
+<div class="bx--col bx--col--auto">
+
+<div class="search_form">
+ <h5 class="title is-5 has-text-centered">
+  Search In ICD10-CM Codes
+ </h5>
+</div><!------title form------------------->
+<div class="columns  is-centered search_form_2">
+
+  <div class="column is-3">
+<span class="bx--form-item">
+   <%= form_for @conn, Routes.icd10clinical_path(@conn,
+          :search, [as: :search]), fn f -> %>
+
+ <div class="field">
+     <label class="label">Select Search: </label>
+
+     <div class="bx--form-item">
+    <div class="bx--select bx--select--light">
+      <%= select(f, :selection,
+       ["In In Codes": "codes",
+       "In Long Description": "long_desc",
+       "In Long Names ": "tsv_long_name"
+],
+ class: "form-control")    %>
+
+    </div><!--select---->
+     </div><!--control---->
+  </div><!---field--->
+
+    </span>
+  </div><!--column---------->
+
+  <div class="column is-4">
+  <label class="label"> Your Query  </label>
+  <div class="control">
+   <%= text_input f, :query, 
+             class: "input", 
+             type: "text", 
+              minlength: 4,
+              maxlength: 40,
+             placeholder: "Your Query"  %>
+   <%= error_tag f, :query %>
+  </div>
+
+  </div> <!--column------>
+
+  <div class="column is-3">
+   <%= submit "Search", class: "bx--btn bx--btn--primary  type=button"  %>
+</div>
+
+<% end %>
+</div>
+</div>
+
+   
+
+
+
+ <table class="bx--data-table 
+               bx--data-table--visible-overflow-menu 
+               bx--data-table--compact " >
+
+  <thead>
+    <tr>
+      <th>
+       <span class="bx--table-header-label">Code</span>
+      </th>
+
+      <th>
+      <span class="bx--table-header-label"> Long description</span>
+      </th>
+      <th>
+      <span class="bx--table-header-label">Includes</span>
+      </th>
+
+      <th>
+      <span class="bx--table-header-label">Notes</span>
+      </th>
+      
+
+      <th>
+      <span class="bx--table-header-label">Exlusions</span>
+      </th>
+      
+      <th>
+      <span class="bx--table-header-label">Show</span>
+      </th>
+
+    </tr>
+  </thead>
+  <tbody>
+<%= for icd10clinical <- @icd10clinicals do %>
+    <tr>
+      <td>
+    
+      <% is_category = icd10clinical.is_category%>
+     
+     <%= if is_category == "Y"  do %> 
+      <button class="bx--tag bx--tag--red">
+      <span class="bx--tag__label">
+           <strong><%= icd10clinical.icd10cm_code_2 %></strong>
+      </span>
+     </button>
+
+     <% else %>
+   
+   <button class="bx--tag bx--tag--green">
+      <span class="bx--tag__label">
+           <strong><%= icd10clinical.icd10cm_code_2 %></strong>
+      </span>
+     </button>
+   
+     <% end %>
+
+
+      </td>
+
+      <td><%= icd10clinical.long_description %></td>
+
+
+      <td>
+
+      <%= if icd10clinical.includes  !== ""  do %> 
+      
+      <span style="color:teal;">Header Includes: </span>
+    <span>
+      <%= icd10clinical.includes %>
+      </span>
+      <br/>
+      <% end %>
+    <br/>
+       <%= if icd10clinical.inclusionterm  !== ""  do %> 
+      <span style="color:teal;">Inclusion Term: </span>
+    <span>
+      <%= icd10clinical.inclusionterm %>
+      </span>
+      <br/>
+      <% end %>
+      
+      </td>
+      
+      
+      
+      <td>
+      
+       <%= if icd10clinical.codealso  !== ""  do %> 
+      <span style="color:orange;">Code Also</span>
+    <span>
+      <%= icd10clinical.codealso %>
+      </span>
+      <br/>
+      <% end %>
+      
+      <%= if icd10clinical.codefirst  !== ""  do %>
+      <span style="color:blue;"> Code First </span>
+     
+     <span>
+      <%= icd10clinical.codefirst %>
+      </span>
+      <br/>
+      <% end %>
+     
+       <%= if icd10clinical.useadditionalcode  !== ""  do %>
+      <span style="color:blue;">Use Additional Code:</span> 
+      <span>
+      <%= icd10clinical.useadditionalcode %>
+      </span>
+     <% end %>
+      
+      
+      </td>
+
+      <td>
+        <%= if icd10clinical.excludes1  !== ""  do %>
+      <span style="color:red;">Exludes1 - Not Coded Here:</span> 
+      <span>
+      <%= icd10clinical.excludes1 %>
+      </span>
+     <% end %>
+         <%= if icd10clinical.excludes2  !== ""  do %>
+      <span style="color:red;">Exludes2 - Not Included Here:</span> 
+      <span>
+      <%= icd10clinical.excludes2 %>
+      </span>
+     <% end %>
+      </td>
+
+      <td>
+        <span><%= link "Show Record", to: Routes.icd10clinical_path(@conn, :show, icd10clinical),
+        class: "bx--btn bx--btn--ghost bx--btn--sm"
+         %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+</div><!-------table container---------------->
+
+
+
+<%= if @page.page_number > 1 do %>
+  <%= link "Prev Page", to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number - 1),
+  class: "bx--btn bx--btn--primary bx--btn--sm"
+   %>
+<% end %>
+<%= if @page.page_number < @page.total_pages do %>
+  <%= link "Next Page", to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number + 1),
+  class: "bx--btn bx--btn--primary bx--btn--sm"
+   %>
+<% end %>
+
+</div>
+</div>
+
+</div>
+

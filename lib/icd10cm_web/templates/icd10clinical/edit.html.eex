@@ -1,0 +1,5 @@
+<h1>Edit Icd10clinical</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.icd10clinical_path(@conn, :update, @icd10clinical)) %>
+
+<span><%= link "Back", to: Routes.icd10clinical_path(@conn, :index) %></span>

@@ -1,0 +1,95 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :order_number %>
+  <%= number_input f, :order_number %>
+  <%= error_tag f, :order_number %>
+
+  <%= label f, :icd10cm_code %>
+  <%= text_input f, :icd10cm_code %>
+  <%= error_tag f, :icd10cm_code %>
+
+  <%= label f, :icd10cm_code_2 %>
+  <%= text_input f, :icd10cm_code_2 %>
+  <%= error_tag f, :icd10cm_code_2 %>
+
+  <%= label f, :icd10cm_code_2_ltree %>
+  <%= text_input f, :icd10cm_code_2_ltree %>
+  <%= error_tag f, :icd10cm_code_2_ltree %>
+
+  <%= label f, :is_header %>
+  <%= text_input f, :is_header %>
+  <%= error_tag f, :is_header %>
+
+  <%= label f, :short_description %>
+  <%= text_input f, :short_description %>
+  <%= error_tag f, :short_description %>
+
+  <%= label f, :long_description %>
+  <%= text_input f, :long_description %>
+  <%= error_tag f, :long_description %>
+
+  <%= label f, :includes %>
+  <%= textarea f, :includes %>
+  <%= error_tag f, :includes %>
+
+  <%= label f, :inclusionterm %>
+  <%= textarea f, :inclusionterm %>
+  <%= error_tag f, :inclusionterm %>
+
+  <%= label f, :excludes1 %>
+  <%= textarea f, :excludes1 %>
+  <%= error_tag f, :excludes1 %>
+
+  <%= label f, :excludes2 %>
+  <%= textarea f, :excludes2 %>
+  <%= error_tag f, :excludes2 %>
+
+  <%= label f, :codefirst %>
+  <%= textarea f, :codefirst %>
+  <%= error_tag f, :codefirst %>
+
+  <%= label f, :codealso %>
+  <%= textarea f, :codealso %>
+  <%= error_tag f, :codealso %>
+
+  <%= label f, :useadditionalcode %>
+  <%= textarea f, :useadditionalcode %>
+  <%= error_tag f, :useadditionalcode %>
+
+  <%= label f, :chapter_name %>
+  <%= number_input f, :chapter_name %>
+  <%= error_tag f, :chapter_name %>
+
+  <%= label f, :chapter_description %>
+  <%= textarea f, :chapter_description %>
+  <%= error_tag f, :chapter_description %>
+
+  <%= label f, :section_id %>
+  <%= text_input f, :section_id %>
+  <%= error_tag f, :section_id %>
+
+  <%= label f, :section_description %>
+  <%= textarea f, :section_description %>
+  <%= error_tag f, :section_description %>
+
+  <%= label f, :is_category %>
+  <%= text_input f, :is_category %>
+  <%= error_tag f, :is_category %>
+
+  <%= label f, :is_subcategory %>
+  <%= text_input f, :is_subcategory %>
+  <%= error_tag f, :is_subcategory %>
+
+  <%= label f, :icd10cm_code_ltree %>
+  <%= text_input f, :icd10cm_code_ltree %>
+  <%= error_tag f, :icd10cm_code_ltree %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

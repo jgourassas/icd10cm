@@ -1,0 +1,113 @@
+<h1>Show Icd10clinical</h1>
+
+<ul>
+
+  <li>
+    <strong>Order number:</strong>
+    <%= @icd10clinical.order_number %>
+  </li>
+
+  <li>
+    <strong>Icd10cm code:</strong>
+    <%= @icd10clinical.icd10cm_code %>
+  </li>
+
+  <li>
+    <strong>Icd10cm code 2:</strong>
+    <%= @icd10clinical.icd10cm_code_2 %>
+  </li>
+
+  <li>
+    <strong>Icd10cm code 2 ltree:</strong>
+    <%= @icd10clinical.icd10cm_code_2_ltree %>
+  </li>
+
+  <li>
+    <strong>Is header:</strong>
+    <%= @icd10clinical.is_header %>
+  </li>
+
+  <li>
+    <strong>Short description:</strong>
+    <%= @icd10clinical.short_description %>
+  </li>
+
+  <li>
+    <strong>Long description:</strong>
+    <%= @icd10clinical.long_description %>
+  </li>
+
+  <li>
+    <strong>Includes:</strong>
+    <%= @icd10clinical.includes %>
+  </li>
+
+  <li>
+    <strong>Inclusionterm:</strong>
+    <%= @icd10clinical.inclusionterm %>
+  </li>
+
+  <li>
+    <strong>Excludes1:</strong>
+    <%= @icd10clinical.excludes1 %>
+  </li>
+
+  <li>
+    <strong>Excludes2:</strong>
+    <%= @icd10clinical.excludes2 %>
+  </li>
+
+  <li>
+    <strong>Codefirst:</strong>
+    <%= @icd10clinical.codefirst %>
+  </li>
+
+  <li>
+    <strong>Codealso:</strong>
+    <%= @icd10clinical.codealso %>
+  </li>
+
+  <li>
+    <strong>Useadditionalcode:</strong>
+    <%= @icd10clinical.useadditionalcode %>
+  </li>
+
+  <li>
+    <strong>Chapter name:</strong>
+    <%= @icd10clinical.chapter_name %>
+  </li>
+
+  <li>
+    <strong>Chapter description:</strong>
+    <%= @icd10clinical.chapter_description %>
+  </li>
+
+  <li>
+    <strong>Section:</strong>
+    <%= @icd10clinical.section_id %>
+  </li>
+
+  <li>
+    <strong>Section description:</strong>
+    <%= @icd10clinical.section_description %>
+  </li>
+
+  <li>
+    <strong>Is category:</strong>
+    <%= @icd10clinical.is_category %>
+  </li>
+
+  <li>
+    <strong>Is subcategory:</strong>
+    <%= @icd10clinical.is_subcategory %>
+  </li>
+
+  <li>
+    <strong>Icd10cm code ltree:</strong>
+    <%= @icd10clinical.icd10cm_code_ltree %>
+  </li>
+
+</ul>
+
+<span><%= link "Back", to: Routes.icd10clinical_path(@conn, :index),
+  class: "bx--btn bx--btn--primary bx--btn--sm"%></span>

@@ -1,0 +1,15 @@
+defmodule Icd10cm.Repo.Migrations.CreateIcd10clinicals do
+  use Ecto.Migration
+
+  def change do
+    create table(:icd10clinicals) do
+      add :order_number, :integer
+      add :icd10cm_code, :string
+      add :icd10cm_code_2, :string
+      add :" ", :string
+
+      timestamps()
+    end
+
+  end
+end

@@ -32,3 +32,30 @@ npm-debug.log
 # we ignore priv/static. You may want to comment
 # this depending on your deployment strategy.
 /priv/static/
+# Swap
+[._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+#git   ls-files -i --exclude-from=.gitignore
+#$ git rm r  --cached assets/node_modules
+#$ git commit -m "Start ignoring node_modules"
+#git push origin master
+jg_notes/
+/jg_notes
+
+
