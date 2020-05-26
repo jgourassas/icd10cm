@@ -1,30 +1,25 @@
 
 
+<div class="row">
 
-<div class="bx--tile">
+  <div class="large-6 columns">
 
- <h4>
-      An Information System for  Cardiology
-      </h4>
-  <h4>
-        Based On Standard
-        <strong>
-          Definitions and Contolled Vocabularies
-        </strong>
-      </h4>    
-<span>
+<a href="#" class="button small">Small Button</a>
+  <a href="#" class="button round">Round Button</a>
+  <a href="#" class="button success">Success Button</a>
+  
+
+   <div class="switch large radius">
+  <input id="exampleRadioSwitch4" type="radio" name="testGroup">
+  <label for="exampleRadioSwitch4"></label>
+</div>
+ 
+  </div>
+ <div class="large-6 columns">
+        <span>
   <i class="fa fa-home"
     style="font-size:80px;color:#1b9e77;"></i>
 </span>
-<button class="bx--btn bx--btn--danger" aria-label="danger"  type="button">Button</button>
-<button class="bx--btn bx--btn--danger" aria-label="danger"  type="button"
-  disabled>Button</button>
-<button class="bx--btn bx--btn--danger" aria-label="danger"  type="button">
-  With icon
-  <svg class="bx--btn__icon" width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-+    <path d="M7 7H4v2h3v3h2V9h3V7H9V4H7v3zm1 9A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" fill-rule="evenodd" />
-   </svg>
-</button>
+  </div>
 </div>
-
 

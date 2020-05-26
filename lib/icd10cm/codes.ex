@@ -107,6 +107,28 @@ defmodule Icd10cm.Codes do
      Icd10clinical
      |> order_by([p], [p.icd10cm_code_2])
   end
+###########################3
+ def format_column(text) do
 
+result =   String.split(text, "^")
 
+corrected = List.delete_at(result, 0)
+
+format_result =
+ Enum.map(corrected,  fn item ->
+   "<td>"
+   <> item
+   <> "</td>"
+  end)
+
+  l_format = List.to_string(format_result)
+
+  form = "<table class='table responsive hover stack table-scroll'>"
+  <> "<tr style='background-color:#edf8e9;'>"
+  <> l_format
+  <> "</tr>"
+  <> "</table>"
+
+end
+#################33
 end

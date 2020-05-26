@@ -1,41 +1,53 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Icd10cm · Phoenix Framework</title>
-    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
-    <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-   <%= render_existing @view_module, "scripts.html", assigns %>
-   <%= render_existing @view_module, "scripts." <> @view_template, assigns %>
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <title>ICD10!</title>
+    <meta name="description" content="">
+    <meta name="author" content="John Gourassas">
+    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
   </head>
-  <body class="bx--body">
+
+
+
+  <body>
     <header>
       <section class="container">
-        <nav role="navigation">
+        
         <%= render "navigation.html", conn: @conn %>
-        </nav>
-       
-      </section>
+  
+        </section>
+        <div class="separator">
     </header>
-    <main role="main" class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-      <%= @inner_content %>
-    </main>
+    
+     <main role="main" class="section">
+
+      <%= unless is_nil(get_flash(@conn, :info)) do %>
+    <div class="notification is-info" role="alert"><%= get_flash(@conn, :info) %></div>
+  <% end %>
+
+  <%= unless is_nil(get_flash(@conn, :error)) do %>
+    <div class="notification is-danger" role="alert"><%= get_flash(@conn, :error) %></div>
+  <% end %>
+     <%= @inner_content %>
+
+  </main>
+  
   </body>
 
-   <footer class="footer">
-     <div class="container">
- <div class="content has-text-centered">
+<script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+
+<script async type="text/javascript" src="<%#= Routes.static_path(@conn, "/js/vendor.js") %>"></script>
+
+
+<div class="footer">
    <span> <i class="fa fa-check">  By old J.G. (M.D)   &nbsp;&nbsp;</i>
- </div>
-  </div>
-</footer>
+    </span>
+</div><!-----footer-------------------------->
 
 </html>
+
 <script type="text/javascript">
   window.csrf_token = <%= raw Poison.encode!(Plug.CSRFProtection.get_csrf_token()) %>;
 </script>

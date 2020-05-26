@@ -1,0 +1,126 @@
+$whiteAntiflash:        #f2f3f4 !default;
+$grayTimberwolf:        #dbd7d2 !default;
+
+
+$white_smoke: #FFFFFF;
+$white: #fff;
+$blue: #0066FF;
+$min_height: rem-calc(650);
+$primary-color:#1779ba;
+$secondary-color:#767676;
+$primary: #1779ba;
+$secondary: #767676;
+$success: #3adb76;
+$warnning: #ffae00;
+$alert: #cc4b37;
+$grayCadet: #91a3b0 !default;
+
+@mixin border_radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+@mixin box_shadow($left:0, $top:2px, $blur:2px, $color:#000, $inset:"inset") {
+    -webkit-box-shadow:$left $top $blur $color #{$inset};
+    -moz-box-shadow:$left $top $blur $color #{$inset};
+    box-shadow:$left $top $blur $color #{$inset};
+}
+html, body {
+    height: 100%;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    font-family:"helvetica","Roboto",sans-serif;
+    font-size:14px;
+    line-height:1.5;
+      
+    font-kerning: normal; // Set the default for kerning
+    font-synthesis: none; // Don't allow the font to create sythetic bold/italic
+    text-rendering: optimizeLegibility; // Improve kerning pairs. Caution: Webkit gets funny with this sometimes
+    background-color:#efefef;//#f0f0f0
+  
+  
+    //background-image: url("/images/clear-bg4.png");
+   }
+
+
+//////////////zurb settings///////////////
+//$table-head-background:#000;//
+//$table-foot-font-color:#fff;
+//$table-border-style: solid;
+//$table-border-size: 12px;
+//$table-border-color: #000;
+
+//////////////////////////////
+
+
+
+    
+.content {
+        background: rgba(255, 255, 255, 0.8);
+        padding: rem-calc(30);
+    
+    }
+ 
+    
+    $hero-height: 60vh;
+
+    .hero-section {
+     // background: url('https://static.pexels.com/photos/248064/pexels-photo-248064.jpeg') 50% no-repeat;
+      background-size: cover;
+      height: $hero-height;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    
+      .hero-section-text {
+        color: $white;
+        text-shadow: 1px 1px 2px $black;
+      }
+    }
+    
+    .table {
+        margin-left: auto;
+        margin-right: auto;
+        width: 95%;
+        padding:.2em .4em;
+        font-size: rem-calc(18);
+        line-height:rem_calc(19);
+        font-family:"helvetica","Roboto",sans-serif;
+        border: 1px solid $grayCadet;
+        border-collapse: collapse;
+        
+    }
+     
+td {
+     border: 1px solid $grayTimberwolf;
+    }
+      
+      .p {
+        text-align: center;
+        padding-top: 140px;
+        font-size: 14px;
+      }
+
+.tooltip{
+    font-size: rem-calc(20);
+    line-height:rem_calc(22);
+}
+
+.label{
+    font-size: rem-calc(18);
+    line-height:rem_calc(20);
+
+}
+.footer {
+    color: $white_smoke;
+    background-color:#91a3b0;
+    @include border-radius(17px);
+    @include box-shadow(#ddd 3px 6px 6px 1px);
+
+    text-align: center;
+    padding-top: rem-calc(10);
+    padding-bottom: rem-calc(10);
+    font-size: rem-calc(18);
+}
