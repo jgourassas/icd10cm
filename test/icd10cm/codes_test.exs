@@ -254,4 +254,67 @@ defmodule Icd10cm.CodesTest do
       assert %Ecto.Changeset{} = Codes.change_icd10clinical(icd10clinical)
     end
   end
+
+  describe "icd10cm_neoplasms" do
+    alias Icd10cm.Codes.Icd10cm_neoplasm
+
+    @valid_attrs %{main_term: %{}, title: "some title", title_tsv: "some title_tsv"}
+    @update_attrs %{main_term: %{}, title: "some updated title", title_tsv: "some updated title_tsv"}
+    @invalid_attrs %{main_term: nil, title: nil, title_tsv: nil}
+
+    def icd10cm_neoplasm_fixture(attrs \\ %{}) do
+      {:ok, icd10cm_neoplasm} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Codes.create_icd10cm_neoplasm()
+
+      icd10cm_neoplasm
+    end
+
+    test "list_icd10cm_neoplasms/0 returns all icd10cm_neoplasms" do
+      icd10cm_neoplasm = icd10cm_neoplasm_fixture()
+      assert Codes.list_icd10cm_neoplasms() == [icd10cm_neoplasm]
+    end
+
+    test "get_icd10cm_neoplasm!/1 returns the icd10cm_neoplasm with given id" do
+      icd10cm_neoplasm = icd10cm_neoplasm_fixture()
+      assert Codes.get_icd10cm_neoplasm!(icd10cm_neoplasm.id) == icd10cm_neoplasm
+    end
+
+    test "create_icd10cm_neoplasm/1 with valid data creates a icd10cm_neoplasm" do
+      assert {:ok, %Icd10cm_neoplasm{} = icd10cm_neoplasm} = Codes.create_icd10cm_neoplasm(@valid_attrs)
+      assert icd10cm_neoplasm.main_term == %{}
+      assert icd10cm_neoplasm.title == "some title"
+      assert icd10cm_neoplasm.title_tsv == "some title_tsv"
+    end
+
+    test "create_icd10cm_neoplasm/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Codes.create_icd10cm_neoplasm(@invalid_attrs)
+    end
+
+    test "update_icd10cm_neoplasm/2 with valid data updates the icd10cm_neoplasm" do
+      icd10cm_neoplasm = icd10cm_neoplasm_fixture()
+      assert {:ok, %Icd10cm_neoplasm{} = icd10cm_neoplasm} = Codes.update_icd10cm_neoplasm(icd10cm_neoplasm, @update_attrs)
+      assert icd10cm_neoplasm.main_term == %{}
+      assert icd10cm_neoplasm.title == "some updated title"
+      assert icd10cm_neoplasm.title_tsv == "some updated title_tsv"
+    end
+
+    test "update_icd10cm_neoplasm/2 with invalid data returns error changeset" do
+      icd10cm_neoplasm = icd10cm_neoplasm_fixture()
+      assert {:error, %Ecto.Changeset{}} = Codes.update_icd10cm_neoplasm(icd10cm_neoplasm, @invalid_attrs)
+      assert icd10cm_neoplasm == Codes.get_icd10cm_neoplasm!(icd10cm_neoplasm.id)
+    end
+
+    test "delete_icd10cm_neoplasm/1 deletes the icd10cm_neoplasm" do
+      icd10cm_neoplasm = icd10cm_neoplasm_fixture()
+      assert {:ok, %Icd10cm_neoplasm{}} = Codes.delete_icd10cm_neoplasm(icd10cm_neoplasm)
+      assert_raise Ecto.NoResultsError, fn -> Codes.get_icd10cm_neoplasm!(icd10cm_neoplasm.id) end
+    end
+
+    test "change_icd10cm_neoplasm/1 returns a icd10cm_neoplasm changeset" do
+      icd10cm_neoplasm = icd10cm_neoplasm_fixture()
+      assert %Ecto.Changeset{} = Codes.change_icd10cm_neoplasm(icd10cm_neoplasm)
+    end
+  end
 end

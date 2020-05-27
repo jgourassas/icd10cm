@@ -16,10 +16,11 @@ defmodule Icd10cmWeb.Router do
   scope "/", Icd10cmWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get( "/", PageController, :index)
+    post("/icd10clinicals/search_clinicals", Icd10clinicalController, :search_clinicals)
     resources( "/icd10clinicals", Icd10clinicalController)
+    resources("/icd10cm_neoplasms", Icd10cm_neoplasmController)
 
-    post("/icd10clinicals/search", Icd10clinicalController, :search)
 
 
   end

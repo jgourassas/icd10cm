@@ -15,7 +15,11 @@ style="width:100%; background-color: #ddd;">
                      <%= link "ICD10-Clinicals",  to: Routes.icd10clinical_path(@conn, :index) %>
 
                     </li>
-                    <li><a href="#">ICD10-Something</a></li>
+                    <li>
+                    
+                       <%= link "ICD10-Neoplasms",  to: Routes.icd10cm_neoplasm_path(@conn, :index) %>
+                    
+                    </li>
                 </ul>
             </li>
 

@@ -69,21 +69,16 @@ defmodule Icd10cmWeb.Icd10clinicalController do
   end
 
 
-  def search(conn,
-              %{"search" =>   %{"query" => query, "selection" => selection} } ) do
+  def search_clinicals(
+    conn,
+    %{"search_clinicals" => %{"query" => query, "selection" => selection}} = params ) do
 
     trim_query = String.trim(query)
 
-    IO.puts("---------------------------")
-
-    IO.inspect trim_query
-    IO.inspect selection
-
-    #page =
-    #IcdcmMedcodes.search_loincs(trim_query, selection)
-    #|> Angio.Repo.paginate(page: params["page"], page_size: 500)
-    #render(conn, "index.html", loincs: page.entries, page: page)
-
+    page =
+    Icd10cm.Codes.search_clinicals(trim_query, selection)
+    |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+    render(conn, "index.html", icd10clinicals: page.entries, page: page)
 
   end
 end

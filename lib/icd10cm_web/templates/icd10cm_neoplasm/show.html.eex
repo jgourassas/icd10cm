@@ -1,0 +1,25 @@
+<h5>Show Icd10cm neoplasm</h5>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @icd10cm_neoplasm.title %>
+  </li>
+
+  <li>
+    <strong>Main term:</strong>
+    <%#= @icd10cm_neoplasm.main_term %>
+  </li>
+
+  <li>
+    <strong>Title tsv:</strong>
+    <%#= @icd10cm_neoplasm.title_tsv %>
+  </li>
+
+</ul>
+
+<span><%#= link "Edit", to: Routes.icd10cm_neoplasm_path(@conn, :edit, @icd10cm_neoplasm) %></span>
+<span><%= link "Back", to: Routes.icd10cm_neoplasm_path(@conn, :index),
+ class: "large primary button" 
+ %></span>

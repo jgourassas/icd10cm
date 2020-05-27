@@ -1,0 +1,79 @@
+
+<%alias Icd10cm.Codes %>
+
+<table class= "table responsive hover stack table-scroll" >
+<caption> ICD10-CM Neoplasm List</caption>
+  <thead>
+    <tr>
+      <th>Neoplasm</th>
+      <th>Mal Primary</th>
+      <th>Secondary </th>
+      <th>Ca in situ</th>
+       <th>Benign</th>
+        <th>Uncertain Beh </th> 
+           <th>Unspecified Beh</th> 
+      <th>Show</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for icd10cm_neoplasm <- @icd10cm_neoplasms do %>
+    <tr>
+      <td>
+      <span style="color:#000; background-color:#f4f0ec">
+
+      <%= raw icd10cm_neoplasm.title %>
+      </span>
+      </td>
+      
+      <td>
+       <% title = icd10cm_neoplasm.title %>
+        <span style="color:#000;padding:5px;">
+      <%= Codes.find_neoplasm_code(title, "primary") %>
+      </span>
+      </td>
+      
+      
+      <td>
+      
+       <span style="color:#000;padding:5px;">
+      <%= Codes.find_neoplasm_code(title, "secondary") %>
+       </span>
+      </td>
+      
+       <td>
+
+      <span style="color:	#000;padding:5px;">
+      <%= Codes.find_neoplasm_code(title, "in_situ") %>
+        </span>
+       </td> 
+      <td>
+      
+       <span style="color:	#000;padding:5px;">
+      <%= Codes.find_neoplasm_code(title, "benign") %>
+        </span>
+      
+      </td>
+ <td>
+   <span style="color:	#000;padding:5px;">
+      <%= Codes.find_neoplasm_code(title, "uncetain") %>
+  </span>
+ </td> 
+<td>
+ <span style="color:	#000;padding:5px;">
+      <%= Codes.find_neoplasm_code(title, "unspecified") %>
+</span>
+</td>
+
+      <td>
+        <span><%= link "Show Record", to: Routes.icd10cm_neoplasm_path(@conn, :show, icd10cm_neoplasm),
+         class: "small primary button expanded" 
+         %></span>
+         </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+ <div class="pagination text-center" role="navigation" aria-label="Pagination">
+     <%= pagination_links @page %>
+    </div>
+<span><%#= link "New Icd10cm neoplasm", to: Routes.icd10cm_neoplasm_path(@conn, :new) %></span>
