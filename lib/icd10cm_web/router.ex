@@ -20,7 +20,7 @@ defmodule Icd10cmWeb.Router do
     post("/icd10clinicals/search_clinicals", Icd10clinicalController, :search_clinicals)
     resources( "/icd10clinicals", Icd10clinicalController)
     resources("/icd10cm_neoplasms", Icd10cm_neoplasmController)
-
+    post("/icd10cm_neoplasms/search_neoplasms", Icd10cm_neoplasmController, :search_neoplasms)
 
 
   end

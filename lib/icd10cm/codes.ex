@@ -353,8 +353,22 @@ end
 
 end
 ########################
+def search_neoplasms(query, selection) do
+  case selection do
+    "title" -> search_icd10cm_neoplasms_title(query)
+    "long_desc" -> search_icd10clinicals_long_desc(query)
+    _ -> ""
+  end
+end
+####################
+def search_icd10cm_neoplasms_title(query) do
+  title_q =
+  (from p in Icd10cm_neoplasm,
+  order_by: [asc: p.title],
+  where: p.title ==   ^("#{query}"),
+  limit: 10
+  )
 
-
-
+end
 #################3
 end

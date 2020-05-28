@@ -1,7 +1,12 @@
 <%alias Icd10cm.Codes %>
+
+<div class = "column row">
+<div class="element_info">ICD10-CLINICAL </div>
+</div><!-------row---------------------------->
+
   <div class = "row">
   
-
+ <div class="search_form">
   <div class="large-6 medium-6 small-6 large-centered columns">
     <ul class="has-form">
 
@@ -19,7 +24,8 @@
 
                 <div class="large-6 medium-6 small-9 columns">
                     <%= text_input f, :query, placeholder: "Your Query",
-                    class: "form-control "%>
+                    class: "form-control ",
+                    minLength: 3 %>
                 </div><!--large-8 small-9 columns-->
 
                 <div class="large-2 small-9 columns">
@@ -35,6 +41,7 @@
              </ul>
 
       </div><!-- small-6 large-centered columns -->
+      </div><!------searchform----------------------------->
 </div>
 
 

@@ -1,5 +1,12 @@
 $whiteAntiflash:        #f2f3f4 !default;
 $grayTimberwolf:        #dbd7d2 !default;
+$lightest-grey:#fafbfc;
+$lighter-grey: #ebeff3;
+$light-grey: #c9d3df;
+$grey: #adb9c9;
+$dark-grey: #8393a7;
+$darker-grey: #53657d;
+$darkest-grey: #26353f;
 
 
 $white_smoke: #FFFFFF;
@@ -14,6 +21,7 @@ $success: #3adb76;
 $warnning: #ffae00;
 $alert: #cc4b37;
 $grayCadet: #91a3b0 !default;
+$azure: hsl(180, 100%, 97%);
 
 @mixin border_radius($radius) {
     -webkit-border-radius: $radius;
@@ -114,6 +122,7 @@ td {
 
 }
 .footer {
+    
     color: $white_smoke;
     background-color:#91a3b0;
     @include border-radius(17px);
@@ -123,4 +132,50 @@ td {
     padding-top: rem-calc(10);
     padding-bottom: rem-calc(10);
     font-size: rem-calc(18);
+}
+.element_info {
+    background-color:#C6CFF6 ;// #AFC3D2;//#936ED4; //#fc9272;//#fee0d2;//#CCCCFF;//$beige-lighter;//$turquoiseBrighter; //$yellowBrighter;//$white_smoke; // #ddd ;//#006699;//#7CBB00;//#7f78d2;//#0074D9;//#3D9970;//#1F7A1F;//#990033;
+    color: $blue;
+    box-shadow: 0 0.375em 0.313em -0.313em rgba(0, 0, 0, 0.8),
+      inset 0 0.063em rgba(255, 255, 255, 0.4),
+      inset 0 -0.188em rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+    text-shadow: 0 0.063em #000;
+    font: bold 1.1rem sans-serif;
+    padding: 7px;
+    text-align: center;
+    width: 95%;
+    margin-left:auto;
+    margin-right: auto;
+    margin-bottom: rem-calc(25);
+    margin-top: rem-calc(25);
+  
+  }
+
+  .top-bar{
+    background-color: $grayCadet;
+    width: 95%;
+    margin-left:auto;
+    margin-right: auto;
+    margin-bottom: rem-calc(25);
+    margin-top: rem-calc(25);
+  }
+  
+.top-bar-section li a:not(.button)
+{
+background: "#740707";
+}
+
+
+.search_form {
+  //background-color:#91a3b0 ;//#FFFF66;//$orangered;//#000 ;
+  background-color:#46b5d1;//#70B8FF;//#86c9ef ;// $orangered;//#000 ;
+  color:#fff;
+  padding: 10px 8px 10px 8px;
+  border-radius: rem-calc(12);
+  margin-bottom: rem-calc(10);
+  margin-top: 17px;
+  box-shadow: 0 0.375em 0.313em -0.313em rgba(0, 0, 0, 0.8),
+    inset 0 0.063em rgba(255, 255, 255, 0.4),
+    inset 0 -0.188em rgba(0, 0, 0, 0.15);
 }

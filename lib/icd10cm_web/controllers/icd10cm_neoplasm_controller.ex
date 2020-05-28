@@ -66,4 +66,18 @@ defmodule Icd10cmWeb.Icd10cm_neoplasmController do
     |> put_flash(:info, "Icd10cm neoplasm deleted successfully.")
     |> redirect(to: Routes.icd10cm_neoplasm_path(conn, :index))
   end
+
+#################
+def search_neoplasms(conn,
+%{"search_neoplasms" => %{"query" => query, "selection" => selection}} = params ) do
+
+  trim_query = String.trim(query)
+
+  page =
+  Icd10cm.Codes.search_neoplasms(trim_query, selection)
+  |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+  render(conn, "index.html", icd10cm_neoplasms: page.entries, page: page)
+
+end
+################################
 end

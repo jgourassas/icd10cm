@@ -1,6 +1,5 @@
 
-<nav class="top-bar" data-topbar data-options="is_hover: false"
-style="width:100%; background-color: #ddd;">
+<nav class="top-bar" data-topbar data-options="is_hover: false">
            
    
   <ul class="dropdown vertical medium-horizontal menu" data-dropdown-menu >
