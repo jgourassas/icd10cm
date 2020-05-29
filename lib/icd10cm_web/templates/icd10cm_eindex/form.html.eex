@@ -1,0 +1,27 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :title %>
+  <%= text_input f, :title %>
+  <%= error_tag f, :title %>
+
+  <%= label f, :main_term_text %>
+  <%= textarea f, :main_term_text %>
+  <%= error_tag f, :main_term_text %>
+
+  <%= label f, :main_term_jsonb %>
+  <%= text_input f, :main_term_jsonb %>
+  <%= error_tag f, :main_term_jsonb %>
+
+  <%= label f, :title_tsv %>
+  <%= text_input f, :title_tsv %>
+  <%= error_tag f, :title_tsv %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

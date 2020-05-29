@@ -1,0 +1,37 @@
+
+<div class = "column row">
+<div class="element_info">List of ICD10 External Injuries </div>
+</div><!-------row---------------------------->
+
+
+<% alias Icd10cm.Codes %>
+<table class="table responsive hover stack table-scroll">
+  <thead>
+    <tr>
+      <th>E-index Term</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for icd10cm_eindex <- @icd10cm_eindexes do %>
+    <tr>
+  
+
+      <td>
+      <span style='color:#000; padding:4px margin:5px;' >
+      <strong>
+      <i class= "fa fa-paperclip" style="color:#428057;"   > </i>
+      <%= icd10cm_eindex.title %></span>
+      </strong>
+      <br/>
+      <%= raw Codes.make_icd10cm_eindexes_jsonb(icd10cm_eindex.title) %>
+     
+      </td>
+
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<div class="pagination text-center" role="navigation" aria-label="Pagination">
+     <%= pagination_links @page %>
+    </div>
+<span><%#= link "New Icd10cm eindex", to: Routes.icd10cm_eindex_path(@conn, :new) %></span>

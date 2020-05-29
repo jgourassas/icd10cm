@@ -371,4 +371,286 @@ def search_icd10cm_neoplasms_title(query) do
 
 end
 #################3
+
+  alias Icd10cm.Codes.Icd10cm_eindex
+
+  @doc """
+  Returns the list of iicd10cm_eindexes.
+
+  ## Examples
+
+      iex> list_iicd10cm_eindexes()
+      [%Icd10cm_eindex{}, ...]
+
+  """
+  def list_iicd10cm_eindexes do
+    Repo.all(Icd10cm_eindex)
+  end
+
+  @doc """
+  Gets a single icd10cm_eindex.
+
+  Raises `Ecto.NoResultsError` if the Icd10cm eindex does not exist.
+
+  ## Examples
+
+      iex> get_icd10cm_eindex!(123)
+      %Icd10cm_eindex{}
+
+      iex> get_icd10cm_eindex!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_icd10cm_eindex!(id), do: Repo.get!(Icd10cm_eindex, id)
+
+  @doc """
+  Creates a icd10cm_eindex.
+
+  ## Examples
+
+      iex> create_icd10cm_eindex(%{field: value})
+      {:ok, %Icd10cm_eindex{}}
+
+      iex> create_icd10cm_eindex(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_icd10cm_eindex(attrs \\ %{}) do
+    %Icd10cm_eindex{}
+    |> Icd10cm_eindex.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a icd10cm_eindex.
+
+  ## Examples
+
+      iex> update_icd10cm_eindex(icd10cm_eindex, %{field: new_value})
+      {:ok, %Icd10cm_eindex{}}
+
+      iex> update_icd10cm_eindex(icd10cm_eindex, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_icd10cm_eindex(%Icd10cm_eindex{} = icd10cm_eindex, attrs) do
+    icd10cm_eindex
+    |> Icd10cm_eindex.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a icd10cm_eindex.
+
+  ## Examples
+
+      iex> delete_icd10cm_eindex(icd10cm_eindex)
+      {:ok, %Icd10cm_eindex{}}
+
+      iex> delete_icd10cm_eindex(icd10cm_eindex)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_icd10cm_eindex(%Icd10cm_eindex{} = icd10cm_eindex) do
+    Repo.delete(icd10cm_eindex)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking icd10cm_eindex changes.
+
+  ## Examples
+
+      iex> change_icd10cm_eindex(icd10cm_eindex)
+      %Ecto.Changeset{data: %Icd10cm_eindex{}}
+
+  """
+  def change_icd10cm_eindex(%Icd10cm_eindex{} = icd10cm_eindex, attrs \\ %{}) do
+    Icd10cm_eindex.changeset(icd10cm_eindex, attrs)
+  end
+
+#####################33
+def list_icd10cm_eindexes(_params) do
+  _page =
+   Icd10cm_eindex
+   |> order_by([p], [p.title])
+end
+#######################################
+def find_icd10cm_eindexes_records(q_title) do
+_query =
+from(
+  p in Icd10cm_eindex,
+  where: ilike(p.title, ^"#{q_title}%"),
+  select: [ p.main_term_jsonb],
+  limit: 250
+)
+
+_query |>Repo.all()
+
+end
+############################################
+def make_icd10cm_eindexes_jsonb(title) do
+
+  records = find_icd10cm_eindexes_records(title)
+
+
+   Enum.map(records, fn(l) ->
+   terms_l = Enum.map(l, fn (x) -> x["terms_l"] end)
+
+   main_title = Enum.map(l, fn (x) -> x["main_title"] end)
+
+   main_code = Enum.map(l, fn (x) -> x["main_code"] end)
+   main_codes = Enum.map(l, fn (x) -> x["main_codes"] end)
+   main_see_probe = Enum.map(l, fn (x) -> x["main_see"] end)
+   main_see_codes = Enum.map(l, fn (x) -> x["main_see_codes"] end)
+   main_see_tab = Enum.map(l, fn (x) -> x["main_see_tab"] end)
+   main_use_probe = Enum.map(l, fn (x) -> x["main_use"] end)
+
+
+
+    formated =
+
+        "#{main_code}"
+      <> " "
+      <> "#{main_codes}"
+      <> " "
+      <> "#{main_see_probe}"
+      <> " "
+      <> "#{main_see_codes}"
+      <> " "
+      <> "#{main_see_tab}"
+      <> " "
+      <> "#{main_use_probe}"
+
+     #format_jsonb(formated)
+
+ if  Enum.any?(terms_l) do
+  Enum.map(terms_l, fn(terms) ->
+    Enum.map(terms, fn(a_term) ->
+      format_term(a_term)
+    end)##a_term
+  end)
+end #if
+
+
+
+
+  end
+  )
+
+
+
+end
+##################################3
+def format_jsonb(key) do
+
+  key
+
+end
+####################
+def format_term(a_term) do
+
+a = a_term |> Enum.filter(fn {_, v} -> v != "" end)
+|> Enum.into(%{})
+
+term_level = a["term_level"]
+intend = level_intend(term_level)
+
+
+term_level = a["term_level"]
+
+term_title = a["term_title"]
+term_nemod = a["term_nemod"]
+term_codes = a["term_codes"]
+term_use_probe = a["term_use"]
+term_see_probe = a["term_see"]
+term_see_codes = a["term_see_codes"]
+term_see_tab  = a["term_see_tab"]
+term_code = a["term_code"]
+
+term_use = if "#{term_use_probe}" != "" do
+ "<span style='background-color:yellow'>" <>  " use " <> "#{term_use_probe}" <> "</span>"
+else
+   " "
+end
+
+term_see  =  if "#{term_see_probe}" != "" do
+  "<span style='color:darkblue'><em>"
+    <>  " See " <> "#{term_see_probe}"
+    <> "</em></span>"
+else
+  " "
+end
+
+  result =
+      intend
+      <>  "#{term_title}"
+      <> " " <> "#{term_nemod}"
+      <> " " <> "#{term_use_probe}"
+      <> "  "  <> "<span style='color:#993333;'>"  <> "#{term_code}" <> "</span>"
+      <> "  "  <> "#{term_codes}"
+
+      <> "<br/>"
+
+      header =
+       "#{term_see_tab}"
+       <> "  "  <> "#{term_see_codes}"
+       <> "  "  <> "#{term_see}"
+
+       <> "  "  <> "#{term_use}"
+
+      final = header <> result
+      #final = "<ul class ='no-bullet'>" <> header <> result <> "</ul>"
+
+end
+#######################
+def level_intend_old(term_level) do
+  intend = case term_level do
+             "1" ->
+                "- "
+             "2" ->
+               "-- "
+               "3" ->
+               "--- "
+             "4" ->
+               "---- "
+               "5" ->
+               "----- "
+               "6" ->
+               "------ "
+               "7" ->
+               "------- "
+               _ ->
+               "\t"
+
+           end
+
+end##level_intend
+################################
+def level_intend(term_level) do
+  intend = case term_level do
+             "1" ->
+               "<span style='margin-left:5px; color:#8EE8D6;'>" <>  "- " <>  "</span>"
+             "2" ->
+              "<span style='margin-left:20px; color:#80B2FF;'>" <>  "- - " <>  "</span>"
+               "3" ->
+                "<span style='margin-left:35px; color: #85E085;'>" <>  "- - - " <>  "</span>"
+             "4" ->
+              "<span style='margin-left:50px;color:#E0FF85;'>" <>  "- - - - " <>  "</span>"
+               "5" ->
+                "<span style='margin-left:65px;color:#8EE8D6;'>" <>  "- - - - - " <>  "</span>"
+               "6" ->
+                "<span style='margin-left:80px;color:#FFCACA;'>" <>  "- - - - - - " <>  "</span>"
+               "7" ->
+                "<span style='margin-left:95px;color:##C2A3FF;'>" <>  "- - - - - - - " <>  "</span>"
+               _ ->
+               "\t"
+
+           end
+
+end##level_intend
+
+
+################################
+
+##############3
 end

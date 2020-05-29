@@ -1,0 +1,5 @@
+<h1>Edit Icd10cm eindex</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.icd10cm_eindex_path(@conn, :update, @icd10cm_eindex)) %>
+
+<span><%= link "Back", to: Routes.icd10cm_eindex_path(@conn, :index) %></span>

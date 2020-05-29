@@ -1,0 +1,28 @@
+<h1>Show Icd10cm eindex</h1>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @icd10cm_eindex.title %>
+  </li>
+
+  <li>
+    <strong>Main term text:</strong>
+    <%= @icd10cm_eindex.main_term_text %>
+  </li>
+
+  <li>
+    <strong>Main term jsonb:</strong>
+    <%= @icd10cm_eindex.main_term_jsonb %>
+  </li>
+
+  <li>
+    <strong>Title tsv:</strong>
+    <%= @icd10cm_eindex.title_tsv %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.icd10cm_eindex_path(@conn, :edit, @icd10cm_eindex) %></span>
+<span><%= link "Back", to: Routes.icd10cm_eindex_path(@conn, :index) %></span>

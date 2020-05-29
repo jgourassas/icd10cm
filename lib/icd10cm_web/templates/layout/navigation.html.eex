@@ -10,15 +10,19 @@
                 <a href="#">ICD10</a>
               
                 <ul class="menu vertical">
+
                     <li>
                      <%= link "ICD10-Clinicals",  to: Routes.icd10clinical_path(@conn, :index) %>
-
                     </li>
+                    
                     <li>
+                     <%= link "ICD10-Neoplasms",  to: Routes.icd10cm_neoplasm_path(@conn, :index) %>
+                     </li>
                     
-                       <%= link "ICD10-Neoplasms",  to: Routes.icd10cm_neoplasm_path(@conn, :index) %>
-                    
-                    </li>
+                     <li>
+                        <%= link "ICD10-External Injuries",  to: Routes.icd10cm_eindex_path(@conn, :index) %>
+                     </li>
+
                 </ul>
             </li>
 
