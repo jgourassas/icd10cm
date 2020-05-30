@@ -3,8 +3,18 @@ defmodule Icd10cmWeb.Icd10cm_eindexControllerTest do
 
   alias Icd10cm.Codes
 
-  @create_attrs %{main_term_jsonb: %{}, main_term_text: "some main_term_text", title: "some title", title_tsv: "some title_tsv"}
-  @update_attrs %{main_term_jsonb: %{}, main_term_text: "some updated main_term_text", title: "some updated title", title_tsv: "some updated title_tsv"}
+  @create_attrs %{
+    main_term_jsonb: %{},
+    main_term_text: "some main_term_text",
+    title: "some title",
+    title_tsv: "some title_tsv"
+  }
+  @update_attrs %{
+    main_term_jsonb: %{},
+    main_term_text: "some updated main_term_text",
+    title: "some updated title",
+    title_tsv: "some updated title_tsv"
+  }
   @invalid_attrs %{main_term_jsonb: nil, main_term_text: nil, title: nil, title_tsv: nil}
 
   def fixture(:icd10cm_eindex) do
@@ -46,7 +56,10 @@ defmodule Icd10cmWeb.Icd10cm_eindexControllerTest do
   describe "edit icd10cm_eindex" do
     setup [:create_icd10cm_eindex]
 
-    test "renders form for editing chosen icd10cm_eindex", %{conn: conn, icd10cm_eindex: icd10cm_eindex} do
+    test "renders form for editing chosen icd10cm_eindex", %{
+      conn: conn,
+      icd10cm_eindex: icd10cm_eindex
+    } do
       conn = get(conn, Routes.icd10cm_eindex_path(conn, :edit, icd10cm_eindex))
       assert html_response(conn, 200) =~ "Edit Icd10cm eindex"
     end
@@ -56,7 +69,11 @@ defmodule Icd10cmWeb.Icd10cm_eindexControllerTest do
     setup [:create_icd10cm_eindex]
 
     test "redirects when data is valid", %{conn: conn, icd10cm_eindex: icd10cm_eindex} do
-      conn = put(conn, Routes.icd10cm_eindex_path(conn, :update, icd10cm_eindex), icd10cm_eindex: @update_attrs)
+      conn =
+        put(conn, Routes.icd10cm_eindex_path(conn, :update, icd10cm_eindex),
+          icd10cm_eindex: @update_attrs
+        )
+
       assert redirected_to(conn) == Routes.icd10cm_eindex_path(conn, :show, icd10cm_eindex)
 
       conn = get(conn, Routes.icd10cm_eindex_path(conn, :show, icd10cm_eindex))
@@ -64,7 +81,11 @@ defmodule Icd10cmWeb.Icd10cm_eindexControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, icd10cm_eindex: icd10cm_eindex} do
-      conn = put(conn, Routes.icd10cm_eindex_path(conn, :update, icd10cm_eindex), icd10cm_eindex: @invalid_attrs)
+      conn =
+        put(conn, Routes.icd10cm_eindex_path(conn, :update, icd10cm_eindex),
+          icd10cm_eindex: @invalid_attrs
+        )
+
       assert html_response(conn, 200) =~ "Edit Icd10cm eindex"
     end
   end
@@ -75,6 +96,7 @@ defmodule Icd10cmWeb.Icd10cm_eindexControllerTest do
     test "deletes chosen icd10cm_eindex", %{conn: conn, icd10cm_eindex: icd10cm_eindex} do
       conn = delete(conn, Routes.icd10cm_eindex_path(conn, :delete, icd10cm_eindex))
       assert redirected_to(conn) == Routes.icd10cm_eindex_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.icd10cm_eindex_path(conn, :show, icd10cm_eindex))
       end

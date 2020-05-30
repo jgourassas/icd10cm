@@ -259,7 +259,11 @@ defmodule Icd10cm.CodesTest do
     alias Icd10cm.Codes.Icd10cm_neoplasm
 
     @valid_attrs %{main_term: %{}, title: "some title", title_tsv: "some title_tsv"}
-    @update_attrs %{main_term: %{}, title: "some updated title", title_tsv: "some updated title_tsv"}
+    @update_attrs %{
+      main_term: %{},
+      title: "some updated title",
+      title_tsv: "some updated title_tsv"
+    }
     @invalid_attrs %{main_term: nil, title: nil, title_tsv: nil}
 
     def icd10cm_neoplasm_fixture(attrs \\ %{}) do
@@ -282,7 +286,9 @@ defmodule Icd10cm.CodesTest do
     end
 
     test "create_icd10cm_neoplasm/1 with valid data creates a icd10cm_neoplasm" do
-      assert {:ok, %Icd10cm_neoplasm{} = icd10cm_neoplasm} = Codes.create_icd10cm_neoplasm(@valid_attrs)
+      assert {:ok, %Icd10cm_neoplasm{} = icd10cm_neoplasm} =
+               Codes.create_icd10cm_neoplasm(@valid_attrs)
+
       assert icd10cm_neoplasm.main_term == %{}
       assert icd10cm_neoplasm.title == "some title"
       assert icd10cm_neoplasm.title_tsv == "some title_tsv"
@@ -294,7 +300,10 @@ defmodule Icd10cm.CodesTest do
 
     test "update_icd10cm_neoplasm/2 with valid data updates the icd10cm_neoplasm" do
       icd10cm_neoplasm = icd10cm_neoplasm_fixture()
-      assert {:ok, %Icd10cm_neoplasm{} = icd10cm_neoplasm} = Codes.update_icd10cm_neoplasm(icd10cm_neoplasm, @update_attrs)
+
+      assert {:ok, %Icd10cm_neoplasm{} = icd10cm_neoplasm} =
+               Codes.update_icd10cm_neoplasm(icd10cm_neoplasm, @update_attrs)
+
       assert icd10cm_neoplasm.main_term == %{}
       assert icd10cm_neoplasm.title == "some updated title"
       assert icd10cm_neoplasm.title_tsv == "some updated title_tsv"
@@ -302,7 +311,10 @@ defmodule Icd10cm.CodesTest do
 
     test "update_icd10cm_neoplasm/2 with invalid data returns error changeset" do
       icd10cm_neoplasm = icd10cm_neoplasm_fixture()
-      assert {:error, %Ecto.Changeset{}} = Codes.update_icd10cm_neoplasm(icd10cm_neoplasm, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Codes.update_icd10cm_neoplasm(icd10cm_neoplasm, @invalid_attrs)
+
       assert icd10cm_neoplasm == Codes.get_icd10cm_neoplasm!(icd10cm_neoplasm.id)
     end
 
@@ -321,8 +333,18 @@ defmodule Icd10cm.CodesTest do
   describe "iicd10cm_eindexes" do
     alias Icd10cm.Codes.Icd10cm_eindex
 
-    @valid_attrs %{main_term_jsonb: %{}, main_term_text: "some main_term_text", title: "some title", title_tsv: "some title_tsv"}
-    @update_attrs %{main_term_jsonb: %{}, main_term_text: "some updated main_term_text", title: "some updated title", title_tsv: "some updated title_tsv"}
+    @valid_attrs %{
+      main_term_jsonb: %{},
+      main_term_text: "some main_term_text",
+      title: "some title",
+      title_tsv: "some title_tsv"
+    }
+    @update_attrs %{
+      main_term_jsonb: %{},
+      main_term_text: "some updated main_term_text",
+      title: "some updated title",
+      title_tsv: "some updated title_tsv"
+    }
     @invalid_attrs %{main_term_jsonb: nil, main_term_text: nil, title: nil, title_tsv: nil}
 
     def icd10cm_eindex_fixture(attrs \\ %{}) do
@@ -358,7 +380,10 @@ defmodule Icd10cm.CodesTest do
 
     test "update_icd10cm_eindex/2 with valid data updates the icd10cm_eindex" do
       icd10cm_eindex = icd10cm_eindex_fixture()
-      assert {:ok, %Icd10cm_eindex{} = icd10cm_eindex} = Codes.update_icd10cm_eindex(icd10cm_eindex, @update_attrs)
+
+      assert {:ok, %Icd10cm_eindex{} = icd10cm_eindex} =
+               Codes.update_icd10cm_eindex(icd10cm_eindex, @update_attrs)
+
       assert icd10cm_eindex.main_term_jsonb == %{}
       assert icd10cm_eindex.main_term_text == "some updated main_term_text"
       assert icd10cm_eindex.title == "some updated title"
@@ -367,7 +392,10 @@ defmodule Icd10cm.CodesTest do
 
     test "update_icd10cm_eindex/2 with invalid data returns error changeset" do
       icd10cm_eindex = icd10cm_eindex_fixture()
-      assert {:error, %Ecto.Changeset{}} = Codes.update_icd10cm_eindex(icd10cm_eindex, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Codes.update_icd10cm_eindex(icd10cm_eindex, @invalid_attrs)
+
       assert icd10cm_eindex == Codes.get_icd10cm_eindex!(icd10cm_eindex.id)
     end
 
@@ -380,6 +408,97 @@ defmodule Icd10cm.CodesTest do
     test "change_icd10cm_eindex/1 returns a icd10cm_eindex changeset" do
       icd10cm_eindex = icd10cm_eindex_fixture()
       assert %Ecto.Changeset{} = Codes.change_icd10cm_eindex(icd10cm_eindex)
+    end
+  end
+
+  describe "iicd10cm_orders" do
+    alias Icd10cm.Codes.Icd10cm_order
+
+    @valid_attrs %{
+      " ": "some  ",
+      icd10cm_code: "some icd10cm_code",
+      is_header: "some is_header",
+      order_number: 42,
+      short_description: "some short_description"
+    }
+    @update_attrs %{
+      " ": "some updated  ",
+      icd10cm_code: "some updated icd10cm_code",
+      is_header: "some updated is_header",
+      order_number: 43,
+      short_description: "some updated short_description"
+    }
+    @invalid_attrs %{
+      " ": nil,
+      icd10cm_code: nil,
+      is_header: nil,
+      order_number: nil,
+      short_description: nil
+    }
+
+    def icd10cm_order_fixture(attrs \\ %{}) do
+      {:ok, icd10cm_order} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Codes.create_icd10cm_order()
+
+      icd10cm_order
+    end
+
+    test "list_iicd10cm_orders/0 returns all iicd10cm_orders" do
+      icd10cm_order = icd10cm_order_fixture()
+      assert Codes.list_iicd10cm_orders() == [icd10cm_order]
+    end
+
+    test "get_icd10cm_order!/1 returns the icd10cm_order with given id" do
+      icd10cm_order = icd10cm_order_fixture()
+      assert Codes.get_icd10cm_order!(icd10cm_order.id) == icd10cm_order
+    end
+
+    test "create_icd10cm_order/1 with valid data creates a icd10cm_order" do
+      assert {:ok, %Icd10cm_order{} = icd10cm_order} = Codes.create_icd10cm_order(@valid_attrs)
+      assert icd10cm_order.==("some  ")
+      assert icd10cm_order.icd10cm_code == "some icd10cm_code"
+      assert icd10cm_order.is_header == "some is_header"
+      assert icd10cm_order.order_number == 42
+      assert icd10cm_order.short_description == "some short_description"
+    end
+
+    test "create_icd10cm_order/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Codes.create_icd10cm_order(@invalid_attrs)
+    end
+
+    test "update_icd10cm_order/2 with valid data updates the icd10cm_order" do
+      icd10cm_order = icd10cm_order_fixture()
+
+      assert {:ok, %Icd10cm_order{} = icd10cm_order} =
+               Codes.update_icd10cm_order(icd10cm_order, @update_attrs)
+
+      assert icd10cm_order.==("some updated  ")
+      assert icd10cm_order.icd10cm_code == "some updated icd10cm_code"
+      assert icd10cm_order.is_header == "some updated is_header"
+      assert icd10cm_order.order_number == 43
+      assert icd10cm_order.short_description == "some updated short_description"
+    end
+
+    test "update_icd10cm_order/2 with invalid data returns error changeset" do
+      icd10cm_order = icd10cm_order_fixture()
+
+      assert {:error, %Ecto.Changeset{}} =
+               Codes.update_icd10cm_order(icd10cm_order, @invalid_attrs)
+
+      assert icd10cm_order == Codes.get_icd10cm_order!(icd10cm_order.id)
+    end
+
+    test "delete_icd10cm_order/1 deletes the icd10cm_order" do
+      icd10cm_order = icd10cm_order_fixture()
+      assert {:ok, %Icd10cm_order{}} = Codes.delete_icd10cm_order(icd10cm_order)
+      assert_raise Ecto.NoResultsError, fn -> Codes.get_icd10cm_order!(icd10cm_order.id) end
+    end
+
+    test "change_icd10cm_order/1 returns a icd10cm_order changeset" do
+      icd10cm_order = icd10cm_order_fixture()
+      assert %Ecto.Changeset{} = Codes.change_icd10cm_order(icd10cm_order)
     end
   end
 end

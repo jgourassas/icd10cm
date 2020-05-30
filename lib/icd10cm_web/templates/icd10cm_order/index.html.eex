@@ -1,0 +1,74 @@
+<div class="title_form">
+<h4>Listing Icd-10-cm Orders Table (Ordered by Long Description)</h4>
+</div>
+
+<table class= "table responsive hover stack table-scroll" >
+
+  <thead class="thead">
+    <tr>
+      <th>Order number</th>
+      <th>Original Code</th>
+      <th>Used Code</th>
+      <th>Is header</th>
+      <th>Short description</th>
+       <th>Long description</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for icd10cm_order <- @icd10cm_orders do %>
+    <tr>
+      <td>
+      <span style="color:#b3b3b3">
+      <%= icd10cm_order.order_number %>
+      </span>
+      </td>
+      <td>
+      
+      <%= icd10cm_order.icd10cm_code %>
+      
+      </td>
+       <td>
+    
+     <span style="color:#26353f">
+     <strong>
+      <%= icd10cm_order.icd10cm_code_2 %>
+      </strong>
+      </span>
+  
+    
+      </td>
+      <td>
+      <%= if icd10cm_order.is_header == "0" do %>
+      <span style="color:red">
+      Yes-
+      <%= icd10cm_order.is_header %>
+      </span>
+      <%else %>
+      <span style="color:green">
+      No-
+      <%= icd10cm_order.is_header %>
+      </span>
+    
+      <% end%>
+      
+      </td>
+      <td>
+       <span style="color:#26353f">
+      <em>
+      <%= icd10cm_order.short_description %>
+       </em>
+       </span>
+      
+      </td>
+      
+      <td><%= icd10cm_order.long_description  %></td>
+
+      
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<div class="pagination text-center" role="navigation" aria-label="Pagination">
+     <%= pagination_links @page %>
+    </div>
+<span><%#= link "New Icd10cm order", to: Routes.icd10cm_order_path(@conn, :new) %></span>

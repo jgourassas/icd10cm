@@ -5,7 +5,7 @@
 
 
 <% alias Icd10cm.Codes %>
-<table class="table responsive hover stack table-scroll">
+<table class="table responsive stack table-scroll">
   <thead>
     <tr>
       <th>E-index Term</th>

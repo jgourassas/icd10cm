@@ -7,14 +7,15 @@ defmodule Icd10cmWeb.Icd10clinicalController do
 
   plug(:scrub_params, "icd10clinical" when action in [:create, :update])
 
-
   def index(conn, params) do
-    page = Codes.list_icd10clinicals(params)
-       |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+    page =
+      Codes.list_icd10clinicals(params)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+
     render(conn, "index.html", icd10clinicals: page.entries, page: page)
 
-    #icd10clinicals = Codes.list_icd10clinicals(params)
-    #render(conn, "index.html", icd10clinicals: icd10clinicals)
+    # icd10clinicals = Codes.list_icd10clinicals(params)
+    # render(conn, "index.html", icd10clinicals: icd10clinicals)
   end
 
   def new(conn, _params) do
@@ -68,17 +69,16 @@ defmodule Icd10cmWeb.Icd10clinicalController do
     |> redirect(to: Routes.icd10clinical_path(conn, :index))
   end
 
-
   def search_clinicals(
-    conn,
-    %{"search_clinicals" => %{"query" => query, "selection" => selection}} = params ) do
-
+        conn,
+        %{"search_clinicals" => %{"query" => query, "selection" => selection}} = params
+      ) do
     trim_query = String.trim(query)
 
     page =
-    Icd10cm.Codes.search_clinicals(trim_query, selection)
-    |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
-    render(conn, "index.html", icd10clinicals: page.entries, page: page)
+      Icd10cm.Codes.search_clinicals(trim_query, selection)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
 
+    render(conn, "index.html", icd10clinicals: page.entries, page: page)
   end
 end

@@ -25,7 +25,7 @@ defmodule Icd10cm.Codes.Icd10clinical do
     field :short_description, :string
     field :useadditionalcode, :string
 
-   # timestamps()
+    # timestamps()
   end
 
   @doc false
@@ -55,7 +55,8 @@ defmodule Icd10cm.Codes.Icd10clinical do
       :icd10cm_code_ltree
     ])
     |> validate_required([])
-    #|> validate_required([
+
+    # |> validate_required([
     #  :order_number,
     #  :icd10cm_code,
     #  :icd10cm_code_2,
@@ -77,8 +78,6 @@ defmodule Icd10cm.Codes.Icd10clinical do
     #  :is_category,
     #  :is_subcategory,
     #  :icd10cm_code_ltree
-    #])
+    # ])
   end
-
-
 end

@@ -7,6 +7,5 @@ defmodule Icd10cm.Repo.Migrations.CreateIcd10cmNeoplasms do
       add :main_term, :map
       add :title_tsv, :tsvector
     end
-
   end
 end

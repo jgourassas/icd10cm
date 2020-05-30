@@ -33,21 +33,21 @@ defmodule Icd10cm.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.1",  override: true},
+      {:phoenix, "~> 1.5.1", override: true},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
-      {:phoenix_live_reload, "~> 1.2.2", only: :dev,  override: true},
+      {:phoenix_live_reload, "~> 1.2.2", only: :dev, override: true},
       {:phoenix_live_dashboard, "~> 0.2.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:poison, "~> 3.1"},
-      {:scrivener_ecto, "~> 2.4",  override: true},
-      {:scrivener_html, "~> 1.8.1",  override: true},
-      {:scrivener_headers, "~> 3.1.1",  override: true},
+      {:scrivener_ecto, "~> 2.4", override: true},
+      {:scrivener_html, "~> 1.8.1", override: true},
+      {:scrivener_headers, "~> 3.1.1", override: true},
       {:plug_cowboy, "~> 2.0"}
     ]
   end

@@ -8,9 +8,11 @@ defmodule Icd10cmWeb.Icd10cm_eindexController do
   plug(:scrub_params, "icd10cm_eindex" when action in [:create, :update])
 
   def index(conn, params) do
-    page = Codes.list_icd10cm_eindexes(params)
-    |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
-     render(conn, "index.html", icd10cm_eindexes: page.entries, page: page)
+    page =
+      Codes.list_icd10cm_eindexes(params)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+
+    render(conn, "index.html", icd10cm_eindexes: page.entries, page: page)
   end
 
   def new(conn, _params) do

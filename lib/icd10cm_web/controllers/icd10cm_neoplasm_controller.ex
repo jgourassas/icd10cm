@@ -8,12 +8,14 @@ defmodule Icd10cmWeb.Icd10cm_neoplasmController do
   plug(:scrub_params, "icd10cm_neoplasm" when action in [:create, :update])
 
   def index(conn, params) do
-    page = Codes.list_icd10cm_neoplasms(params)
-       |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+    page =
+      Codes.list_icd10cm_neoplasms(params)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+
     render(conn, "index.html", icd10cm_neoplasms: page.entries, page: page)
 
-    #icd10cm_neoplasms = Codes.list_icd10cm_neoplasms()
-    #render(conn, "index.html", icd10cm_neoplasms: icd10cm_neoplasms)
+    # icd10cm_neoplasms = Codes.list_icd10cm_neoplasms()
+    # render(conn, "index.html", icd10cm_neoplasms: icd10cm_neoplasms)
   end
 
   def new(conn, _params) do
@@ -67,17 +69,19 @@ defmodule Icd10cmWeb.Icd10cm_neoplasmController do
     |> redirect(to: Routes.icd10cm_neoplasm_path(conn, :index))
   end
 
-#################
-def search_neoplasms(conn,
-%{"search_neoplasms" => %{"query" => query, "selection" => selection}} = params ) do
+  #################
+  def search_neoplasms(
+        conn,
+        %{"search_neoplasms" => %{"query" => query, "selection" => selection}} = params
+      ) do
+    trim_query = String.trim(query)
 
-  trim_query = String.trim(query)
+    page =
+      Icd10cm.Codes.search_neoplasms(trim_query, selection)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
 
-  page =
-  Icd10cm.Codes.search_neoplasms(trim_query, selection)
-  |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
-  render(conn, "index.html", icd10cm_neoplasms: page.entries, page: page)
+    render(conn, "index.html", icd10cm_neoplasms: page.entries, page: page)
+  end
 
-end
-################################
+  ################################
 end

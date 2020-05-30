@@ -1,25 +1,31 @@
 
+<div class="title_form">
+<h4>ICD-10-CM - US clinical modification</h4>
+</div>
 
 <div class="row">
-
   <div class="large-6 columns">
+  <a class="button tiny" href="#">So Tiny</a>
+<a class="button small" href="#">So Small</a>
+<a class="button" href="#">So Basic</a>
+<a class="button large" href="#">So Large</a>
+<a class="button expanded" href="#">Such Expand</a>
+<a class="button small expanded" href="#">Wow, Small Expand</a>
+ <a class="button small success expanded" href="#">Wow, Small Expand</a>
+ <a class="button large secondary expanded" href="#">Secondary Small Expand</a>
+ <a class="button large warning expanded" href="#">Wow, Small Expand</a>
 
-<a href="#" class="button small">Small Button</a>
-  <a href="#" class="button round">Round Button</a>
-  <a href="#" class="button success">Success Button</a>
-  
-
-   <div class="switch large radius">
-  <input id="exampleRadioSwitch4" type="radio" name="testGroup">
-  <label for="exampleRadioSwitch4"></label>
-</div>
- 
   </div>
  <div class="large-6 columns">
+<button class="dropdown button tiny">Dropdown Button</button>
+<button class="dropdown button small">Dropdown Button</button>
+<button class="dropdown button">Dropdown Button</button>
+<button class="dropdown button large">Dropdown Button</button>
+<button class="dropdown button expanded">Dropdown Button</button>
+
         <span>
   <i class="fa fa-home"
     style="font-size:80px;color:#1b9e77;"></i>
 </span>
   </div>
 </div>
-

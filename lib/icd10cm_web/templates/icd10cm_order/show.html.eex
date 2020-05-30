@@ -1,0 +1,33 @@
+<h1>Show Icd10cm order</h1>
+
+<ul>
+
+  <li>
+    <strong>Order number:</strong>
+    <%= @icd10cm_order.order_number %>
+  </li>
+
+  <li>
+    <strong>Icd10cm code:</strong>
+    <%= @icd10cm_order.icd10cm_code %>
+  </li>
+
+  <li>
+    <strong>Is header:</strong>
+    <%= @icd10cm_order.is_header %>
+  </li>
+
+  <li>
+    <strong>Short description:</strong>
+    <%= @icd10cm_order.short_description %>
+  </li>
+
+  <li>
+    <strong> :</strong>
+    <%= @icd10cm_order.long_description  %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.icd10cm_order_path(@conn, :edit, @icd10cm_order) %></span>
+<span><%= link "Back", to: Routes.icd10cm_order_path(@conn, :index) %></span>

@@ -15,6 +15,6 @@ defmodule Icd10cm.Codes.Icd10cm_eindex do
     |> cast(attrs, [:title, :main_term_text, :main_term_jsonb, :title_tsv])
     |> validate_required([])
 
-    #|> validate_required([:title, :main_term_text, :main_term_jsonb, :title_tsv])
+    # |> validate_required([:title, :main_term_text, :main_term_jsonb, :title_tsv])
   end
 end
