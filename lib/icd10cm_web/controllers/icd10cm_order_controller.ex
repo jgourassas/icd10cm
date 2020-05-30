@@ -66,4 +66,26 @@ defmodule Icd10cmWeb.Icd10cm_orderController do
     |> put_flash(:info, "Icd10cm order deleted successfully.")
     |> redirect(to: Routes.icd10cm_order_path(conn, :index))
   end
+###########################
+
+
+def search_orders(
+
+    conn,
+    %{"search_orders" => %{"query" => query, "selection" => selection}} = params
+  ) do
+
+    trim_query = String.trim(query)
+
+
+    page =
+      Icd10cm.Codes.search_orders(trim_query, selection)
+       |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
+
+       render(conn, "index.html", icd10cm_orders: page.entries, page: page)
+
+  end
+
+
+  ####################################
 end

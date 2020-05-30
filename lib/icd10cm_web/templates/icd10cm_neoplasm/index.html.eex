@@ -1,12 +1,7 @@
 
 <%alias Icd10cm.Codes %>
-<div class = "row">
- <div class="large-12 medium-12 small-6 large-centered columns">
-<div class="element_info">ICD10-NEOPLASMS </div>
-</div><!-------large----------------->
-</div><!-------row---------------------------->
-<div class = "row">
-  
+<div class="element_info"><h5>ICD-10-NEOPLASMS </h5> </div>
+
  <div class="search_form">
   <div class="large-6 medium-6 small-6 large-centered columns">
     <ul class="has-form">
@@ -43,6 +38,7 @@
       </div><!-- small-6 large-centered columns -->
 </div>
 </div><!--------search form----------------------->
+
 <table class= "table responsive hover stack table-scroll" >
 <caption> ICD10-CM Neoplasm List</caption>
   <thead>

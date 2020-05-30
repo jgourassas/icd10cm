@@ -78,7 +78,7 @@ defmodule Icd10cmWeb.Icd10cm_neoplasmController do
 
     page =
       Icd10cm.Codes.search_neoplasms(trim_query, selection)
-      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
 
     render(conn, "index.html", icd10cm_neoplasms: page.entries, page: page)
   end

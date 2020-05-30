@@ -17,12 +17,17 @@ defmodule Icd10cmWeb.Router do
     pipe_through :browser
 
     get("/", PageController, :index)
+    # get "/page", PageController, :index, as: :pages
+
     post("/icd10clinicals/search_clinicals", Icd10clinicalController, :search_clinicals)
     resources("/icd10clinicals", Icd10clinicalController)
     resources("/icd10cm_neoplasms", Icd10cm_neoplasmController)
     post("/icd10cm_neoplasms/search_neoplasms", Icd10cm_neoplasmController, :search_neoplasms)
     resources("/icd10cm_eindexes", Icd10cm_eindexController)
     resources("/icd10cm_orders", Icd10cm_orderController)
+    post("/icd10cm_orders/search_orders", Icd10cm_orderController, :search_orders)
+
+
   end
 
   # Other scopes may use custom stacks.

@@ -1,13 +1,12 @@
 <%alias Icd10cm.Codes %>
 
-<div class = "column row">
-<div class="element_info">ICD10-CLINICAL </div>
-</div><!-------row---------------------------->
+<div class="element_info"><h5>ICD-10-CLINICAL</h5> </div>
+
 
   <div class = "row">
   
  <div class="search_form">
-  <div class="large-6 medium-6 small-6 large-centered columns">
+ <div class="large-6 medium-6 small-6 large-centered columns">
     <ul class="has-form">
 
                <%= form_for @conn, Routes.icd10clinical_path(@conn, :search_clinicals),
@@ -42,10 +41,10 @@
 
       </div><!-- small-6 large-centered columns -->
       </div><!------searchform----------------------------->
-</div>
+</div><!------row------------------------->
 
 
- <table class="table responsive hover stack table-scroll" >
+ <table class="table responsive  stack table-scroll" >
 
   <thead>
     <tr>
@@ -213,24 +212,31 @@
   </tbody>
 </table>
 </div><!-------table container---------------->
-
+<!-------------
   <div class="pagination text-center" role="navigation" aria-label="Pagination">
-     <%= pagination_links @page %>
+     <%#= pagination_links @page %>
     </div>
+-------->
+<nav aria-label="Pagination">
+  <ul class="pagination text-center">
+    <%= if @page.page_number > 1 do %>
+       <li> <%= link "Prev Page", to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number - 1),
+          class: "large primary button  " %>
+        </li>
+<% end %>
 
-<!---------------------------
-<%#= if @page.page_number > 1 do %>
-  <%#= link "Prev Page", to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number - 1),
-  class: "small primary7 button  "
-   %>
-<%# end %>
-<%#= if @page.page_number < @page.total_pages do %>
-  <%#= link "Next Page", to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number + 1),
-  class: "small primary button"
-   %>
-<%# end %>
------------------->
+<%= if @page.page_number < @page.total_pages do %>
+       <li> <%= link "Next Page", to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number + 1),
+           class: "large primary button"%>
+   </li>
+<% end %>
+   </ul>
+</nav>
+
+
+
 </div>
+
 </div>
 
 </div>

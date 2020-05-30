@@ -778,6 +778,39 @@ defmodule Icd10cm.Codes do
       |> order_by([p], [p.long_description])
   end
 
+################################
+ ################# 33
+ def search_orders(query, selection) do
+  case selection do
+    "codes_2" -> search_icd10cm_order_codes(query)
+    "long_description" -> search_icd10cm_order_long_description(query)
+    _ -> ""
+  end
+end
 
+######################
+def search_icd10cm_order_codes(query) do
+
+  _query =
+  from(
+    p in Icd10cm_order,
+    where: ilike(p.icd10cm_code_2, ^"#{query}%"),
+    limit: 250,
+    order_by: [asc: p.icd10cm_code_2]
+  )
+
+end
+###################################3
+def search_icd10cm_order_long_description(query) do
+  from(
+    d in Icd10cm_order,
+    where: fragment("(?) @@ plainto_tsquery(?)", d.long_description_tsv, ^query),
+    # or  where: ilike(d.long_description, ^"#{query}%"),
+    order_by: [asc: d.long_description]
+  )
+
+
+end
+#################################
 
 end

@@ -77,7 +77,7 @@ defmodule Icd10cmWeb.Icd10clinicalController do
 
     page =
       Icd10cm.Codes.search_clinicals(trim_query, selection)
-      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
 
     render(conn, "index.html", icd10clinicals: page.entries, page: page)
   end

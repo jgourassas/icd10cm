@@ -1,7 +1,43 @@
 <div class="title_form">
-<h4>Listing Icd-10-cm Orders Table (Ordered by Long Description)</h4>
+<h4>Listing Icd-10-cm Orders Table</h4>
 </div>
+<div class="search_form">
+  <div class="large-6 medium-6 small-6 large-centered columns">
+    <ul class="has-form">
 
+               <%= form_for @conn, Routes.icd10cm_order_path(@conn, :search_orders),
+                   [as: :search_orders], fn f -> %>
+            <div class="row collapse">
+                <div class="large-4 small-9 columns">
+                    <%=  select(f, :selection,
+                        ["Long Description": "long_description",
+                        "Used Codes": "codes_2"
+                        ],
+                        prompt: "---Select---",   required: true,
+                        class: "form-control f-dropdown"  ) %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-6 medium-6 small-9 columns">
+                    <%= text_input f, :query, placeholder: "Your Query",
+                    class: "form-control ",
+                    minLength: 3 %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-2 small-9 columns">
+                    <%= submit "Search", class: "button primary expanded"  %>
+
+                </div><!--large-4 small-9 columns-->
+
+
+            </div><!--row collapse-->
+
+
+    <% end %>
+             </ul>
+
+      </div><!-- small-6 large-centered columns -->
+</div>
+</div><!--------search form----------------------->
 <table class= "table responsive hover stack table-scroll" >
 
   <thead class="thead">
@@ -68,7 +104,32 @@
 <% end %>
   </tbody>
 </table>
+
 <div class="pagination text-center" role="navigation" aria-label="Pagination">
-     <%= pagination_links @page %>
-    </div>
-<span><%#= link "New Icd10cm order", to: Routes.icd10cm_order_path(@conn, :new) %></span>
+     <%#= pagination_links @page %>
+     <%= pagination_links @page, next: "Next", previous: "Prev" %>
+
+     <%#= pagination_links @conn, @page, action: :show %>
+     <%#= pagination_links @conn, @icd10cm_orders, @conn.params %>
+  <%#= Scrivener.HTML.pagination_links(%Scrivener.Page{total_pages: 10, page_number: 5}) |> Phoenix.HTML.safe_to_string()%>
+<%#= pagination_links @conn, @page, ["en", @page_id], path: &page_path/4, action: :show %>
+ </div>
+
+ 
+ <!---------------
+<nav aria-label="Pagination">
+  <ul class="pagination text-center">
+    <%#= if @page.page_number > 1 do %>
+       <li> <%#= link "Prev Page", to: Routes.icd10cm_order_path(@conn, :index, page: @page.page_number - 1),
+          class: "large primary button  " %>
+        </li>
+<%# end %>
+
+<%#= if @page.page_number < @page.total_pages do %>
+       <li> <%#= link "Next Page", to: Routes.icd10cm_order_path(@conn, :index, page: @page.page_number + 1),
+           class: "large primary button"%>
+   </li>
+<%# end %>
+   </ul>
+</nav>
+----->
