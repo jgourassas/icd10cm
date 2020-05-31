@@ -1,0 +1,53 @@
+<h1>Show Ctd</h1>
+
+<ul>
+
+  <li>
+    <strong>Diseasename:</strong>
+    <%= @ctd.diseasename %>
+  </li>
+
+  <li>
+    <strong>Diseaseid:</strong>
+    <%= @ctd.diseaseid %>
+  </li>
+
+  <li>
+    <strong>Altdiseaseids:</strong>
+    <%= @ctd.altdiseaseids %>
+  </li>
+
+  <li>
+    <strong>Definition:</strong>
+    <%= @ctd.definition %>
+  </li>
+
+  <li>
+    <strong>Parentids:</strong>
+    <%= @ctd.parentids %>
+  </li>
+
+  <li>
+    <strong>Treenumbers:</strong>
+    <%= @ctd.treenumbers %>
+  </li>
+
+  <li>
+    <strong>Parenttreenumbers:</strong>
+    <%= @ctd.parenttreenumbers %>
+  </li>
+
+  <li>
+    <strong>Synonyms:</strong>
+    <%= @ctd.synonyms %>
+  </li>
+
+  <li>
+    <strong>Slimmappings:</strong>
+    <%= @ctd.slimmappings %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.ctd_path(@conn, :edit, @ctd) %></span>
+<span><%= link "Back", to: Routes.ctd_path(@conn, :index) %></span>

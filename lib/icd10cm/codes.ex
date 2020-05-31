@@ -273,7 +273,7 @@ defmodule Icd10cm.Codes do
         select: %{main_term: fragment("? ", p.main_term), title: fragment(" ? ", p.title)},
         limit: 10
 
-    records_b = main_term_q |> Repo.all()
+    main_term_q |> Repo.all()
   end
 
   ############################# 3
@@ -294,7 +294,7 @@ defmodule Icd10cm.Codes do
       Enum.map(records_b, fn rec ->
         main_term_rec = rec[:main_term]
 
-        IO.inspect(main_term_rec)
+        #IO.inspect(main_term_rec)
 
         case code_order do
           "primary" ->
@@ -373,7 +373,7 @@ defmodule Icd10cm.Codes do
 
   ####################
   def search_icd10cm_neoplasms_title(query) do
-    title_q =
+    _title_q =
       from p in Icd10cm_neoplasm,
         order_by: [asc: p.title],
         where: p.title == ^"#{query}",
@@ -487,7 +487,7 @@ defmodule Icd10cm.Codes do
 
   #######################################
   def find_icd10cm_eindexes_records(q_title) do
-    _query =
+    query =
       from(
         p in Icd10cm_eindex,
         where: ilike(p.title, ^"#{q_title}%"),
@@ -495,7 +495,7 @@ defmodule Icd10cm.Codes do
         limit: 250
       )
 
-    _query |> Repo.all()
+    query |> Repo.all()
   end
 
   ############################################
@@ -514,8 +514,9 @@ defmodule Icd10cm.Codes do
       main_see_tab = Enum.map(l, fn x -> x["main_see_tab"] end)
       main_use_probe = Enum.map(l, fn x -> x["main_use"] end)
 
-      formated =
-        "#{main_code}" <>
+      _formated =
+        "#{main_title}" <>
+         "#{main_code}" <>
           " " <>
           "#{main_codes}" <>
           " " <>
@@ -795,7 +796,7 @@ def search_icd10cm_order_codes(query) do
   from(
     p in Icd10cm_order,
     where: ilike(p.icd10cm_code_2, ^"#{query}%"),
-    limit: 250,
+    limit: 50,
     order_by: [asc: p.icd10cm_code_2]
   )
 
@@ -812,5 +813,167 @@ def search_icd10cm_order_long_description(query) do
 
 end
 #################################
+def search_icd10cm_order_codes_from_clinical(query) do
+  query =
+  from(
+    p in Icd10cm_order,
+    where: ilike(p.icd10cm_code_2, ^"#{query}%"),
+    select: [p.icd10cm_code_2, p.long_description],
+    limit: 20
+  )
+
+text = query |> Repo.all()
+flatten = List.flatten(text)
+
+
+result = Enum.map(flatten, fn item ->
+  "<tr>"
+  <> "<td>"
+  <> item
+  <> "</td>"
+  <> "</tr>"
+end)
+
+result
+
+#IO.puts("------text----------------")
+#IO.inspect result
+#[["V89.2"], ["V89.2XXA"], ["V89.2XXD"], ["V89.2XXS"]]
+#result = String.split(text, ",")
+
+
+end
+#####################3
+
+  alias Icd10cm.Codes.Ctd
+
+  @doc """
+  Returns the list of ctds.
+
+  ## Examples
+
+      iex> list_ctds()
+      [%Ctd{}, ...]
+
+  """
+  def list_ctds do
+    Repo.all(Ctd)
+  end
+
+  @doc """
+  Gets a single ctd.
+
+  Raises `Ecto.NoResultsError` if the Ctd does not exist.
+
+  ## Examples
+
+      iex> get_ctd!(123)
+      %Ctd{}
+
+      iex> get_ctd!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_ctd!(id), do: Repo.get!(Ctd, id)
+
+  @doc """
+  Creates a ctd.
+
+  ## Examples
+
+      iex> create_ctd(%{field: value})
+      {:ok, %Ctd{}}
+
+      iex> create_ctd(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_ctd(attrs \\ %{}) do
+    %Ctd{}
+    |> Ctd.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a ctd.
+
+  ## Examples
+
+      iex> update_ctd(ctd, %{field: new_value})
+      {:ok, %Ctd{}}
+
+      iex> update_ctd(ctd, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_ctd(%Ctd{} = ctd, attrs) do
+    ctd
+    |> Ctd.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a ctd.
+
+  ## Examples
+
+      iex> delete_ctd(ctd)
+      {:ok, %Ctd{}}
+
+      iex> delete_ctd(ctd)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_ctd(%Ctd{} = ctd) do
+    Repo.delete(ctd)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking ctd changes.
+
+  ## Examples
+
+      iex> change_ctd(ctd)
+      %Ecto.Changeset{data: %Ctd{}}
+
+  """
+  def change_ctd(%Ctd{} = ctd, attrs \\ %{}) do
+    Ctd.changeset(ctd, attrs)
+  end
+#####################
+def list_ctds(_params) do
+  _page =
+    Ctd
+    |> order_by([p], [p.diseasename])
+end
+####################
+def format_ctd_synonyms(synonyms) do
+  if(synonyms !== nil) do
+
+  split = String.split(synonyms, "|")
+
+  result =
+  Enum.map(split, fn item ->
+    "<span>"
+    <> "<i class='fa fa-caret-right' style='font-size:20px;color:#1b9e77;''></i>"
+    <> " "
+    <> item
+    <> "<br/>"
+    <> "</span>"
+  end)
+
+
+
+
+   IO.puts("------------------synonyms---------------")
+   IO.inspect result
+
+
+
+end
+
+
+end
+#####################
 
 end

@@ -1,0 +1,47 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :diseasename %>
+  <%= text_input f, :diseasename %>
+  <%= error_tag f, :diseasename %>
+
+  <%= label f, :diseaseid %>
+  <%= text_input f, :diseaseid %>
+  <%= error_tag f, :diseaseid %>
+
+  <%= label f, :altdiseaseids %>
+  <%= text_input f, :altdiseaseids %>
+  <%= error_tag f, :altdiseaseids %>
+
+  <%= label f, :definition %>
+  <%= textarea f, :definition %>
+  <%= error_tag f, :definition %>
+
+  <%= label f, :parentids %>
+  <%= text_input f, :parentids %>
+  <%= error_tag f, :parentids %>
+
+  <%= label f, :treenumbers %>
+  <%= textarea f, :treenumbers %>
+  <%= error_tag f, :treenumbers %>
+
+  <%= label f, :parenttreenumbers %>
+  <%= textarea f, :parenttreenumbers %>
+  <%= error_tag f, :parenttreenumbers %>
+
+  <%= label f, :synonyms %>
+  <%= textarea f, :synonyms %>
+  <%= error_tag f, :synonyms %>
+
+  <%= label f, :slimmappings %>
+  <%= textarea f, :slimmappings %>
+  <%= error_tag f, :slimmappings %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

@@ -1,17 +1,19 @@
-<%alias Icd10cm.Codes %>
+<% alias Icd10cm.Codes %>
+<% alias Icd10cm.Repo %>
 
 <div class="element_info"><h5>ICD-10-CLINICAL</h5> </div>
 
 
-  <div class = "row">
   
  <div class="search_form">
+
  <div class="large-6 medium-6 small-6 large-centered columns">
     <ul class="has-form">
 
                <%= form_for @conn, Routes.icd10clinical_path(@conn, :search_clinicals),
                    [as: :search_clinicals], fn f -> %>
             <div class="row collapse">
+           
                 <div class="large-4 small-9 columns">
                     <%=  select(f, :selection,
                         ["Codes": "codes",
@@ -40,8 +42,9 @@
              </ul>
 
       </div><!-- small-6 large-centered columns -->
+
       </div><!------searchform----------------------------->
-</div><!------row------------------------->
+
 
 
  <table class="table responsive  stack table-scroll" >
@@ -51,7 +54,11 @@
       <th>
        Code
       </th>
-
+     <!---------------
+     <th>
+      Associated Codes 
+      </th>
+-------------------->
       <th>
       <span> Long description</span>
       </th>
@@ -107,7 +114,14 @@
 
 
       </td>
-
+     <!---------------------------------     
+     <td>
+      <%# query = icd10clinical.icd10cm_code_2  %>
+      <table class="table responsive  stack table-scroll">
+      <%#= raw  Codes.search_icd10cm_order_codes_from_clinical(query)  %>
+      </table>
+      </td>
+    ----------------------->
       <td><%= icd10clinical.long_description %></td>
 
 
@@ -212,27 +226,28 @@
   </tbody>
 </table>
 </div><!-------table container---------------->
-<!-------------
+
   <div class="pagination text-center" role="navigation" aria-label="Pagination">
-     <%#= pagination_links @page %>
+     <%= pagination_links @page %>
     </div>
--------->
+
+<!---------------
 <nav aria-label="Pagination">
   <ul class="pagination text-center">
-    <%= if @page.page_number > 1 do %>
-       <li> <%= link "Prev Page", to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number - 1),
+    <%#= if @page.page_number > 1 do %>
+       <li> <%#= link "Prev Page", to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number - 1),
           class: "large primary button  " %>
         </li>
-<% end %>
+<%# end %>
 
-<%= if @page.page_number < @page.total_pages do %>
-       <li> <%= link "Next Page", to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number + 1),
+<%#= if @page.page_number < @page.total_pages do %>
+       <li> <%#= link "Next Page", to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number + 1),
            class: "large primary button"%>
    </li>
-<% end %>
+<%# end %>
    </ul>
 </nav>
-
+--------------->
 
 
 </div>

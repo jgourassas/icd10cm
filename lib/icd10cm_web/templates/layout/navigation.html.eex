@@ -25,6 +25,9 @@
                      <li>
                         <%= link "ICD-10-CM Ordered List",  to: Routes.icd10cm_order_path(@conn, :index) %>
                      </li>
+<li>
+                        <%= link "Comparative Toxicogenomics Database List",  to: Routes.ctd_path(@conn, :index) %>
+                     </li>
 
                 </ul>
             </li>

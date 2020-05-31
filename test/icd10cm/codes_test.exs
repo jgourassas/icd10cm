@@ -501,4 +501,79 @@ defmodule Icd10cm.CodesTest do
       assert %Ecto.Changeset{} = Codes.change_icd10cm_order(icd10cm_order)
     end
   end
+
+  describe "ctds" do
+    alias Icd10cm.Codes.Ctd
+
+    @valid_attrs %{altdiseaseids: "some altdiseaseids", definition: "some definition", diseaseid: "some diseaseid", diseasename: "some diseasename", parentids: "some parentids", parenttreenumbers: "some parenttreenumbers", slimmappings: "some slimmappings", synonyms: "some synonyms", treenumbers: "some treenumbers"}
+    @update_attrs %{altdiseaseids: "some updated altdiseaseids", definition: "some updated definition", diseaseid: "some updated diseaseid", diseasename: "some updated diseasename", parentids: "some updated parentids", parenttreenumbers: "some updated parenttreenumbers", slimmappings: "some updated slimmappings", synonyms: "some updated synonyms", treenumbers: "some updated treenumbers"}
+    @invalid_attrs %{altdiseaseids: nil, definition: nil, diseaseid: nil, diseasename: nil, parentids: nil, parenttreenumbers: nil, slimmappings: nil, synonyms: nil, treenumbers: nil}
+
+    def ctd_fixture(attrs \\ %{}) do
+      {:ok, ctd} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Codes.create_ctd()
+
+      ctd
+    end
+
+    test "list_ctds/0 returns all ctds" do
+      ctd = ctd_fixture()
+      assert Codes.list_ctds() == [ctd]
+    end
+
+    test "get_ctd!/1 returns the ctd with given id" do
+      ctd = ctd_fixture()
+      assert Codes.get_ctd!(ctd.id) == ctd
+    end
+
+    test "create_ctd/1 with valid data creates a ctd" do
+      assert {:ok, %Ctd{} = ctd} = Codes.create_ctd(@valid_attrs)
+      assert ctd.altdiseaseids == "some altdiseaseids"
+      assert ctd.definition == "some definition"
+      assert ctd.diseaseid == "some diseaseid"
+      assert ctd.diseasename == "some diseasename"
+      assert ctd.parentids == "some parentids"
+      assert ctd.parenttreenumbers == "some parenttreenumbers"
+      assert ctd.slimmappings == "some slimmappings"
+      assert ctd.synonyms == "some synonyms"
+      assert ctd.treenumbers == "some treenumbers"
+    end
+
+    test "create_ctd/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Codes.create_ctd(@invalid_attrs)
+    end
+
+    test "update_ctd/2 with valid data updates the ctd" do
+      ctd = ctd_fixture()
+      assert {:ok, %Ctd{} = ctd} = Codes.update_ctd(ctd, @update_attrs)
+      assert ctd.altdiseaseids == "some updated altdiseaseids"
+      assert ctd.definition == "some updated definition"
+      assert ctd.diseaseid == "some updated diseaseid"
+      assert ctd.diseasename == "some updated diseasename"
+      assert ctd.parentids == "some updated parentids"
+      assert ctd.parenttreenumbers == "some updated parenttreenumbers"
+      assert ctd.slimmappings == "some updated slimmappings"
+      assert ctd.synonyms == "some updated synonyms"
+      assert ctd.treenumbers == "some updated treenumbers"
+    end
+
+    test "update_ctd/2 with invalid data returns error changeset" do
+      ctd = ctd_fixture()
+      assert {:error, %Ecto.Changeset{}} = Codes.update_ctd(ctd, @invalid_attrs)
+      assert ctd == Codes.get_ctd!(ctd.id)
+    end
+
+    test "delete_ctd/1 deletes the ctd" do
+      ctd = ctd_fixture()
+      assert {:ok, %Ctd{}} = Codes.delete_ctd(ctd)
+      assert_raise Ecto.NoResultsError, fn -> Codes.get_ctd!(ctd.id) end
+    end
+
+    test "change_ctd/1 returns a ctd changeset" do
+      ctd = ctd_fixture()
+      assert %Ecto.Changeset{} = Codes.change_ctd(ctd)
+    end
+  end
 end
