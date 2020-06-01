@@ -152,8 +152,8 @@ defmodule Icd10cm.Codes do
   def search_icd10clinicals_long_desc(query) do
     from(
       d in Icd10clinical,
-      where: fragment("(?) @@ plainto_tsquery(?)", d.long_description_tsv, ^query),
-      # or  where: ilike(d.long_description, ^"#{query}%"),
+      #where: fragment("(?) @@ plainto_tsquery(?)", d.long_description_tsv, ^query),
+      where: ilike(d.long_description, ^"#{query}%"),
       order_by: [asc: d.long_description]
     )
   end
@@ -968,5 +968,234 @@ end#if
 
 end#format_ctd_columns
 #####################
+def search_ctds(query, selection) do
+  case selection do
+    "diseasenames" -> search_ctds_diseasnames(query)
+    "synonyms" -> search_ctds_synonyms(query)
+    _ -> ""
+  end
+end
+#############################
+def search_ctds_diseasnames(query) do
 
+from(
+      d in Ctd,
+      where: fragment("(?) @@ plainto_tsquery(?)", d.diseasename, ^query),
+      # or  where: ilike(d.long_description, ^"#{query}%"),
+      order_by: [asc: d.diseasename]
+    )
+end
+##########################
+def search_ctds_synonyms(query) do
+ synonym =  from(
+    d in Ctd,
+    where: fragment("(?) @@ plainto_tsquery(?)", d.synonyms, ^query),
+    # or  where: ilike(d.long_description, ^"#{query}%"),
+    order_by: [asc: d.diseasename]
+  )
+
+  #IO.puts("---synonym-------")
+  #IO.inspect synonym
+
+end
+################
+
+  alias Icd10cm.Codes.Icd10cm_dindex
+
+  @doc """
+  Returns the list of icd10cm_dindexes.
+
+  ## Examples
+
+      iex> list_icd10cm_dindexes()
+      [%Icd10cm_dindex{}, ...]
+
+  """
+  def list_icd10cm_dindexes do
+    Repo.all(Icd10cm_dindex)
+  end
+
+  @doc """
+  Gets a single icd10cm_dindex.
+
+  Raises `Ecto.NoResultsError` if the Icd10cm dindex does not exist.
+
+  ## Examples
+
+      iex> get_icd10cm_dindex!(123)
+      %Icd10cm_dindex{}
+
+      iex> get_icd10cm_dindex!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_icd10cm_dindex!(id), do: Repo.get!(Icd10cm_dindex, id)
+
+  @doc """
+  Creates a icd10cm_dindex.
+
+  ## Examples
+
+      iex> create_icd10cm_dindex(%{field: value})
+      {:ok, %Icd10cm_dindex{}}
+
+      iex> create_icd10cm_dindex(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_icd10cm_dindex(attrs \\ %{}) do
+    %Icd10cm_dindex{}
+    |> Icd10cm_dindex.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a icd10cm_dindex.
+
+  ## Examples
+
+      iex> update_icd10cm_dindex(icd10cm_dindex, %{field: new_value})
+      {:ok, %Icd10cm_dindex{}}
+
+      iex> update_icd10cm_dindex(icd10cm_dindex, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_icd10cm_dindex(%Icd10cm_dindex{} = icd10cm_dindex, attrs) do
+    icd10cm_dindex
+    |> Icd10cm_dindex.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a icd10cm_dindex.
+
+  ## Examples
+
+      iex> delete_icd10cm_dindex(icd10cm_dindex)
+      {:ok, %Icd10cm_dindex{}}
+
+      iex> delete_icd10cm_dindex(icd10cm_dindex)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_icd10cm_dindex(%Icd10cm_dindex{} = icd10cm_dindex) do
+    Repo.delete(icd10cm_dindex)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking icd10cm_dindex changes.
+
+  ## Examples
+
+      iex> change_icd10cm_dindex(icd10cm_dindex)
+      %Ecto.Changeset{data: %Icd10cm_dindex{}}
+
+  """
+  def change_icd10cm_dindex(%Icd10cm_dindex{} = icd10cm_dindex, attrs \\ %{}) do
+    Icd10cm_dindex.changeset(icd10cm_dindex, attrs)
+  end
+##########################
+def list_icd10cm_dindexes(_params) do
+  _page =
+    Icd10cm_dindex
+    |> order_by([p], [p.title])
+
+end
+##########################
+def search_dindexes(query, selection) do
+IO.inspect query
+
+end
+###########################
+def get_dindex_title(title) do
+  main_term_q =
+  from p in Icd10cm_dindex,
+    order_by: [asc: p.title],
+    where: p.title == ^"#{title}",
+    select: %{main_term: fragment("? ", p.main_term), title: fragment(" ? ", p.title)},
+    limit: 10
+
+main_term_q |> Repo.all()
+end
+##########################
+def find_dindex_code(title, poisoning) do
+  records_b = get_dindex_title(title)
+
+  if Enum.any?(records_b) do
+
+    Enum.map(records_b, fn rec ->
+      main_term_rec = rec[:main_term]
+      case poisoning do
+        "accidental" ->
+          #code = main_term_rec["0.term_cell_l.0.cell_code"]
+          code = main_term_rec["main_cell_l.0.main_cell_code"]
+
+          if(code !== nil) do
+            code
+          else
+            "None"
+          end
+          "intentional" ->
+            code = main_term_rec["main_cell_l.1.main_cell_code"]
+
+            if(code !== nil) do
+              code
+            else
+              "None"
+            end
+
+
+            "assault" ->
+              code = main_term_rec["main_cell_l.2.main_cell_code"]
+
+              if(code !== nil) do
+                code
+              else
+                "None"
+              end
+
+
+              "undetermined" ->
+                code = main_term_rec["main_cell_l.3.main_cell_code"]
+
+                if(code !== nil) do
+                  code
+                else
+                  "None"
+                end
+
+
+              "adverse_effect" ->
+                code = main_term_rec["main_cell_l.4.main_cell_code"]
+
+                if(code !== nil) do
+                  code
+                else
+                  "None"
+                end
+
+
+                "underdosing" ->
+                  code = main_term_rec["main_cell_l.5.main_cell_code"]
+
+                  if(code !== nil) do
+                    code
+                  else
+                    "None"
+                  end
+
+          _ ->
+            " "
+          end
+
+          # case
+        end)
+
+
+  end#if
+
+
+end#def
+  #############################
 end

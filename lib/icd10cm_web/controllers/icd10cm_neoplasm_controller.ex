@@ -73,7 +73,8 @@ defmodule Icd10cmWeb.Icd10cm_neoplasmController do
   def search_neoplasms(
         conn,
         %{"search_neoplasms" => %{"query" => query, "selection" => selection}} = params
-      ) do
+      )
+      do
     trim_query = String.trim(query)
 
     page =

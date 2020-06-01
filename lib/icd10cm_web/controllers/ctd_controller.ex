@@ -68,4 +68,19 @@ defmodule Icd10cmWeb.CtdController do
     |> put_flash(:info, "Ctd deleted successfully.")
     |> redirect(to: Routes.ctd_path(conn, :index))
   end
+  ###############
+  def search_ctds(
+    conn,
+    %{"search_ctds" => %{"query" => query, "selection" => selection}} = params
+  ) do
+    trim_query = String.trim(query)
+
+    page =
+      Icd10cm.Codes.search_ctds(trim_query, selection)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
+
+    render(conn, "index.html", ctds: page.entries, page: page)
+
+  end
+  ###############33
 end

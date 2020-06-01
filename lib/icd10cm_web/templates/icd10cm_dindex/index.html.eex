@@ -1,0 +1,79 @@
+
+<%alias Icd10cm.Codes %>
+<div class="element_info"><h5>ICD-10 DRUG INDEX </h5> </div>
+<!-----------------------------------
+Accidental | Intentional | Assault | Undetermined | Adverse effect  | Underdosing 
+------------------>
+
+<table class= "table responsive hover stack table-scroll">
+<caption> ICD10-CM DRUG  List</caption>
+  <thead>
+    <tr>
+      <th>Medication - Drug </th>
+      <th>Accidental</th>
+      <th>Intentional</th>
+      <th>Assault</th>
+      <th>Undetermined</th>
+      <th>Adverse effect</th>
+      <th>Underdosing</th>
+
+     </tr>
+  </thead>
+  <tbody>
+<%= for icd10cm_dindex <- @icd10cm_dindexes do %>
+    <tr>
+      <td><%= icd10cm_dindex.title %></td>
+     <% title = icd10cm_dindex.title %>
+
+      <td>
+      <span style="color:#000;padding:5px;">
+      <%= raw  Codes.find_dindex_code(title, "accidental") %>
+      </span>
+  
+       </td>
+     <td>
+       <span style="color:#000;padding:5px;">
+      <%= raw  Codes.find_dindex_code(title, "intentional") %>
+      </span>
+      
+       </td>     
+      <td>
+       <span style="color:#000;padding:5px;">
+      <%= raw  Codes.find_dindex_code(title, "assault") %>
+      </span>
+       </td>  
+
+       <td>
+      
+        <span style="color:#000;padding:5px;">
+      <%= raw  Codes.find_dindex_code(title, "undetermined") %>
+      </span>
+
+
+          </td> 
+
+
+       <td>
+        
+        <span style="color:#000;padding:5px;">
+      <%= raw  Codes.find_dindex_code(title, "adverse_effect") %>
+      </span>
+
+      
+          </td> 
+<td>
+        
+ 
+        <span style="color:#000;padding:5px;">
+      <%= raw  Codes.find_dindex_code(title, "underdosing") %>
+      </span>
+
+          </td> 
+
+<% end %>
+  </tbody>
+</table>
+<div class="pagination text-center" role="navigation" aria-label="Pagination">
+     <%= pagination_links @page %>
+    </div>
+<span><%#= link "New Icd10cm dindex", to: Routes.icd10cm_dindex_path(@conn, :new) %></span>

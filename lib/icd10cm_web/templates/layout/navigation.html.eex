@@ -18,7 +18,9 @@
                     <li>
                      <%= link "ICD10-Neoplasms",  to: Routes.icd10cm_neoplasm_path(@conn, :index) %>
                      </li>
-                    
+                     <li>
+                        <%= link "ICD10-CM Drugs",  to: Routes.icd10cm_dindex_path(@conn, :index) %>
+                     </li>
                      <li>
                         <%= link "ICD10-External Injuries",  to: Routes.icd10cm_eindex_path(@conn, :index) %>
                      </li>
@@ -26,7 +28,7 @@
                         <%= link "ICD-10-CM Ordered List",  to: Routes.icd10cm_order_path(@conn, :index) %>
                      </li>
 <li>
-                        <%= link "Comparative Toxicogenomics Database List",  to: Routes.ctd_path(@conn, :index) %>
+                        <%= link "For Synonyms. Comparative Toxicogenomics Database",  to: Routes.ctd_path(@conn, :index) %>
                      </li>
 
                 </ul>

@@ -27,7 +27,8 @@ defmodule Icd10cmWeb.Router do
     resources("/icd10cm_orders", Icd10cm_orderController)
     post("/icd10cm_orders/search_orders", Icd10cm_orderController, :search_orders)
     resources( "/ctds", CtdController)
-
+    post("/ctds/search_ctds", CtdController, :search_ctds)
+    resources("/icd10cm_dindexes", Icd10cm_dindexController)
 
   end
 

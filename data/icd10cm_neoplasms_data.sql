@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.13
 -- Dumped by pg_dump version 9.6.13
 
--- Started on 2020-05-30 18:43:44 EEST
+-- Started on 2020-06-01 10:20:22 EEST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 2498 (class 0 OID 58677)
+-- TOC entry 2504 (class 0 OID 58677)
 -- Dependencies: 191
 -- Data for Name: icd10cm_neoplasms; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -620,7 +620,7 @@ INSERT INTO public.icd10cm_neoplasms (id, title, main_term, title_tsv) VALUES (7
 
 
 --
--- TOC entry 2504 (class 0 OID 0)
+-- TOC entry 2510 (class 0 OID 0)
 -- Dependencies: 190
 -- Name: icd10cm_neoplasms_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -628,7 +628,7 @@ INSERT INTO public.icd10cm_neoplasms (id, title, main_term, title_tsv) VALUES (7
 SELECT pg_catalog.setval('public.icd10cm_neoplasms_id_seq', 1186, true);
 
 
--- Completed on 2020-05-30 18:43:45 EEST
+-- Completed on 2020-06-01 10:20:23 EEST
 
 --
 -- PostgreSQL database dump complete

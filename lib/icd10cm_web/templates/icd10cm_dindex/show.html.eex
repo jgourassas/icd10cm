@@ -1,0 +1,23 @@
+<h1>Show Icd10cm dindex</h1>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @icd10cm_dindex.title %>
+  </li>
+
+  <li>
+    <strong>Main term:</strong>
+    <%= @icd10cm_dindex.main_term %>
+  </li>
+
+  <li>
+    <strong>Title tsv:</strong>
+    <%= @icd10cm_dindex.title_tsv %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.icd10cm_dindex_path(@conn, :edit, @icd10cm_dindex) %></span>
+<span><%= link "Back", to: Routes.icd10cm_dindex_path(@conn, :index) %></span>

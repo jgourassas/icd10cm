@@ -576,4 +576,67 @@ defmodule Icd10cm.CodesTest do
       assert %Ecto.Changeset{} = Codes.change_ctd(ctd)
     end
   end
+
+  describe "icd10cm_dindexes" do
+    alias Icd10cm.Codes.Icd10cm_dindex
+
+    @valid_attrs %{main_term: %{}, title: "some title", title_tsv: "some title_tsv"}
+    @update_attrs %{main_term: %{}, title: "some updated title", title_tsv: "some updated title_tsv"}
+    @invalid_attrs %{main_term: nil, title: nil, title_tsv: nil}
+
+    def icd10cm_dindex_fixture(attrs \\ %{}) do
+      {:ok, icd10cm_dindex} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Codes.create_icd10cm_dindex()
+
+      icd10cm_dindex
+    end
+
+    test "list_icd10cm_dindexes/0 returns all icd10cm_dindexes" do
+      icd10cm_dindex = icd10cm_dindex_fixture()
+      assert Codes.list_icd10cm_dindexes() == [icd10cm_dindex]
+    end
+
+    test "get_icd10cm_dindex!/1 returns the icd10cm_dindex with given id" do
+      icd10cm_dindex = icd10cm_dindex_fixture()
+      assert Codes.get_icd10cm_dindex!(icd10cm_dindex.id) == icd10cm_dindex
+    end
+
+    test "create_icd10cm_dindex/1 with valid data creates a icd10cm_dindex" do
+      assert {:ok, %Icd10cm_dindex{} = icd10cm_dindex} = Codes.create_icd10cm_dindex(@valid_attrs)
+      assert icd10cm_dindex.main_term == %{}
+      assert icd10cm_dindex.title == "some title"
+      assert icd10cm_dindex.title_tsv == "some title_tsv"
+    end
+
+    test "create_icd10cm_dindex/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Codes.create_icd10cm_dindex(@invalid_attrs)
+    end
+
+    test "update_icd10cm_dindex/2 with valid data updates the icd10cm_dindex" do
+      icd10cm_dindex = icd10cm_dindex_fixture()
+      assert {:ok, %Icd10cm_dindex{} = icd10cm_dindex} = Codes.update_icd10cm_dindex(icd10cm_dindex, @update_attrs)
+      assert icd10cm_dindex.main_term == %{}
+      assert icd10cm_dindex.title == "some updated title"
+      assert icd10cm_dindex.title_tsv == "some updated title_tsv"
+    end
+
+    test "update_icd10cm_dindex/2 with invalid data returns error changeset" do
+      icd10cm_dindex = icd10cm_dindex_fixture()
+      assert {:error, %Ecto.Changeset{}} = Codes.update_icd10cm_dindex(icd10cm_dindex, @invalid_attrs)
+      assert icd10cm_dindex == Codes.get_icd10cm_dindex!(icd10cm_dindex.id)
+    end
+
+    test "delete_icd10cm_dindex/1 deletes the icd10cm_dindex" do
+      icd10cm_dindex = icd10cm_dindex_fixture()
+      assert {:ok, %Icd10cm_dindex{}} = Codes.delete_icd10cm_dindex(icd10cm_dindex)
+      assert_raise Ecto.NoResultsError, fn -> Codes.get_icd10cm_dindex!(icd10cm_dindex.id) end
+    end
+
+    test "change_icd10cm_dindex/1 returns a icd10cm_dindex changeset" do
+      icd10cm_dindex = icd10cm_dindex_fixture()
+      assert %Ecto.Changeset{} = Codes.change_icd10cm_dindex(icd10cm_dindex)
+    end
+  end
 end

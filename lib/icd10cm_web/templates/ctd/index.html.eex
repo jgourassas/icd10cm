@@ -5,6 +5,47 @@
 <div class="element_info"><h5>ICD-10 Utility - CTD</h5> </div>
 
 
+  
+ <div class="search_form">
+
+ <div class="large-6 medium-6 small-6 large-centered columns">
+    <ul class="has-form">
+
+               <%= form_for @conn, Routes.ctd_path(@conn, :search_ctds),
+                   [as: :search_ctds], fn f -> %>
+            <div class="row collapse">
+           
+                <div class="large-4 small-9 columns">
+                    <%=  select(f, :selection,
+                        ["Diseasename": "diseasenames",
+                          "Synonyms": "synonyms"
+                        ],
+                        prompt: "---Select---",   required: true,
+                        class: "form-control f-dropdown"  ) %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-6 medium-6 small-9 columns">
+                    <%= text_input f, :query, placeholder: "Your Query",
+                    class: "form-control ",
+                    minLength: 3 %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-2 small-9 columns">
+                    <%= submit "Search", class: "button primary expanded"  %>
+
+                </div><!--large-4 small-9 columns-->
+
+
+            </div><!--row collapse-->
+
+
+    <% end %>
+             </ul>
+
+      </div><!-- small-6 large-centered columns -->
+
+      </div><!------searchform----------------------------->
+
 
 
 <table class="table responsive  stack table-scroll">

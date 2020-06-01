@@ -63,6 +63,47 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: ctds; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.ctds (
+    id bigint NOT NULL,
+    diseasename character varying(255),
+    diseaseid character varying(255),
+    altdiseaseids character varying(255),
+    definition text,
+    parentids character varying(255),
+    treenumbers text,
+    parenttreenumbers text,
+    synonyms text,
+    slimmappings text
+);
+
+
+ALTER TABLE public.ctds OWNER TO postgres;
+
+--
+-- Name: ctds_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.ctds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.ctds_id_seq OWNER TO postgres;
+
+--
+-- Name: ctds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.ctds_id_seq OWNED BY public.ctds.id;
+
+
+--
 -- Name: icd10clinicals; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -240,6 +281,13 @@ CREATE TABLE public.schema_migrations (
 ALTER TABLE public.schema_migrations OWNER TO postgres;
 
 --
+-- Name: ctds id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ctds ALTER COLUMN id SET DEFAULT nextval('public.ctds_id_seq'::regclass);
+
+
+--
 -- Name: icd10clinicals id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -265,6 +313,14 @@ ALTER TABLE ONLY public.icd10cm_neoplasms ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.icd10cm_orders ALTER COLUMN id SET DEFAULT nextval('public.iicd10cm_orders_id_seq'::regclass);
+
+
+--
+-- Name: ctds ctds_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ctds
+    ADD CONSTRAINT ctds_pkey PRIMARY KEY (id);
 
 
 --

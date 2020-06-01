@@ -3,4 +3,5 @@ pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_
 pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_dev  -t icd10cm_eindexes  > icd10cm_eindexes_data.sql 
 pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_dev  -t icd10cm_neoplasms > icd10cm_neoplasms_data.sql 
 pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_dev  -t icd10cm_orders    > icd10cm_orders_data.sql 
-
+pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_dev  -t ctds    > ctds_data.sql 
+pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_dev  -t icd10cm_dindexes  > icd10cm_dindexes_data.sql 
