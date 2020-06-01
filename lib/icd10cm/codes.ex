@@ -947,33 +947,26 @@ def list_ctds(_params) do
     |> order_by([p], [p.diseasename])
 end
 ####################
-def format_ctd_synonyms(synonyms) do
+def format_ctd_colums(synonyms) do
   if(synonyms !== nil) do
 
   split = String.split(synonyms, "|")
 
-  result =
+  _result =
   Enum.map(split, fn item ->
-    "<span>"
+    "<span > "
     <> "<i class='fa fa-caret-right' style='font-size:20px;color:#1b9e77;''></i>"
     <> " "
     <> item
+    <> "&nbsp;&nbsp;&nbsp;&nbsp;"
     <> "<br/>"
     <> "</span>"
   end)
+   #IO.puts("------------------synonyms---------------")
+   #IO.inspect result
+end#if
 
-
-
-
-   IO.puts("------------------synonyms---------------")
-   IO.inspect result
-
-
-
-end
-
-
-end
+end#format_ctd_columns
 #####################
 
 end

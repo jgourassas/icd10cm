@@ -52,17 +52,17 @@
       <span style="color:blue;">
     <% alt =  ctd.altdiseaseids  %>
       <span>
-      <%= raw  Codes.format_ctd_synonyms(alt) %>
+      <%= raw  Codes.format_ctd_colums(alt) %>
       <br/>
       </span>
       <%#= ctd.altdiseaseids %>
       </span>
       
       </td>
-      
-      <td>
+
+      <td style="word-wrap:break-word;width:35%;">
       <%= ctd.definition %>
-      
+    
       </td>
       <!-----------------
       <td><%#= ctd.parentids %></td>
@@ -75,10 +75,10 @@
       <!-----------------
       <td><%#= ctd.parenttreenumbers %></td>
       ---------------->
-      <td>
+      <td style="word-wrap:break-word;width:25%;" >
       <% syn =  ctd.synonyms %>
       <span>
-      <%= raw  Codes.format_ctd_synonyms (syn) %>
+      <%= raw  Codes.format_ctd_colums(syn) %>
       <br/>
       </span>
     
@@ -87,7 +87,7 @@
       <td>
       <% slim =  ctd.slimmappings %>
       <span>
-      <%= raw  Codes.format_ctd_synonyms(slim) %>
+      <%= raw  Codes.format_ctd_colums(slim) %>
       <br/>
       </span>
     
