@@ -68,7 +68,7 @@ defmodule Icd10cmWeb.Icd10cm_orderController do
   end
 ###########################
 
-
+#############################
 def search_orders(
 
     conn,
@@ -82,7 +82,7 @@ def search_orders(
       Icd10cm.Codes.search_orders(trim_query, selection)
        |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
 
-       render(conn, "index.html", icd10cm_orders: page.entries, page: page)
+      render(conn, "index.html", icd10cm_orders: page.entries, page: page)
 
   end
 

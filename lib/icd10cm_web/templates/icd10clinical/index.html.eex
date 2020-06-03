@@ -193,7 +193,7 @@
 
       <td>
         <%= if icd10clinical.excludes1  !== ""  do %>
-      <span style="color:red;">Exludes1 - Not Coded Here:</span> 
+      <span style="color:#b7410e;">Exludes1 - Not Coded Here:</span> 
       <span>
      <% term = icd10clinical.excludes1 %>
      <%= raw  Codes.format_column(term ) %>
@@ -205,7 +205,7 @@
       
       
          <%= if icd10clinical.excludes2  !== ""  do %>
-      <span style="color:red;">Exludes2 - Not Included Here:</span> 
+      <span style="color:#b7410e;">Exludes2 - Not Included Here:</span> 
        <span>
      <% term = icd10clinical.excludes2 %>
      <%= raw  Codes.format_column(term ) %>

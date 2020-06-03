@@ -1,3 +1,4 @@
+<%alias Icd10cm.Codes  %>
 <div class="title_form">
 <h4>Listing Icd-10-cm Orders Table</h4>
 </div>
@@ -24,7 +25,7 @@
                 </div><!--large-8 small-9 columns-->
 
                 <div class="large-2 small-9 columns">
-                    <%= submit "Search", class: "button primary expanded"  %>
+                    <%= submit "Search", class:  "button primary expanded"  %>
 
                 </div><!--large-4 small-9 columns-->
 
@@ -48,6 +49,7 @@
       <th>Is header</th>
       <th>Short description</th>
        <th>Long description</th>
+       <th>Info</th>
     </tr>
   </thead>
   <tbody>
@@ -64,31 +66,39 @@
       
       </td>
        <td>
-    
+      <% icd10cm_code_2 = icd10cm_order.icd10cm_code_2%>
      <span style="color:#26353f">
      <strong>
       <%= icd10cm_order.icd10cm_code_2 %>
       </strong>
       </span>
-  
-    
+     
       </td>
+  
       <td>
+      
       <%= if icd10cm_order.is_header == "0" do %>
       <span style="color:red">
       Yes-
       <%= icd10cm_order.is_header %>
       </span>
+      
       <%else %>
-      <span style="color:green">
-      No-
+      <span style="color:#117A65;">
+       <i class="fa fa-heart-o" style="font-size:14px;color:#117A65;" ></i>
+         No
+      </span>
+
+      <span>
       <%= icd10cm_order.is_header %>
       </span>
     
       <% end%>
       
       </td>
-      <td>
+
+
+      <td style="width:20%"> 
        <span style="color:#26353f">
       <em>
       <%= icd10cm_order.short_description %>
@@ -97,16 +107,90 @@
       
       </td>
       
-      <td><%= icd10cm_order.long_description  %></td>
-
+      <td style="width:35%;">
       
+      <%= icd10cm_order.long_description  %>
+      
+      </td>
+
+      <td style="width:25%;" >
+
+     <% codefirst =   Codes.search_clinicals(icd10cm_code_2, "codefirst")%> 
+      <%= if codefirst !== "" do %>
+      <span style="color:teal;">Codefirst: </span>
+      <span>
+      <%= raw Codes.format_column(codefirst) %>
+      </span>
+      <% end %>
+       <br/>    
+
+     <% codealso =   Codes.search_clinicals(icd10cm_code_2, "codealso")%> 
+      <%= if codealso !== "" do %>
+      <span style="color:teal;">Codealso: </span>
+      <span>
+      <%= raw Codes.format_column(codealso) %>
+      </span>
+      <% end %>
+       <br/> 
+
+
+
+      <% includes =   Codes.search_clinicals(icd10cm_code_2, "includes")%> 
+       <%= if includes !== "" do %>
+      <span style="color:teal;">Includes: </span>
+      <span>
+      <%= raw Codes.format_column(includes) %>
+      </span>
+      <% end %>
+      <br/>
+
+      <% inclusionterm =   Codes.search_clinicals(icd10cm_code_2, "inclusionterm")%> 
+      <%= if inclusionterm !== "" do %>
+      <span style="color:teal;">Inclusionterm: </span>
+      <span>
+      <%= raw Codes.format_column(inclusionterm) %>
+      </span>
+      <% end %>
+       <br/>
+
+ <% useadditionalcode =   Codes.search_clinicals(icd10cm_code_2, "useadditionalcode")%> 
+      <%= if useadditionalcode !== "" do %>
+      <span style="color:teal;">Useadditionalcode: </span>
+      <span>
+      <%= raw Codes.format_column(useadditionalcode) %>
+      </span>
+      <% end %>
+       <br/>
+
+     <% excludes1 =   Codes.search_clinicals(icd10cm_code_2, "excludes1")%> 
+      <%= if excludes1 !== "" do %>
+      <i class="fa fa-stop-circle" style="color:#b7410e;"></i>
+      <span style="color:#b7410e;">Excludes1  - Not Coded Here </span>
+      <span style="color:#b7410e;">
+      <%= raw Codes.format_column(excludes1) %>
+      </span>
+      <% end %>
+       <br/>  
+
+    <% excludes2 =   Codes.search_clinicals(icd10cm_code_2, "excludes2")%> 
+      <%= if excludes2 !== "" do %>
+       <i class="fa fa-stop-circle" style="color:#b7410e;"></i>
+      <span style="color:#b7410e;">Excludes2 - Not Included Here: </span>
+
+      <span>
+      <%= raw Codes.format_column(excludes2) %>
+      </span>
+      <% end %>
+       <br/>    
+     
+     
+      </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
 <div class="pagination text-center" role="navigation" aria-label="Pagination">
-     <%#= pagination_links @page %>
      <%= pagination_links @page, next: "Next", previous: "Prev" %>
 
      <%#= pagination_links @conn, @page, action: :show %>

@@ -1,9 +1,43 @@
 
-<div class = "column row">
-<div class="element_info">List of ICD10 External Injuries </div>
-</div><!-------row---------------------------->
+<div class="element_info"><h5>List of ICD10 External Injuries</h5> </div>
+
+<div class="search_form">
+  <div class="large-6 medium-6 small-6 large-centered columns">
+    <ul class="has-form">
+
+               <%= form_for @conn, Routes.icd10cm_eindex_path(@conn, :search_eindexes),
+                   [as: :search_eindexes], fn f -> %>
+            <div class="row collapse">
+                <div class="large-4 small-9 columns">
+                    <%=  select(f, :selection,
+                        ["Title": "title",
+                      # "Main Term": "main_term_jsonb"
+                        ],
+                        prompt: "---Select---",   required: true,
+                        class: "form-control f-dropdown"  ) %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-6 medium-6 small-9 columns">
+                    <%= text_input f, :query, placeholder: "Your Query. Min 3 Char",
+                    class: "form-control ",
+                    minLength: 3 %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-2 small-9 columns">
+                    <%= submit "Search", class: "button primary expanded"  %>
+
+                </div><!--large-4 small-9 columns-->
 
 
+            </div><!--row collapse-->
+
+
+    <% end %>
+             </ul>
+
+      </div><!-- small-6 large-centered columns -->
+</div>
+</div><!--------search form----------------------->
 <% alias Icd10cm.Codes %>
 <table class="table responsive stack table-scroll">
   <thead>

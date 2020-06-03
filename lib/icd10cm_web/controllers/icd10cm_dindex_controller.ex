@@ -79,7 +79,7 @@ page =
   Icd10cm.Codes.search_dindexes(trim_query, selection)
   |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
 
-render(conn, "index.html", icd10cm_dindexes: page.entries, page: page)
+  render(conn, "index.html", icd10cm_dindexes: page.entries, page: page)
 end
 
 ######

@@ -65,4 +65,29 @@ defmodule Icd10cmWeb.Icd10cm_eindexController do
     |> put_flash(:info, "Icd10cm eindex deleted successfully.")
     |> redirect(to: Routes.icd10cm_eindex_path(conn, :index))
   end
+###############################
+def search_eindexes(
+
+    conn,
+    %{"search_eindexes" => %{"query" => query, "selection" => selection}} = params
+  ) do
+
+    trim_query = String.trim(query)
+
+
+    page =
+      Icd10cm.Codes.search_eindexes(trim_query, selection)
+       |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
+
+      render(conn, "index.html", icd10cm_eindexes: page.entries, page: page)
+
+  end
+
+
+
+
+
+
+
+  ################################3
 end

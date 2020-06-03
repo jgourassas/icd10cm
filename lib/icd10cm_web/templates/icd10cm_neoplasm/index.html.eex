@@ -58,8 +58,9 @@
     <tr>
       <td>
       <span style="color:#000; background-color:#f4f0ec">
-
+      <strong>
       <%= raw icd10cm_neoplasm.title %>
+      </strong>
       </span>
       </td>
       

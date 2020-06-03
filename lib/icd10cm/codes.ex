@@ -129,15 +129,122 @@ defmodule Icd10cm.Codes do
   end
 
   ################# 33
-  def search_clinicals(query, selection) do
+  def search_clinicals(query, selection ) do
     case selection do
       "codes" -> search_icd10clinicals_codes(query)
       "long_desc" -> search_icd10clinicals_long_desc(query)
+      "includes" -> search_icd10clinicals_includes(query)
+      "inclusionterm"-> search_icd10clinicals_inclusionterm(query)
+      "excludes1"-> search_icd10clinicals_excludes1(query)
+      "excludes2"-> search_icd10clinicals_excludes2(query)
+      "codefirst" -> search_icd10clinicals_codefirst(query)
+      "codealso" -> search_icd10clinicals_codealso(query)
+      "useadditionalcode" -> search_icd10clinicals_useadditionalcode(query)
       _ -> ""
     end
   end
+ ######################
+ def search_icd10clinicals_useadditionalcode(code_2) do
 
+  query =
+    from(
+     p in Icd10clinical,
+      where: p.icd10cm_code_2 ==  ^"#{code_2}",
+      select: [p.useadditionalcode],
+      order_by: [asc: p.icd10cm_code_2] )
+
+      res = Repo.all(query)
+      str_split = List.to_string(res)
+end
+
+ ######################
+
+ def search_icd10clinicals_codealso(code_2) do
+
+  query =
+    from(
+     p in Icd10clinical,
+      where: p.icd10cm_code_2 ==  ^"#{code_2}",
+      select: [p.codealso],
+      order_by: [asc: p.icd10cm_code_2] )
+
+      res = Repo.all(query)
+      str_split = List.to_string(res)
+end
+
+ ######################
+ def search_icd10clinicals_codefirst(code_2) do
+
+  query =
+    from(
+     p in Icd10clinical,
+      where: p.icd10cm_code_2 ==  ^"#{code_2}",
+      select: [p.codefirst],
+      order_by: [asc: p.icd10cm_code_2] )
+
+      res = Repo.all(query)
+      str_split = List.to_string(res)
+
+  end
+ ######################
+ def search_icd10clinicals_excludes2(code_2) do
+
+  query =
+    from(
+     p in Icd10clinical,
+      where: p.icd10cm_code_2 ==  ^"#{code_2}",
+      select: [p.excludes2],
+      order_by: [asc: p.icd10cm_code_2] )
+
+      res = Repo.all(query)
+      str_split = List.to_string(res)
+
+  end
+#########################
+
+ def search_icd10clinicals_excludes1(code_2) do
+
+  query =
+    from(
+     p in Icd10clinical,
+      where: p.icd10cm_code_2 ==  ^"#{code_2}",
+      select: [p.excludes1],
+      order_by: [asc: p.icd10cm_code_2] )
+
+      res = Repo.all(query)
+      str_split = List.to_string(res)
+
+  end
+#########################
   ######################
+  def search_icd10clinicals_inclusionterm(code_2) do
+
+    query =
+      from(
+       p in Icd10clinical,
+        where: p.icd10cm_code_2 ==  ^"#{code_2}",
+        select: [p.inclusionterm],
+        order_by: [asc: p.icd10cm_code_2] )
+
+        res = Repo.all(query)
+        str_split = List.to_string(res)
+
+    end
+  #########################
+  def search_icd10clinicals_includes(code_2) do
+
+  query =
+    from(
+     p in Icd10clinical,
+      where: p.icd10cm_code_2 ==  ^"#{code_2}",
+      select: [p.includes],
+      order_by: [asc: p.icd10cm_code_2] )
+
+      res = Repo.all(query)
+      str_split = List.to_string(res)
+
+  end
+  ##########################
   def search_icd10clinicals_codes(query) do
     _query =
       from(
@@ -152,8 +259,8 @@ defmodule Icd10cm.Codes do
   def search_icd10clinicals_long_desc(query) do
     from(
       d in Icd10clinical,
-      #where: fragment("(?) @@ plainto_tsquery(?)", d.long_description_tsv, ^query),
-      where: ilike(d.long_description, ^"#{query}%"),
+      where: fragment("(?) @@ plainto_tsquery(?)", d.long_description_tsv, ^query),
+      or_where: ilike(d.long_description, ^"#{query}%"),
       order_by: [asc: d.long_description]
     )
   end
@@ -269,7 +376,7 @@ defmodule Icd10cm.Codes do
       from p in Icd10cm_neoplasm,
         order_by: [asc: p.title],
         where: p.title == ^"#{term}",
-        # where: fragment("(?) @@ plainto_tsquery(?)", p.title,   ^("#{term}%")  ),
+        #where: fragment("(?) @@ plainto_tsquery(?)", p.title,   ^("#{term}%")  ),
         select: %{main_term: fragment("? ", p.main_term), title: fragment(" ? ", p.title)},
         limit: 10
 
@@ -497,8 +604,44 @@ defmodule Icd10cm.Codes do
 
     query |> Repo.all()
   end
+####################################
+def search_eindexes(query, selection) do
+  case selection do
+    "title" -> search_icd10cm_eindex_title(query)
+    "main_term_jsonb" -> search_icd10cm_eindex_main_term(query)
+    _ -> ""
+  end
+end
+##########################################
+def search_icd10cm_eindex_title(title) do
+  query =
+  from(
+    p in Icd10cm_eindex,
+    where: ilike(p.title, ^"#{title}%"),
+    limit: 5
+  )
+end
+#########################################
+def search_icd10cm_eindex_main_term(query) do
+  query = from(
+    d in Icd10cm_eindex,
+    #where: fragment("(?) @@ toquery (?)", d.main_term_jsonb, ^query),
+    #or_where: jsonb_each( '{"name": "Alice", "agent": {"bot": true} }'::jsonb );
+    # ilike(d.long_description, ^"#{query}%"),
+   # where: fragment("? @> ?", d.main_term_jsonb, ^query),
+  # select: [d.main_term_jsonb, d.title],
+   where: fragment("?->> ?  = ? ", d.main_term_jsonb,  "term_title" ,  ^"#{query}%"    ),
+   order_by: [asc: d.title]
+  )
+ # query |> Repo.all()
 
-  ############################################
+  #movement_id = 2
+  #from wo in Workout,
+ #   where: fragment(~s(?#>'{movements}' @> ?), wo.details, ^[%{id: movement_id}])
+ # from(t in Team, where: t.owner_id == ^user_id and fragment("?->>'see_owner' = ?", t.config, true))
+end
+
+############################################
   def make_icd10cm_eindexes_jsonb(title) do
     records = find_icd10cm_eindexes_records(title)
 
@@ -514,21 +657,25 @@ defmodule Icd10cm.Codes do
       main_see_tab = Enum.map(l, fn x -> x["main_see_tab"] end)
       main_use_probe = Enum.map(l, fn x -> x["main_use"] end)
 
-      _formated =
-        "#{main_title}" <>
-         "#{main_code}" <>
+      formated =
+        "main title " <> "#{main_title}" <>
+         "main_code " <> "#{main_code}" <>
           " " <>
-          "#{main_codes}" <>
+          "main_codes " <> "#{main_codes}" <>
           " " <>
-          "#{main_see_probe}" <>
+          "main_see_probe " <>"#{main_see_probe}" <>
           " " <>
-          "#{main_see_codes}" <>
+          "main_see_codes " <>  "#{main_see_codes}" <>
           " " <>
-          "#{main_see_tab}" <>
+          "main_see_tab "<>  "#{main_see_tab}" <>
           " " <>
-          "#{main_use_probe}"
+          "main_use_probe "<>  "#{main_use_probe}"
 
-      # format_jsonb(formated)
+        #IO.puts("-----------formated---------------------" )
+        #IO.inspect formated
+        #IO.puts("----------------------------------------")
+
+          # format_jsonb(formated)
 
       if Enum.any?(terms_l) do
         Enum.map(terms_l, fn terms ->
@@ -599,6 +746,7 @@ defmodule Icd10cm.Codes do
         "#{term_use_probe}" <>
         "  " <>
         "<span style='color:#993333;margin-left:10px;'>" <>
+        "#{term_see}" <>
         "<strong>" <>
         "#{term_code}" <>
         "</strong>" <>
@@ -612,7 +760,6 @@ defmodule Icd10cm.Codes do
         "  " <>
         "#{term_see_codes}" <>
         "  " <>
-        "#{term_see}" <>
         "  " <> "#{term_use}"
 
     _final = header <> result
@@ -624,45 +771,46 @@ defmodule Icd10cm.Codes do
     _intend =
       case term_level do
         "1" ->
-          "<span style='margin-left:10px; color:#e41a1c;'>" <>
+          "<span style='margin-left:10px; margin-top:20px;margin-bottom:20px;color:#e41a1c;'>" <>
             "- " <>
-            "<i class= 'fa fa-snowflake-o' style='color:#e41a1c';></i> " <>
+            "<i class= 'fa fa-snowflake-o' style='color:#e41a1c; margin-top:15px;' ></i> " <>
+
             "</span>"
 
         "2" ->
-          "<span style='margin-left:30px; color:#377eb8;'>" <>
+           "<span style='margin-left:30px; color:#377eb8;'>" <>
             "- - " <>
-            "<i class= 'fa  fa-chevron-right' style='color:#377eb8';></i> " <>
+            "<i class= 'fa  fa-chevron-right' style='color:#377eb8;margin-top:5px;'' ></i> " <>
             "</span>"
 
         "3" ->
           "<span style='margin-left:50px; color:#4daf4a;'>" <>
             "- - - " <>
-            "<i class= 'fa fa-chevron-right' style='color:#4daf4a';></i> " <>
+            "<i class= 'fa fa-chevron-right' style='color:#4daf4a;margin-top:5px;'></i> " <>
             "</span>"
 
         "4" ->
           "<span style='margin-left:70px;color:#984ea3;'>" <>
             "- - - - " <>
-            "<i class= 'fa fa-chevron-right' style='color:#984ea3';></i> " <>
+            "<i class= 'fa fa-chevron-right' style='color:#984ea3;margin-top:5px;'></i> " <>
             "</span>"
 
         "5" ->
           "<span style='margin-left:90px;color:#ff7f00;'>" <>
             "- - - - - " <>
-            "<i class= 'fa fa-chevron-right' style='color:#ff7f00';></i> " <>
+            "<i class= 'fa fa-chevron-right' style='color:#ff7f00;margin-top:5px; '></i> " <>
             "</span>"
 
         "6" ->
           "<span style='margin-left:110px;color:#ffff33;'>" <>
             "- - - - - - " <>
-            "<i class= 'fa fa-chevron-right' style='color:#ffff33';></i> " <>
+            "<i class= 'fa fa-chevron-right' style='color:#ffff33; margin-top:5px;'></i> " <>
             "</span>"
 
         "7" ->
           "<span style='margin-left:130px;color:#a65628;'>" <>
             "- - - - - - - " <>
-            "<i class= 'fa fa-chevron-right' style='color:#a65628';></i> " <>
+            "<i class= 'fa fa-chevron-right' style='color:#a65628;margin-top:5px;'></i> " <>
             "</span>"
 
         _ ->
@@ -805,8 +953,10 @@ end
 def search_icd10cm_order_long_description(query) do
   from(
     d in Icd10cm_order,
+    #this is not working properly ?
     where: fragment("(?) @@ plainto_tsquery(?)", d.long_description_tsv, ^query),
-    # or  where: ilike(d.long_description, ^"#{query}%"),
+    #where: fragment("(?) @@ plainto_tsquery(?)", d.long_description, ^query),
+    or_where: ilike(d.long_description, ^"#{query}%"),
     order_by: [asc: d.long_description]
   )
 
@@ -1104,7 +1254,22 @@ def list_icd10cm_dindexes(_params) do
 end
 ##########################
 def search_dindexes(query, selection) do
-IO.inspect query
+  case selection do
+    "title" -> get_dindex_from_title(query)
+    #"long_desc" -> search_icd10clinicals_long_desc(query)
+    _ -> ""
+  end
+
+
+end
+###########################
+def get_dindex_from_title(title) do
+  main_term_q =
+  from p in Icd10cm_dindex,
+    order_by: [asc: p.title],
+    where: ilike(p.title, ^"#{title}%"),
+    #where: p.title == ^"#{title}",
+    limit: 30
 
 end
 ###########################
