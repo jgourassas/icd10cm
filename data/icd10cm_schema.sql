@@ -158,6 +158,41 @@ ALTER SEQUENCE public.icd10clinicals_id_seq OWNED BY public.icd10clinicals.id;
 
 
 --
+-- Name: icd10cm_dindexes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.icd10cm_dindexes (
+    id bigint NOT NULL,
+    title character varying(255),
+    main_term jsonb,
+    title_tsv tsvector
+);
+
+
+ALTER TABLE public.icd10cm_dindexes OWNER TO postgres;
+
+--
+-- Name: icd10cm_dindexes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.icd10cm_dindexes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.icd10cm_dindexes_id_seq OWNER TO postgres;
+
+--
+-- Name: icd10cm_dindexes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.icd10cm_dindexes_id_seq OWNED BY public.icd10cm_dindexes.id;
+
+
+--
 -- Name: icd10cm_eindexes; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -295,6 +330,13 @@ ALTER TABLE ONLY public.icd10clinicals ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: icd10cm_dindexes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.icd10cm_dindexes ALTER COLUMN id SET DEFAULT nextval('public.icd10cm_dindexes_id_seq'::regclass);
+
+
+--
 -- Name: icd10cm_eindexes id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -329,6 +371,14 @@ ALTER TABLE ONLY public.ctds
 
 ALTER TABLE ONLY public.icd10clinicals
     ADD CONSTRAINT icd10clinicals_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: icd10cm_dindexes icd10cm_dindexes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.icd10cm_dindexes
+    ADD CONSTRAINT icd10cm_dindexes_pkey PRIMARY KEY (id);
 
 
 --

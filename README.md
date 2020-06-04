@@ -1,18 +1,21 @@
-# Icd10cm
-ICD10 is an open source software web application
-Make sure about the Dates that the ICD10cm codes would be in eï¬€ect
-Be Sure that the codes are qualiï¬ed for your country. This module
-uses the Clinical Modiï¬cation - USA
+## Icd10cm
+
+ICD10 is an open source software web application developed in Elixir - Phoenix
+
+This module uses the Clinical Modication - USA
+
 We take no father responsibility. The software is provided as it is
+
 
 To start your Phoenix server:
 
   * Setup the project with `mix setup`
+  * Please Find out how to setup the data files (Are Located in data dir)
   * Start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deploymenthtml).
 
 ## Learn more
 
@@ -21,3 +24,5 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+  *
+  *
