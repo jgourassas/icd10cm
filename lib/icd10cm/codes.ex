@@ -128,7 +128,10 @@ defmodule Icd10cm.Codes do
         "</table>"
   end
 
-  ################# 33
+  #################
+
+
+  ####################
   def search_clinicals(query, selection ) do
     case selection do
       "codes" -> search_icd10clinicals_codes(query)
@@ -1122,8 +1125,25 @@ def search_ctds(query, selection) do
   case selection do
     "diseasenames" -> search_ctds_diseasnames(query)
     "synonyms" -> search_ctds_synonyms(query)
+    "definitions" -> search_ctds_definitions(query)
+
     _ -> ""
   end
+end
+#######################3
+def search_ctds_definitions(orders_long_description) do
+
+  #defs = from(
+  #  d in Ctd,
+  #  where: fragment("(?) @@ plainto_tsquery(?)", d.diseasename, ^"#{orders_long_description}"),
+  #  #or_where: ilike(d.diseasename, ^"#{orders_long_description}%"),
+  #  select: [d.definition],
+  #  order_by: [asc: d.diseasename]
+  #)
+  #res = Repo.all(defs)
+
+  #IO.puts("----------------------")
+  #IO.inspect(res)
 end
 #############################
 def search_ctds_diseasnames(query) do

@@ -1,6 +1,6 @@
 <%alias Icd10cm.Codes  %>
 <div class="title_form">
-<h4>Listing Icd-10-cm Orders Table</h4>
+<h4>Listing Icd-10-CM Table (order)</h4>
 </div>
 <div class="search_form">
   <div class="large-6 medium-6 small-6 large-centered columns">
@@ -110,7 +110,22 @@
       <td style="width:35%;">
       
       <%= icd10cm_order.long_description  %>
+       <br />
+  <!---------not working -needs-------------------------
+      <%# description =  icd10cm_order.long_description%>
+     
+      <%# definition =   Codes.search_ctds(description, "definitions")%> 
       
+      <%#= raw definition %>
+
+      <%#= if definition !== "" or definition !== nil do %>
+      <span style="color:teal;">Definition: </span>
+      <span>
+      <%#= raw definition %>
+      </span>
+      <%# end %>
+       <br/>  
+------------------------>
       </td>
 
       <td style="width:25%;" >
@@ -161,6 +176,8 @@
       </span>
       <% end %>
        <br/>
+    
+                    
 
      <% excludes1 =   Codes.search_clinicals(icd10cm_code_2, "excludes1")%> 
       <%= if excludes1 !== "" do %>
@@ -171,6 +188,8 @@
       </span>
       <% end %>
        <br/>  
+
+
 
     <% excludes2 =   Codes.search_clinicals(icd10cm_code_2, "excludes2")%> 
       <%= if excludes2 !== "" do %>
