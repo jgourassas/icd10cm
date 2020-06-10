@@ -18,13 +18,17 @@ module.exports = (env, options) => {
 
   return {
     optimization: {
+      namedChunks: true,
+  
       minimizer: [
         new TerserPlugin({ cache: true, parallel: true, sourceMap: devMode }),
         new OptimizeCSSAssetsPlugin({})
       ]
     },
     entry: {
-      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js'])
+      app: ['./js/app.js'].concat(glob.sync('./vendor/**/*.js')),
+      //'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js']),
+      draw_external: './js/external_injuries/draw_external.js',
     },
     output: {
       filename: '[name].js',

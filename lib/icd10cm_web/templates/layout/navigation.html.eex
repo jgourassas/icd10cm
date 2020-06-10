@@ -45,5 +45,5 @@
      // $(document).ready(function() {
      //   console.log("jQuery is working");
     //  });
-      $(document).foundation();
+   //   $(document).foundation();
     </script>

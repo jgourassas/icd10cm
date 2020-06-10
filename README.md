@@ -1,8 +1,8 @@
 ## Icd10cm
 
-ICD10 is an open source software web application developed in Elixir - Phoenix
+ICD10 is an open source software web application developed in Elixir - Phoenix - Zurb Foundation
 
-This module uses the Clinical Modication - USA
+This module uses the Clinical Modification - USA
 
 We take no father responsibility. The software is provided as it is
 
@@ -24,5 +24,4 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
-  *
-  *
+  

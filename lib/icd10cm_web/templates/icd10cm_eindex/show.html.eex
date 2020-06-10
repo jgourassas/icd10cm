@@ -1,4 +1,5 @@
-<h1>Show Icd10cm eindex</h1>
+
+<div class="element_info"><h5>Showing of ICD10 External Injuries</h5> </div>
 
 <ul>
 
@@ -7,22 +8,25 @@
     <%= @icd10cm_eindex.title %>
   </li>
 
-  <li>
-    <strong>Main term text:</strong>
-    <%= @icd10cm_eindex.main_term_text %>
-  </li>
 
-  <li>
-    <strong>Main term jsonb:</strong>
-    <%= @icd10cm_eindex.main_term_jsonb %>
-  </li>
+   <script type="text/javascript">
+     var EINDEX_DATA = window.App || {};
+    EINDEX_DATA = 
+       <%= raw Poison.encode!(%{eindex: @icd10cm_eindex})%>
+    </script>
+ 
+    <div id="d3_eindex_button">
+  
+    </div>
 
-  <li>
-    <strong>Title tsv:</strong>
-    <%= @icd10cm_eindex.title_tsv %>
-  </li>
+    <p/>
+    
+
+    <div id="d3_eindex_parent_canvas" style="background-color:cyan;">
+    d3_eindex_parent_canvas
+    </div>
 
 </ul>
 
-<span><%= link "Edit", to: Routes.icd10cm_eindex_path(@conn, :edit, @icd10cm_eindex) %></span>
-<span><%= link "Back", to: Routes.icd10cm_eindex_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.icd10cm_eindex_path(@conn, :index), 
+class: "button primary " %></span>

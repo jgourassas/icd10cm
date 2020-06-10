@@ -43,6 +43,7 @@
   <thead>
     <tr>
       <th>E-index Term</th>
+      <th>Show</th>
     </tr>
   </thead>
   <tbody>
@@ -60,7 +61,15 @@
       <%= raw Codes.make_icd10cm_eindexes_jsonb(icd10cm_eindex.title) %>
      
       </td>
+     <td>
+       
+       <span>
 
+<%= link "Show", to: Routes.icd10cm_eindex_path(@conn, :show, icd10cm_eindex),
+                class: "small expanded button" %>
+
+
+     </td>
     </tr>
 <% end %>
   </tbody>

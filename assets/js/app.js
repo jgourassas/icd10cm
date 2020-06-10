@@ -7,10 +7,11 @@ import $ from "jquery";
 window.jQuery = $;
 window.$ = $;
 
-if ($('body')) {
-    console.log('jquery works!');
 
-  }
+if ($("body")) {
+  console.log("jquery works!");
+}
+
   
 
 import Foundation from 'foundation-sites';
@@ -18,6 +19,14 @@ $(document).foundation();
 
 import css from "../css/app.scss"
 //import "phoenix_html"
+import {Interface_buttons} from "./external_injuries/draw_external.js";
+
+
+export var App = {
+  run: function() {
+    Interface_buttons.draw_external_ini();
+  }
+};
 
 
 
