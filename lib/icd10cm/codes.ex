@@ -775,47 +775,52 @@ end
       case term_level do
         "1" ->
           "<span style='margin-left:10px; margin-top:20px;margin-bottom:20px;color:#e41a1c;'>" <>
-            "- " <>
+            "1- " <>
             "<i class= 'fa fa-snowflake-o' style='color:#e41a1c; margin-top:15px;' ></i> " <>
 
             "</span>"
 
         "2" ->
            "<span style='margin-left:30px; color:#377eb8;'>" <>
-            "- - " <>
+            "2- - " <>
             "<i class= 'fa  fa-chevron-right' style='color:#377eb8;margin-top:5px;'' ></i> " <>
             "</span>"
 
         "3" ->
           "<span style='margin-left:50px; color:#4daf4a;'>" <>
-            "- - - " <>
+            "3- - - " <>
             "<i class= 'fa fa-chevron-right' style='color:#4daf4a;margin-top:5px;'></i> " <>
             "</span>"
 
         "4" ->
           "<span style='margin-left:70px;color:#984ea3;'>" <>
-            "- - - - " <>
+            "4- - - - " <>
             "<i class= 'fa fa-chevron-right' style='color:#984ea3;margin-top:5px;'></i> " <>
             "</span>"
 
         "5" ->
           "<span style='margin-left:90px;color:#ff7f00;'>" <>
-            "- - - - - " <>
+            "5- - - - - " <>
             "<i class= 'fa fa-chevron-right' style='color:#ff7f00;margin-top:5px; '></i> " <>
             "</span>"
 
         "6" ->
           "<span style='margin-left:110px;color:#ffff33;'>" <>
-            "- - - - - - " <>
+            "6- - - - - - " <>
             "<i class= 'fa fa-chevron-right' style='color:#ffff33; margin-top:5px;'></i> " <>
             "</span>"
 
         "7" ->
           "<span style='margin-left:130px;color:#a65628;'>" <>
-            "- - - - - - - " <>
+            "7- - - - - - - " <>
             "<i class= 'fa fa-chevron-right' style='color:#a65628;margin-top:5px;'></i> " <>
             "</span>"
 
+            "8" ->
+              "<span style='margin-left:150px;color:#a65628;'>" <>
+                "8- - - - - - - - " <>
+                "<i class= 'fa fa-chevron-right' style='color:#4575b4;margin-top:5px;'></i> " <>
+                "</span>"
         _ ->
           "\t"
       end

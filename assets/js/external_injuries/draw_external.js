@@ -10,6 +10,7 @@ const get_edges = () => {
   return edges;
 
 }
+
 export const graph_edges = [{
 
   key: 'level_1_level_2',
@@ -247,29 +248,93 @@ let  svg = group.append("svg")
 
 
 
-/*
-  let diagonal = function link(d) {
-    return "M" + d.source.y + "," + d.source.x
-        + "C" + (d.source.y + d.target.y) / 2 + "," + d.source.x
-        + " " + (d.source.y + d.target.y) / 2 + "," + d.target.x
-        + " " + d.target.y + "," + d.target.x;
-  };
- */
-
 //////////////attempt/////////
-
+/*
     this.g = new Data_graph();
     let graph = this.g.set_graph();
    
     graph.forEachNode((node, attributes) => {
       //console.log("NODE "+JSON.stringify(node) + "ATTRIBUTES " + JSON.stringify(attributes))
      // console.log(`node attributes ${node} to ${attributes}`);
-      nodes_data.push(attributes)
+      nodes_data.push(attributes) 
     });
   
+    let  treemap = d3.tree()
+    .size([width, height-250]);
+
+    // assigns the data to a hierarchy using parent-child relationships
+    let  nodes = d3.hierarchy(nodes_data, d => {return d.term_level});
+
+
+    // maps the node data to the tree layout
+    nodes = treemap(nodes);
+
+    //console.log("NODES: "+ JSON.stringify(nodes) );
+
+   let link = svg
+    .selectAll('.link')
+    .data(nodes.descendants().slice(1))
+    .enter()
+    .append('path')
+    .attr('class', (d) => {
+        return 'link' + d.term_title
+    })
+    .attr('d', function (d) {
+        return (
+            'M' +
+            d.x +
+            ',' +
+            d.y +
+            'C' +
+            d.x +
+            ',' +
+            (d.y + d.parent.y) / 2 +
+            ' ' +
+            d.parent.x +
+            ',' +
+            (d.y + d.parent.y) / 2 +
+            ' ' +
+            d.parent.x +
+            ',' +
+            d.parent.y
+        );
+    })
+    .style('fill', 'none')
+    .style('stroke', "#fff")
+    .attr('opacity', 0.9)
+    .style('stroke-width', '3px')
+
     
-    
-   // console.log("+++ nodes data ++++++" + JSON.stringify(nodes_data) );
+
+
+// adds each node as a group
+let  node = svg.selectAll(".node")
+    .data(nodes.descendants())
+    .enter().append("g")
+    .attr("class", d =>  {
+      return "node" +
+        (d.term_level ? " node--internal" : " node--leaf"); })
+      .attr("transform", d =>  {
+      return "translate(" + d.x + "," + d.y + ")"; 
+     }
+     )
+
+
+      // adds the circle to the node
+node.append("circle")
+  .attr("r", 10)
+  .style("fill", "red");
+  
+  node.append("text")
+  .attr("dy", ".35em")
+  .attr("y", function(d) { return d.children ? -20 : 20; })
+  .style("text-anchor", "middle")
+  .style("fill", "#fff")
+  .text(function(d) { return d.term_title; });
+*/
+
+
+    // console.log("+++ nodes data ++++++" + JSON.stringify(nodes_data) );
     
       
   //  let nodes = d3.hierarchy(nodes_data);
@@ -614,165 +679,79 @@ for (let i = 0; i < data.length; i++) {
         term_level: a_term_level,
         });
    //////////////////////////
- for (let i = 0; i < nodes.length; i++) {
- 
-  let n_current = nodes[i];   
-  //console.log(JSON.stringify(n_current));
-
-  this.build_edges(g, n_current);
-
-  };//for
-
-
-
+  
  ///////////////////////////
 
 };//for
-    
-    
+
+   
+     this.build_edges(g);
+     this.build_nodes(g)
+
     return g;
 
 };
 /////////////////////
-/*************************************/
-build_edges_test(graph) {
+/************************************ */
+
+build_nodes(graph){
   graph.forEachNode((node, attributes) => {
-      //let source = attributes["cath_graft_prox_site"]
-      let source = attributes["term_level"]
-      console.log("ATTRIBUTS:"  + JSON.stringify(attributes) )
-      let target = attributes['cath_graft_segments_cdisc'];
-      if (typeof target !== 'undefined' && target) {
-          const new_node = graph.mergedNode(target);
-          let key = source + "_" + target;
-          if (target !== "") {
-              let edge = graph.addEdgeWithKey(key, source, target);
-          }
-      }
-  });
+    //console.log("NODE "+JSON.stringify(node) + "ATTRIBUTES " + JSON.stringify(attributes))
+    // console.log(`node attributes ${node} to ${attributes}`);
+    nodes_data.push(attributes) 
 
+  
+  });//graph
 
-  graph.forEachEdge(
-      (edge, attributes, source, target, sourceAttributes, targetAttributes) => {
-          console.log(`Edge from ${source} to ${target}`);
-      });
-
-  return graph;
-
-}; //build_graft_edges
+};//build_nodes
 
 /**************************/
-
-build_edges(g, n_current){
+build_edges(graph) {
   
+  graph.forEachNode((node, attributes) => {
+    this.set_edge(graph, node);
+   });//graph.forEach
 
+//////////////////////////
+};//buiild edges
 
-
-let level_current = g.getNodeAttribute(n_current, "term_level");
-  
-  switch(level_current){
-      case  "1":
-      this.set_edge(g, n_current,  "2")
-    break;
-    
-    case "2":
-        this.set_edge(g,  n_current,  "3");
-    break;
-    
-    case "3":
-        this.set_edge(g, n_current, "4");
-    break;
-
-    case "4":
-       this.set_edge(g,  n_current, "5");
-    break;
-
-    case "5":
-    
-      this.set_edge(g,   n_current,"6");
-    break;
-
-    case "6":
-    
-      this.set_edge(g,  n_current,  "7");
-    break;
-    
-    case "7":
-        this.set_edge(g,  n_current,  "8");
-    break;
-    
-    default: 
-
-    console.log("Something went horribly wrong...");
-   // console.log("Something went horribly wrong..."+ level_current);
-
-};//switch
+////////////////////////
+set_edge(graph,  source){
  
-};//define edges
-
-/////////////////////////
-set_edge(graph,  source, next_level){
- let prev_num = 1;
- let prev = source - prev_num;
- let next = source + 1;
+let current_level = graph.getNodeAttribute(source, "term_level") ;
  
- let prev_node = source[prev]
-let next_node = source[next]
+let next_level = Number(current_level) + 1;
 
  graph.forEachNode((node, attributes) => {
-  
- // console.log("source "+ source + " next node " + next_node + " prev " + prev_node);
-
-
-  if(next_node == source){
-   
-    let eq_source = prev_node;
-    let eq_target  = node;
-
-    ////////////////////////////
-    if (typeof eq_source !== 'undefined' && eq_source) {
-      let key = eq_source + "_" + eq_target;
-      let edge = graph.addEdgeWithKey(key, eq_source, eq_target);
-       //let edge = graph.mergeEdge(source, target);
-       let title_1 = graph.getNodeAttribute(eq_source, "term_title");
-       console.log("SOURCE TITLE: "+title_1);
-
-    // console.log("equal nodes source "+ eq_source + " target > " + eq_target)
-
-      
-   };//if typeof
-
-  
-  }
-  
-  else{
   let term_level  = attributes["term_level"]
 
-  if(term_level == next_level) {
-     let target = node;
-     
-     ////////////////////////////
-   if (typeof target !== 'undefined' && target) {
-      let key = source + "_" + target;
-       //let edge = graph.addEdgeWithKey(key, source, target);
-        let edge = graph.mergeEdge(source, target);
-        let title_2  = graph.getNodeAttribute(source, "term_title");
-       console.log("SOURCE TITLE: 2 "+title_2);
+  
+  if(term_level ==  next_level){
+    let target = node;
+    if (typeof target !== 'undefined' && target) {
+      let key = term_level + next_level + source + "_" + target;
+       let edge = graph.addEdgeWithKey(key, source, target);
+
+       //graph.setAttribute('status',"parent");
+       // let edge = graph.mergeEdgeWithKey(key, source, target);
+        
    };//if typeof
-   ///////////////////////////////
-  };//if
 
-};//else
+  };//if term_level
 
-  })//forEeachNode
- 
-  return graph;
+ });//forEachNode
+return graph;
 
 
-};//set_edge
+};//func set edge
+
+/*************************************/
 
 
-};//class
-  ///////////////////////////
+};//class Data_graph
+
+
+///////////////////////////
 
 /////////////////////////////
 class Prep_data{
@@ -784,30 +763,34 @@ class Prep_data{
 
 start() {
   let graph = this.g.set_graph();
-
+/*
   console.log("***********************************");
   console.log("Graph type: " +  graph.type)
   console.log("Graph Nodes: " + graph.nodes())
+
+ 
+  console.log('Order Of Graph: '+ graph.order);
+
   
   console.log("-----start ---edges---------------------------");
-
+*/
+ console.log("----------end edges ----------------------");  
   graph.forEachEdge(
      (edge, attributes, source, target, sourceAttributes, targetAttributes) => {
         console.log(`Edge from ${source} to ${target}`);
     });
+    console.log('Size: Number of edges in the graph '+  graph.size);
   console.log("----------end edges ----------------------");  
   
-  console.log('Order Of Graph: '+ graph.order);
-  console.log('Size: Number of edges in the graph '+  graph.size);
-  console.log("***********************************");
-
-  /*
+ 
+/*
  graph.forEachNode((node, attributes) => {
-    console.log("NODE "+JSON.stringify(node) + "ATTRIBUTES " + JSON.stringify(attributes))
+    console.log("NODE ID "+JSON.stringify(node) + 
+    "ATTRIBUTES " + JSON.stringify(attributes))
    // console.log(`node attributes ${node} to ${attributes}`);
     });
 
-  */
+*/
 
 
 
