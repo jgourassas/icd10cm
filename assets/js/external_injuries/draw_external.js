@@ -1,64 +1,25 @@
 import { json } from "d3";
 
-
+// check and Partition Layouts
 var d3 = require("d3");
 const Graph = require('graphology');
+//let  colors = d3.scale.category10();
+/*
+.attr("fill,â€ function(d,i){
+  if (d.parent) {
+    return colors(d.parent.name);
+  }
+})
+*/
+const  mag_size =  1.9;
 
-const edges=[];
-
-const get_edges = () => {
-  return edges;
-
-}
-
-export const graph_edges = [{
-
-  key: 'level_1_level_2',
-  source: '1',
-  target: '2',
-},
- {
-  key: 'level_2_level_3',
-  source: '2',
-  target: '3',
-},
-{
-  key: 'level_3_level_4',
-  source: '3',
-  target: '4',
-},
-
-{
-  key: 'level_4_level_5',
-  source: '4',
-  target: '5',
-},
-
-{
-  key: 'level_5_level_6',
-  source: '5',
-  target: '6',
-},
-
-{
-  key: 'level_6_level_7',
-  source: '6',
-  target: '7',
-},
-{
-  key: 'level_7_level_8',
-  source: '7',
-  target: '8 ',
-},
-
-]
 
 var treeData =
   {
     "name": "Top Level",
     "children": [
       {
-                "name": "Level 2: A",
+        "name": "Level 2: A",
         "children": [
           { "name": "Son of A" },
           { "name": "Daughter of A" }
@@ -68,6 +29,9 @@ var treeData =
     ]
   };
   
+
+
+
 const get_data = () => {
     let eindex_data = EINDEX_DATA;
        return eindex_data["eindex"]["main_term_jsonb"]["terms_l"];
@@ -75,10 +39,18 @@ const get_data = () => {
 
 let nodes_data = [];
 
+let tree_data = []
+
+let links = [];
 
 
-const get_draw_data = () => {
-    return nodes_data;
+
+const get_links = () => {
+  return links;
+}
+
+const get_tree_data = () => {
+    return tree_data;
 }
 
 let margin = {
@@ -232,393 +204,73 @@ constructor(
 };//constructor
 
 
+///////////////////////
 diagram(group){
-    
-
-let tree_origin_x = width * 0.01;
-let tree_origin_y = height * 0.1;
-
-let  svg = group.append("svg")
-.attr("width", width)
-.attr("height", height )
-.append("g")
-.attr('transform', `translate(${tree_origin_x}, ${tree_origin_y})`);
-/////////////////////////
-
-
-
-
-//////////////attempt/////////
-/*
-    this.g = new Data_graph();
-    let graph = this.g.set_graph();
-   
-    graph.forEachNode((node, attributes) => {
-      //console.log("NODE "+JSON.stringify(node) + "ATTRIBUTES " + JSON.stringify(attributes))
-     // console.log(`node attributes ${node} to ${attributes}`);
-      nodes_data.push(attributes) 
-    });
+  let tree_origin_x = width * 0.01;
+  let tree_origin_y = height * 0.1;
   
-    let  treemap = d3.tree()
-    .size([width, height-250]);
-
-    // assigns the data to a hierarchy using parent-child relationships
-    let  nodes = d3.hierarchy(nodes_data, d => {return d.term_level});
-
-
-    // maps the node data to the tree layout
-    nodes = treemap(nodes);
-
-    //console.log("NODES: "+ JSON.stringify(nodes) );
-
-   let link = svg
-    .selectAll('.link')
-    .data(nodes.descendants().slice(1))
-    .enter()
-    .append('path')
-    .attr('class', (d) => {
-        return 'link' + d.term_title
-    })
-    .attr('d', function (d) {
-        return (
-            'M' +
-            d.x +
-            ',' +
-            d.y +
-            'C' +
-            d.x +
-            ',' +
-            (d.y + d.parent.y) / 2 +
-            ' ' +
-            d.parent.x +
-            ',' +
-            (d.y + d.parent.y) / 2 +
-            ' ' +
-            d.parent.x +
-            ',' +
-            d.parent.y
-        );
-    })
-    .style('fill', 'none')
-    .style('stroke', "#fff")
-    .attr('opacity', 0.9)
-    .style('stroke-width', '3px')
-
-    
-
-
-// adds each node as a group
-let  node = svg.selectAll(".node")
-    .data(nodes.descendants())
-    .enter().append("g")
-    .attr("class", d =>  {
-      return "node" +
-        (d.term_level ? " node--internal" : " node--leaf"); })
-      .attr("transform", d =>  {
-      return "translate(" + d.x + "," + d.y + ")"; 
-     }
-     )
-
-
-      // adds the circle to the node
-node.append("circle")
-  .attr("r", 10)
-  .style("fill", "red");
-  
-  node.append("text")
-  .attr("dy", ".35em")
-  .attr("y", function(d) { return d.children ? -20 : 20; })
-  .style("text-anchor", "middle")
-  .style("fill", "#fff")
-  .text(function(d) { return d.term_title; });
-*/
-
-
-    // console.log("+++ nodes data ++++++" + JSON.stringify(nodes_data) );
-    
-      
-  //  let nodes = d3.hierarchy(nodes_data);
-  //  nodes = treemap(nodes);
-
- // let  root  = d3.stratify()
- // .id(function(d) { return d.id; })
-//  .parentId(function(d) { return d.term_level; })
-//  (nodes);
-
- //console.log("+++ tranfomed ++++++" + JSON.stringify(root) );
-
-   //let root = d3.hierarchy(tree_data, function (d) {return d.children})
-
-   ///////end attempt////////////////////
-
- 
- /*******THE EXAMPOE****************/
- /*
- // declares a tree layout and assigns the size
- let treemap = d3.tree()
- .size([width, height-250]);
-
- // assigns the data to a hierarchy using parent-child relationships
- let nodes = d3.hierarchy(treeData);
-//// maps the node data to the tree layout
-   nodes = treemap(nodes);
-
-
-
-let link = svg.selectAll(".link")
-    .data( nodes.descendants().slice(1))
-  .enter().append("path")
-    .attr("class", "link")
-    .attr("d", function(d) {
-       return "M" + d.x + "," + d.y
-         + "C" + d.x + "," + (d.y + d.parent.y) / 2
-         + " " + d.parent.x + "," + (d.y + d.parent.y) / 2
-         + " " + d.parent.x + "," + d.parent.y;
-        })
-    .attr("fill", "none")
-    .attr("stroke", "yellow")
-    .attr("storke-width", "4px")
-        
-let  node = svg.selectAll(".node")
-        .data(nodes.descendants())
-      .enter().append("g")
-        .attr("class", function(d) {
-          return "node" +
-            (d.children ? " node--internal" : " node--leaf"); })
-        .attr("transform", function(d) {
-          return "translate(" + d.x + "," + d.y + ")"; });
-    // adds the circle to the no
-
-    node.append("circle")
-    .attr("r", 10)
-    .attr("fill", "#fff")
-    .attr("stroke","blue")
-    .attr("stoke-width", "3px")
-
-
-
-// adds the text to the node
-node.append("text")
-  .attr("dy", ".45em")
-  .attr("y", function(d) { return d.children ? -20 : 20; })
-  .style("text-anchor", "middle")
-  .text(function(d) { return d.data.name; })
-  .attr("stroke", "#fff");
-*/
-
- /********END OF EXAMPLE**************************/
-/*
- svg.append("rect")    // attach a rectangle
-    .attr("x", 100)      // position the left of the rectangle
-    .attr("y", 50)       // position the top of the rectangle
-    .attr("height", 100) // set the height
-    .attr("width", 200) // set the width
-    .attr("fill", "#fff")
-*/
-/*
-  let layoutRoot = d3
-  .select(svg)
-  .append('svg:svg')
-  .attr('width', size.width)
-  .attr('height', size.height)
-  .append('svg:g')
-  .attr('class', 'container')
-  .attr('transform', 'translate(' + width + ',0)');
-*/
-
-//////////////////////////////////
-/*
-var i = 0,
-    duration = 750,
-    root;
+  let  svg = group.append("svg")
+  .attr("width", width)
+  .attr("height", height )
+  .append("g")
+  .attr('transform', `translate(${tree_origin_x}, ${tree_origin_y})`);
 
 // declares a tree layout and assigns the size
-var treemap = d3.tree().size([height, width]);
-
-// Assigns parent, children, height, depth
-root = d3.hierarchy(treeData, function(d) { return d.children; });
-//root = d3.hierarchy(nodes_data, function(d) { return d.children; });
-root.x0 = height / 2;
-root.y0 = 0;
-
-// Collapse after the second level
-root.children.forEach(collapse);
-update(root);
-
-// Collapse the node and all it's children
-function collapse(d) {
-  if(d.children) {
-    d._children = d.children
-    d._children.forEach(collapse)
-    d.children = null
-  }
-}
-
-function update(source) {
-
-  // Assigns the x and y position for the nodes
-  var treeData = treemap(root);
-
-  // Compute the new tree layout.
-  var nodes = treeData.descendants(),
-      links = treeData.descendants().slice(1);
-
-  // Normalize for fixed-depth.
-  nodes.forEach(function(d){ d.y = d.depth * 180});
-
-  // ****************** Nodes section ***************************
-
-  // Update the nodes...
-  var node = svg.selectAll('g.node')
-      .data(nodes, function(d) {return d.id || (d.id = ++i); });
-
-  // Enter any new modes at the parent's previous position.
-  var nodeEnter = node.enter().append('g')
-      .attr('class', 'node')
-      .attr("transform", function(d) {
-        return "translate(" + source.y0 + "," + source.x0 + ")";
-    })
-    .on('click', click);
-
-  // Add Circle for the nodes
-  nodeEnter.append('circle')
-      .attr('class', 'node')
-      .attr('r', 1e-6)
-      .style("fill", function(d) {
-        return d._children ? "#31a354" : "#fff";
-    });
-
-     // .style("fill", function(d) {
-     //     return d._children ? "lightsteelblue" : "#fff";
-      //});
-
-  // Add labels for the nodes
-  nodeEnter.append('text')
-      .attr("dy", ".35em")
-      .attr("x", function(d) {
-          return d.children || d._children ? -13 : 13;
-      })
-      .attr("text-anchor", function(d) {
-          return d.children || d._children ? "end" : "start";
-      })
-      .text(function(d) { return d.data.name; });
-
-  // UPDATE
-  var nodeUpdate = nodeEnter.merge(node);
-
-  // Transition to the proper position for the node
-  nodeUpdate.transition()
-    .duration(duration)
-    .attr("transform", function(d) { 
-        return "translate(" + d.y + "," + d.x + ")";
-     });
-
-  // Update the node attributes and style
-  nodeUpdate.select('circle.node')
-    .attr('r', 10)
-    .style("fill", function(d) {
-        return d._children ? "lightsteelblue" : "#fff";
-    })
-    .attr('cursor', 'pointer');
+let treemap = d3.tree()
+.size([width, height]);
 
 
-  // Remove any exiting nodes
-  var nodeExit = node.exit().transition()
-      .duration(duration)
-      .attr("transform", function(d) {
-          return "translate(" + source.y + "," + source.x + ")";
-      })
-      .remove();
+// assigns the data to a hierarchy using parent-child relationships
+//let nodes = d3.hierarchy(treeData)
+///////////////////////////
+let nodes = d3.hierarchy(tree_data)
 
-  // On exit reduce the node circles size to 0
-  nodeExit.select('circle')
-    .attr('r', 1e-6);
+ //// maps the node data to the tree layout
+  nodes = treemap(nodes);
+  
+let  groups = svg.selectAll(".circle")
+  .data(tree_data)
+  .enter().append("g")
+  .attr("class", "circle")
+  .append("g")
+  .attr('transform', `translate(${width*0.06}, ${tree_origin_y})`);
 
-  // On exit reduce the opacity of text labels
-  nodeExit.select('text')
-    .style('fill-opacity', 1e-6);
-
-  // ****************** links section ***************************
-
-  // Update the links...
-  var link = svg.selectAll('path.link')
-      .data(links, function(d) { return d.id; });
-
-  // Enter any new links at the parent's previous position.
-  var linkEnter = link.enter().insert('path', "g")
-      .attr("class", "link")
-      .attr('d', function(d){
-        var o = {x: source.x0, y: source.y0}
-        return diagonal(o, o)
+  var circles = groups.selectAll("circle") // start a nested selection
+  .data( (d, i) => {
+    //console.log("D VAUES "+JSON.stringify(d.values[i]) )
+    //console.log("TERM LEVEL "+JSON.stringify(d.values[i].term_level) )
+    return d.values; // tell d3 where the children are
+  })
+  .enter().append("circle")
+  .style('stroke', '#fdae6b')
+  .style('fill', d => {
+    return '#00FFCC';
+  })
+  .attr("stroke", (d) =>  {
+    return "cyan"
+    //return color(d.shortName);
+  })
+  .attr('stroke-width', d => {
+    return mag_size * 0.6;
+  })
+  .attr('opacity', d => 0.8)
+  .attr('cursor', 'pointer')
+  .attr("cx", function(d, i) {
+    return  12 * i ;
+   //return x(d.sampleDate) // use the fields directly; no reference to "values"
+  })
+  .attr("cy", function(d, i) {
+    return 60 * d.term_level;
+    //return y(d.pfcLevel)
+  })
+  .attr("r",  mag_size * 2, 5)
+  .append('title')
+      .text((d,i) => {
+        return ' Info:  ' + d.term_title + " " + " Term Level " + d.term_level;
       });
 
-  // UPDATE
-  var linkUpdate = linkEnter.merge(link);
-
-  // Transition back to the parent element position
-  linkUpdate.transition()
-      .duration(duration)
-      .attr('d', function(d){ return diagonal(d, d.parent) });
-
-  // Remove any exiting links
-  var linkExit = link.exit().transition()
-      .duration(duration)
-      .attr('d', function(d) {
-        var o = {x: source.x, y: source.y}
-        return diagonal(o, o)
-      })
-      .remove();
-
-  // Store the old positions for transition.
-  nodes.forEach(function(d){
-    d.x0 = d.x;
-    d.y0 = d.y;
-  });
-
-  // Creates a curved (diagonal) path from parent to the child nodes
-  function diagonal(s, d) {
-
-   let path = `M ${s.y} ${s.x}
-            C ${(s.y + d.y) / 2} ${s.x},
-              ${(s.y + d.y) / 2} ${d.x},
-              ${d.y} ${d.x}`
-
-    return path
-  }
-
-  // Toggle children on click.
-  function click(d) {
-    if (d.children) {
-        d._children = d.children;
-        d.children = null;
-      } else {
-        d.children = d._children;
-        d._children = null;
-      }
-    update(d);
-  }
-}
-*/
-//////////////////////
-/*
-    var root = d3.stratify()
-    .id(function(d) { return d.term_level; })
-    .parentId(function(d) { return d.term_level; })
-    (nodes_data);
-    */
-    
-
-/*
-    let cluster = d3.layout.cluster()
-        .size([height, width - 160]);
-        let diagonal = d3.svg.diagonal()
-           .projection(function(d) { return [d.y, d.x]; });
-    let  nodes = cluster.nodes(array_data),
-    links = cluster.links(nodes);
-*/
-
+//////////////////////////  
 };//diagram
-
 
 
 };//class Draw
@@ -693,23 +345,37 @@ for (let i = 0; i < data.length; i++) {
 };
 /////////////////////
 /************************************ */
+/////////////////////////000001
+
+
 
 build_nodes(graph){
+  
+
   graph.forEachNode((node, attributes) => {
-    //console.log("NODE "+JSON.stringify(node) + "ATTRIBUTES " + JSON.stringify(attributes))
-    // console.log(`node attributes ${node} to ${attributes}`);
-    nodes_data.push(attributes) 
+   // let data_i = {node: node, attributes: attributes}  
+    nodes_data.push(attributes)
+     
+   
+  })//graph1 
 
   
-  });//graph
+ tree_data = d3.nest()
+ .key(function(d) { return d.term_level; }).sortKeys(d3.ascending)
+ .entries(nodes_data);
+
+ 
 
 };//build_nodes
 
+
 /**************************/
+
+
 build_edges(graph) {
   
   graph.forEachNode((node, attributes) => {
-    this.set_edge(graph, node);
+    let all_edges = this.set_edge(graph, node);
    });//graph.forEach
 
 //////////////////////////
@@ -722,7 +388,8 @@ let current_level = graph.getNodeAttribute(source, "term_level") ;
  
 let next_level = Number(current_level) + 1;
 
- graph.forEachNode((node, attributes) => {
+
+graph.forEachNode((node, attributes) => {
   let term_level  = attributes["term_level"]
 
   
@@ -731,16 +398,24 @@ let next_level = Number(current_level) + 1;
     if (typeof target !== 'undefined' && target) {
       let key = term_level + next_level + source + "_" + target;
        let edge = graph.addEdgeWithKey(key, source, target);
-
-       //graph.setAttribute('status',"parent");
-       // let edge = graph.mergeEdgeWithKey(key, source, target);
+       let a_link = {"source": source, "target": target}   
+        links.push(a_link)
+      // let edge = graph.mergeEdgeWithKey(key, source, target);
         
+    ////////////////////////////////////////////////////////////////
+        
+      
    };//if typeof
 
   };//if term_level
+ 
 
  });//forEachNode
-return graph;
+  
+ 
+
+
+ return graph;
 
 
 };//func set edge
@@ -763,7 +438,10 @@ class Prep_data{
 
 start() {
   let graph = this.g.set_graph();
-/*
+
+  //console.log("TREE DATA: "+JSON.stringify(tree_data) + "length " + tree_data.length)
+  //console.log("NODES DATA: "+JSON.stringify(nodes_data) + "length " + nodes_data.length)
+  /*
   console.log("***********************************");
   console.log("Graph type: " +  graph.type)
   console.log("Graph Nodes: " + graph.nodes())
@@ -774,23 +452,25 @@ start() {
   
   console.log("-----start ---edges---------------------------");
 */
+/*
  console.log("----------end edges ----------------------");  
   graph.forEachEdge(
      (edge, attributes, source, target, sourceAttributes, targetAttributes) => {
-        console.log(`Edge from ${source} to ${target}`);
+        console.log(`Edge from ${source} to ${target}`)
+        console.log(`sourceAttributes  ${JSON.stringify(sourceAttributes)} 
+        targetAttributes  ${JSON.stringify( targetAttributes)}`)
     });
     console.log('Size: Number of edges in the graph '+  graph.size);
   console.log("----------end edges ----------------------");  
   
- 
-/*
+*/
+
  graph.forEachNode((node, attributes) => {
-    console.log("NODE ID "+JSON.stringify(node) + 
+    console.log(" NODE----------- ID "+JSON.stringify(node) + 
     "ATTRIBUTES " + JSON.stringify(attributes))
-   // console.log(`node attributes ${node} to ${attributes}`);
+   //console.log(`node attributes ${node} to ${attributes}`);
     });
 
-*/
 
 
 
@@ -898,8 +578,112 @@ export class Interface_buttons {
 
 }//class Interface_buttons
 ///////////////////////////
+class Utils{
+constructor(){
+
+};//constructor
+
+convert(namesArray) {
+  let result = {};
+  let nestedObj = result;
+  namesArray.forEach(name => {
+    nestedObj[name] = {};
+    nestedObj = nestedObj[name];
+  });
+
+  return result;
+}
+create_tree(arr, topItem = "Top") {
+  const node = (name, parent = null) => ({
+    name,
+    parent,
+    children: []
+  });
+  const addNode = (parent, child) => {
+    parent.children.push(child);
+
+    return child;
+  };
+  const findNamedNode = (name, parent) => {
+    for (const child of parent.children) {
+      if (child.name === name) {
+        return child
+      }
+      const found = findNamedNode(name, child);
+      if (found) {
+        return found
+      }
+    }
+  };
+
+  const top = node(topItem);
+  let current;
+
+  for (const children of arr) {
+    current = top;
+    for (const name of children) {
+      const found = findNamedNode(name, current);
+      current = found ? found : addNode(current, node(name, current.name));
+    }
+  }
+
+  return top;
+}
 
 
+nested_array_to_json(structure) {
+  const top_item = '0';
+
+  let data = {
+      children: [
+          {
+              name: top_item,
+              parent: null,
+              children: [],
+          }],
+  };
+
+  for(let i = 0; i < structure.length; i++) {
+      let parents = [top_item];
+      for(let j = 0; j < structure[i].length; j++) {
+          let obj = data;
+          for(parent of parents) {
+              obj = obj.children.find(o => o.name === parent);
+          }
+          const name = structure[i][j];
+          if(!obj.children.find(o => o.name === name)) {
+              obj.children.push({
+                  name,
+                  parent,
+                  children: [],
+              });
+          }
+          parents.push(structure[i][j]);
+      }
+  }
+
+  return data.children[0];
+}
+///////////////////////////
+memoize(node) {
+  let root = {children: []};
+  
+  var i = node.term_level.lastIndexOf("."),
+      p = i < 0 ? root : memoize({term_level: node.term_level.substring(0, i),
+children: []}),
+      n = p.children.length;
+  for (i = -1; ++i < n;) {
+    if (p.children[i].term_level === node.term_level) {
+      return p.children[i];
+    }
+  }
+  p.children.push(node);
+  return node;
+}
+
+
+};//class
+/////////////////////
 const draw_external_init = () => {
 //console.log("from draw_coronary_init ------------------------");
   
