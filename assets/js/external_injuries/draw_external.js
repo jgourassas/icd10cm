@@ -12,8 +12,76 @@ const Graph = require('graphology');
 })
 */
 const  mag_size =  1.9;
+let template=[];
+
+let injury_template = [];
+
+const injury_template_2 = [
+  {
+    term_level: "0",
+    data:   "",
+    parent: null
+}, 
+
+{
+  term_level: "1",
+  data:   "",
+  parent: "0"
+}, 
+
+{
+  term_level: "2",
+  data:   "",
+  parent: "1"
+}, 
+
+{
+  term_level: "3",
+  data:   "",
+  parent: "2"
+}, 
+
+{
+  term_level: "4",
+  data:   "",
+  parent: "3"
+}, 
+
+{
+  term_level: "5",
+  data:   "",
+  parent: "4"
+},
+
+{
+  term_level: "6",
+data:   "",
+parent: "5"
+},
+
+{
+  term_level: "7",
+data:   "",
+parent: "6"
+},
+
+{
+  term_level: "8",
+data:   "",
+parent: "7"
+},
+
+{
+  term_level: "9",
+data:   "",
+parent: "8"
+},
 
 
+
+];//injury_template
+
+//////////////////////////
 var treeData =
   {
     "name": "Top Level",
@@ -39,7 +107,7 @@ const get_data = () => {
 
 let nodes_data = [];
 
-let tree_data = []
+let nested_data = []
 
 let links = [];
 
@@ -49,8 +117,8 @@ const get_links = () => {
   return links;
 }
 
-const get_tree_data = () => {
-    return tree_data;
+const get_nested_data = () => {
+    return nested_data;
 }
 
 let margin = {
@@ -202,7 +270,7 @@ constructor(
 ){
 
 };//constructor
-
+///////////////////////
 
 ///////////////////////
 diagram(group){
@@ -220,16 +288,9 @@ let treemap = d3.tree()
 .size([width, height]);
 
 
-// assigns the data to a hierarchy using parent-child relationships
-//let nodes = d3.hierarchy(treeData)
-///////////////////////////
-let nodes = d3.hierarchy(tree_data)
-
- //// maps the node data to the tree layout
-  nodes = treemap(nodes);
   
 let  groups = svg.selectAll(".circle")
-  .data(tree_data)
+  .data(nested_data)
   .enter().append("g")
   .attr("class", "circle")
   .append("g")
@@ -237,12 +298,9 @@ let  groups = svg.selectAll(".circle")
 
   var circles = groups.selectAll("circle") // start a nested selection
   .data( (d, i) => {
-    //console.log("D VAUES "+JSON.stringify(d.values[i]) )
-    //console.log("TERM LEVEL "+JSON.stringify(d.values[i].term_level) )
     return d.values; // tell d3 where the children are
   })
   .enter().append("circle")
-  .style('stroke', '#fdae6b')
   .style('fill', d => {
     return '#00FFCC';
   })
@@ -266,7 +324,8 @@ let  groups = svg.selectAll(".circle")
   .attr("r",  mag_size * 2, 5)
   .append('title')
       .text((d,i) => {
-        return ' Info:  ' + d.term_title + " " + " Term Level " + d.term_level;
+        //console.log("DATA JGOUR " + JSON.stringify( d.data.term_title) )
+        return ' Term Title:  ' + d.data.term_title + " " + " Term Level " + d.term_level;
       });
 
 //////////////////////////  
@@ -347,27 +406,33 @@ for (let i = 0; i < data.length; i++) {
 /************************************ */
 /////////////////////////000001
 
-
-
 build_nodes(graph){
-  
-
   graph.forEachNode((node, attributes) => {
-   // let data_i = {node: node, attributes: attributes}  
-    nodes_data.push(attributes)
-     
-   
-  })//graph1 
+    let template_i =    this.insert_to_template(node,  attributes );
+   })//graph1 
 
-  
- tree_data = d3.nest()
- .key(function(d) { return d.term_level; }).sortKeys(d3.ascending)
- .entries(nodes_data);
+ nested_data = d3.nest()
+   .key(function(d) { return d.term_level; }).sortKeys(d3.ascending)
+   .entries(injury_template);
+
+  };//build_nodes
+/////////////////////
+
+insert_to_template(node, attributes){
+  let level = attributes["term_level"];
+  //console.log("term level ---jgour" + level )
+  let an_item =  {
+    term_level: level,
+    data:   attributes,
+    parent:  (Number(level) -  Number(1)).toString(),
+
+};//an_item 
+
+
+injury_template.push( an_item);
 
  
-
-};//build_nodes
-
+};//insert_to_template
 
 /**************************/
 
@@ -438,8 +503,10 @@ class Prep_data{
 
 start() {
   let graph = this.g.set_graph();
+//  console.log("NODES DATA: "+JSON.stringify(nodes_data) + " length " + nodes_data.length)
+ // console.log("NESTED  DATA: "+JSON.stringify(nested_data) + " length " + nested_data.length)
+ // console.log("INJURY TEMPLATE : "+JSON.stringify(injury_template) + " length " +  injury_template.length)
 
-  //console.log("TREE DATA: "+JSON.stringify(tree_data) + "length " + tree_data.length)
   //console.log("NODES DATA: "+JSON.stringify(nodes_data) + "length " + nodes_data.length)
   /*
   console.log("***********************************");
@@ -464,14 +531,14 @@ start() {
   console.log("----------end edges ----------------------");  
   
 */
-
+/*
  graph.forEachNode((node, attributes) => {
     console.log(" NODE----------- ID "+JSON.stringify(node) + 
     "ATTRIBUTES " + JSON.stringify(attributes))
    //console.log(`node attributes ${node} to ${attributes}`);
     });
 
-
+*/
 
 
 
