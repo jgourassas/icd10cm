@@ -3,7 +3,17 @@ import { json } from "d3";
 // check and Partition Layouts
 var d3 = require("d3");
 const Graph = require('graphology');
-//let  colors = d3.scale.category10();
+
+//import mergePath from 'graphology-utils/merge-path';
+//import shortestPath from 'graphology-shortest-path';
+import dijkstra from 'graphology-shortest-path/dijkstra';
+
+const nest = (items, id = null, link = 'parent_id') =>
+  items
+    .filter(item => item[link] === id)
+    .map(item => ({ ...item, children: nest(items, item.id) }));
+
+    //let  colors = d3.scale.category10();
 /*
 .attr("fill,â€ function(d,i){
   if (d.parent) {
@@ -11,8 +21,29 @@ const Graph = require('graphology');
   }
 })
 */
+const getCircularReplacer = () => {
+  const seen = new WeakSet();
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+};
+
+const desc_color = (d) =>  {
+  return d._children ? "#87AAAE" : d.children ? "#BFD9DA" : "#DDECEF";
+
+}
+
+    /////////////
 const  mag_size =  1.9;
 let template=[];
+let barHeight = 24
+let barWidth = 1100 * .8
 
 let injury_template = [];
 
@@ -211,7 +242,7 @@ let margin = {
  let width = 1100 - margin.left - margin.right;
  let  height = 1300 - margin.top - margin.bottom;
 
- let barWidth = width  * 0.8
+ 
 
 class Guides {
     constructor() {
@@ -401,9 +432,9 @@ let  node = svg.selectAll(".node")
 .attr("class", function(d) {
   return "node" +
     (d.children ? " node--internal" : " node--leaf"); })
-//.attr("transform", function(d) {
-//  return "translate(" + d.x + "," + d.y + ")"; });
-  .attr('transform', `translate(${width*0.06}, ${tree_origin_y})`)
+.attr("transform", function(d) {
+  return "translate(" + d.x + "," + d.y + ")"; });
+//  .attr('transform', `translate(${width*0.06}, ${tree_origin_y})`)
 
   
   // adds the circle to the node
@@ -411,6 +442,7 @@ node.append("circle")
   .attr("r", 10)
   .append('title')
   .text((d,i) => {
+    
     return ' Title:  ' 
     + d.term_title
     + " Code: " 
@@ -419,12 +451,13 @@ node.append("circle")
     + " Level " 
     + d.term_level
        })
+
   node.append("text")
   .attr("dy", ".35em")
   .attr("y", function(d) { return d.children ? -20 : 20; })
   .style("text-anchor", "middle")
   .text(function(d) {
-   console.log("DATA jgour " + d )  
+  // console.log("DATA jgour " + d )  
     return d.data.term_title;
    });
 
@@ -438,6 +471,166 @@ node.append("circle")
 
 
 
+//////////////////////
+
+diagram_1(group){
+  let tree_origin_x = width * 0.01;
+  let tree_origin_y = height * 0.09;
+ 
+  let  svg = group.append("svg")
+  .attr("width", width)
+  .attr("height", height )
+  .append("g")
+  .attr("id", "group_svg")
+  .attr('transform', `translate(${tree_origin_x}, ${tree_origin_y})`);
+
+// declares a tree layout and assigns the size
+let treemap = d3.tree()
+.size([width, height-200])
+
+let  nodes = d3.hierarchy(nested_data)
+//let  nodes = d3.hierarchy(treeData)
+//nodes.x0 = height / 2;
+//nodes.y0 = 0;
+nodes = treemap(nodes);
+console.log("nested_data " + JSON.stringify(nested_data) )
+
+
+let  node = svg.selectAll(".node")
+  //.data(nodes.descendants())
+  .data(nodes)
+  // .data(nodes.descendants() , function(d, i) { return d.values || (d.values = ++i); })
+    .enter().append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) {
+      return "translate(" + d.x + "," + d.y + ")"; })
+    
+  // adds the circle to the nod
+      d3.selectAll("g.node")
+      .data( (d, i) => {
+        return d.values; // tell d3 where the children are
+      })
+      .enter()
+      .append("circle")
+     .attr("r", 15)
+.attr("stroke", (d) =>  {
+ return "cyan"
+   })
+.style("fill", "yellow")
+/*
+      d3.select("#group_svg").selectAll("line")
+     // .data(nodes.filter(d => d.parent))
+      .enter().insert("line","g")
+      .attr("x1", d => d.parent.x)
+      .attr("y1", d => d.parent.y)
+      .attr("x2", d => d.x)
+      .attr("y2", d => d.y)
+      .style("stroke", "#fff")
+
+*/
+  /*    
+  let link = svg.selectAll(".link")
+      .data( nodes.descendants().slice(1))
+    .enter().append("path")
+      .attr("class", "link")
+      .attr("d", function(d) {
+         return "M" + d.x + "," + d.y
+           + "C" + d.x + "," + (d.y + d.parent.y) / 2
+           + " " + d.parent.x + "," + (d.y + d.parent.y) / 2
+           + " " + d.parent.x + "," + d.parent.y;
+          })
+
+     .style("fill", "none")
+     .style("stroke", "#fff")
+    */      
+
+
+/*
+// adds each node as a group
+var node = svg.selectAll(".node")
+   .data(nodes.descendants())
+   //.data(nodes)
+ //  .data(nested_data)
+    .enter().append("g")
+    .attr("class", (d, i) => {
+        return "node" + 
+        (d.data[i]["values"][i]["children"] ? " node--internal" : " node--leaf"); })
+        //(d.values[i]["children"] ? " node--internal" : " node--leaf"); })
+      //.attr('transform', `translate(${width*0.06}, ${tree_origin_y})`);
+     // .attr("transform", function(d) {
+     //   return "translate(" + d.x + "," + d.y + ")"; });
+      
+
+ node.append("circle")
+  .style("fill", (d, i) => color(d.data[i]["values"][i]["term_level"]) )
+   .attr("stroke", (d) =>  {
+    return "cyan"
+      })
+  .attr('stroke-width', (d, i) => {
+       return mag_size * 0.6;
+  })
+  .attr('opacity', d => 0.8)
+  .attr('cursor', 'pointer')
+  .attr("cx", function(d, i) {
+    return 60;
+    //return  60   * d.values[i]["term_level"]
+    })
+  .attr("cy", function(d, i) {
+     return mag_size * 40  * i;
+  })
+  .attr("r",  mag_size * 4)
+   .append('title')
+      .text((d,i) => {
+        console.log( JSON.stringify(d.data[i]["values"][i]["term_title"]))
+          return ' Title:  ' 
+          + d.data[i]["values"][i]["term_title"]
+     
+            + " Code: " 
+        + d.data[i]["values"][i]["term_code"]
+        + " "
+        + " Level: " 
+        + d.data[i]["values"][i]["term_level"]
+
+           })
+  
+  node.append("text")
+  .attr("dx", function(d, i) {
+    return 89
+    //  return  80   * d.values[i]["term_level"]
+    })
+  .attr("dy", function(d, i) {
+    return mag_size *  4 ;
+     })
+  .style("text-anchor", "start")
+  .style("fill", "#ffff")
+  .style("font-family", "sans, georgia, times")
+  .style('font-size', '1.2em')
+  .style('font-weight', 'normal')
+  .style('opacity', '0.9')
+  .style('stroke', 'none')
+  //.text(function(d, i) { return d.values[i]["term_title"]; })
+*/
+  
+  
+    
+
+}
+///////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -445,74 +638,9 @@ node.append("circle")
 
 
 diagram(group){
-
-  let tree_origin_x = width * 0.01;
-  let tree_origin_y = height * 0.1;
-  
-  let  svg = group.append("svg")
-  .attr("width", width)
-  .attr("height", height )
-  .append("g")
-  .attr('transform', `translate(${tree_origin_x}, ${tree_origin_y})`);
-
-// declares a tree layout and assigns the size
-let treemap = d3.tree()
-.size([width, height* 0.8])
-
-/////////////////////
-// assigns the data to a hierarchy using parent-child relationships
-//let nodes = d3.hierarchy(nested_data);  
-let nodes = d3.hierarchy(treeData);  
-// maps the node data to the tree layout
-    nodes = treemap(nodes)
-  
-   // adds each node as a group
-let  node = svg.selectAll(".node")
-.data(nodes.descendants())
-.enter().append("g")
-.attr("class", function(d) {
-  return "node" +
-    (d.children ? " node--internal" : " node--leaf"); })
-.attr("transform", function(d) {
-  return "translate(" + d.x + "," + d.y + ")"; });
-
-  node.append("circle")
-  .attr("r", 10);
-  
-  let link = svg.selectAll(".link")
-  .data( nodes.descendants().slice(1))
-.enter().append("path")
-  .attr("class", "link")
-  .attr("d", function(d) {
-     return "M" + d.x + "," + d.y
-       + "C" + d.x + "," + (d.y + d.parent.y) / 2
-       + " " + d.parent.x + "," + (d.y + d.parent.y) / 2
-       + " " + d.parent.x + "," + d.parent.y;
-     });
-
-
-     node.append("text")
-     .attr("dy", ".35em")
-     .attr("y", function(d) { return d.children ? -20 : 20; })
-     .style("text-anchor", "middle")
-     .text(function(d) { return d.data.name; });
-   
-
-///////////////////
-};//diagram
-
-
-
-
-
-
-//////////////////////
-
-
-diagram_22(group){
   let tree_origin_x = width * 0.01;
   let tree_origin_y = height * 0.04;
-  
+ 
   let  svg = group.append("svg")
   .attr("width", width)
   .attr("height", height )
@@ -534,16 +662,25 @@ let nodes = d3.hierarchy(nested_data);
 
 
 let  groups = svg.selectAll(".circle")
-   .data(nested_data)
+   .data(nodes)
     .enter().append("g")
   .attr("class", "circle")
   .append("g")
   .attr('transform', `translate(${width*0.06}, ${tree_origin_y})`);
 
- 
-  
+ /*
+  groups.append("svg:rect")
+  .attr("y", -barHeight / 2)
+  .attr("height", barHeight)
+  .attr("rx", 5)
+  .attr("ry", 5)
+  .attr("width", barWidth)
+  .style("stroke","#FFFCE5")
+  .attr("stroke-width", 2)
+  .style("opacity",0.9)
+  .style("fill", desc_color)
+*/
 
- 
   let circles = groups.selectAll("circle") // start a nested selection
   .data( (d, i) => {
     return d.values; // tell d3 where the children are
@@ -562,11 +699,11 @@ let  groups = svg.selectAll(".circle")
     return  60   * d.term_level
     })
   .attr("cy", function(d, i) {
-     return mag_size * 7  * i;
+     return mag_size * 14  * i;
     //return 60 * d.term_level;
     //return y(d.pfcLevel)
   })
-  .attr("r",  mag_size * 2)
+  .attr("r",  mag_size * 4)
   .append('title')
       .text((d,i) => {
         return ' Title:  ' 
@@ -577,20 +714,61 @@ let  groups = svg.selectAll(".circle")
         + " Level " 
         + d.term_level
            })
+  
 
-    var link = groups.selectAll("circle")
-           .data( nodes.descendants().slice(1))
-         .enter().append("path")
-           .attr("class", "link")
-           .attr("d", function(d) {
-             console.log( "PARENT " +  d.parent)
-              return "M" + d.x + "," + d.y
-                + "L" + d.parent.x + "," + d.parent.y;
-              })
-              .style("fill", "none")
-              .style("stroke", "darkslateblue")
-              .style("stroke-width", "4px"); 
-   /*    
+         
+    
+
+let text = groups.selectAll("text") // start a nested selection
+      .data( (d, i) => {
+           return d.values; // tell d3 where the children are
+      })
+    .enter()
+    .append("g")
+    .append('svg:text')
+    .attr("dx", function(d, i) {
+      return  80   * d.term_level
+      })
+    .attr("dy", function(d, i) {
+       return mag_size * 14  * i;
+       })
+           .attr('fill', '#fff')
+        .attr('text-anchor', 'start')
+        .style("font-family", "sans, georgia, times")
+        .style('font-size', '1.2em')
+        .style('font-weight', 'normal')
+        .style('opacity', '0.9')
+        .style('stroke', 'none')
+        .text( (d, i) => {
+         // console.log("Titles: " + d.term_level  + " " + " " + d.term_title)      
+          return  d.term_title
+        }
+      
+        )
+        //.attr("transform", (d) => {return "rotate(-70)"})
+
+      //.attr('transform', `translate(${width*0.06}, ${tree_origin_y})`);
+    let  link = groups.selectAll("path.link")
+      .data((nodes), function(d) { return d.target.id; });
+      
+      let  diagonal = d3.linkHorizontal()
+      .x(function(d) {
+        return d.x;
+      })
+      .y(function(d) {
+        return d.y;
+      });
+
+  // Enter any new links at the parent's previous position.
+  link.enter().insert("svg:path", "g")
+      .attr("class", "link")
+      .attr("d", function(d) {
+        console.log(source.x0)
+        var o = {x: source.x0, y: source.y0};
+        return diagonal({source: o, target: o});
+      })
+    
+/*
   let  link = d3.linkHorizontal()
            .x(function(d) {
              return d.x;
@@ -598,14 +776,24 @@ let  groups = svg.selectAll(".circle")
            .y(function(d) {
              return d.y;
            });
- 
-           svg.append("path")
-           .attr("d", link(nodes.descendants()))
+
+
+      groups.selectAll("link") // start a nested selection
+           .data( (d, i) => {
+                console.log("LINK--- " + JSON.stringify(d) )
+                console.log("NODES--- " + JSON.stringify(nodes) )
+
+                return d.values; // tell d3 where the children are
+           })
+         .append("g")
+         .append('svg:path')
+          .attr("d", link(nodes.descendants()))
            .style("fill", "none")
            .style("stroke", "darkslateblue")
            .style("stroke-width", "4px");
-*/
-    /*       
+  */
+  
+           /*               
     let link = svg.selectAll(".link")
            .data( nodes.descendants().slice(1))
          .enter().append("path")
@@ -621,36 +809,7 @@ let  groups = svg.selectAll(".circle")
 
     
     
-           let text = groups.selectAll("circle") // start a nested selection
-           .data( (d, i) => {
-             return d.values; // tell d3 where the children are
-           })
-         .append('text')
-          .attr('dx', (d, i) => {
-             return  80   * d.term_level
-                })
-        .attr('dy',  (d, i) => {
-          return mag_size * 7  * i;
-          //return 40 * i;
-          
-        })
-        //.attr("y", function(d, i) { 
-        //  console.log("CHILDREN" + JSON.stringify(d[i]) )
-        //  return d.children ? -20 : 20; })             
-        .attr('fill', '#fff')
-        .attr('text-anchor', 'start')
-        .style("font-family", "sans, georgia, times")
-        .style('font-size', '1.2em')
-        .style('font-weight', 'normal')
-        .style('opacity', '0.9')
-        .style('stroke', 'none')
-        .text( (d, i) => {
-          console.log("Titles: " + d.term_level  + " " + " " + d.term_title)      
-          return  d.term_title
-        }
-      
-        )
-     // .attr('transform', `translate(${width*0.06}, ${tree_origin_y})`);
+       
   
  //////////////////////////////
 /*
@@ -676,73 +835,7 @@ circles.append("text")
 //////////////////////////  
 }
 ///////////////////////
-diagram_2(group){
-  let tree_origin_x = width * 0.01;
-  let tree_origin_y = height * 0.1;
-  
-  let  svg = group.append("svg")
-  .attr("width", width)
-  .attr("height", height )
-  .append("g")
-  .attr('transform', `translate(${tree_origin_x}, ${tree_origin_y})`);
 
-// declares a tree layout and assigns the size
-let treemap = d3.tree()
-.size([width, height]);
-
-
- 
-let  groups = svg.selectAll(".circle")
-  .data(nested_data)
-  .enter().append("g")
-  .attr("class", "circle")
-  .append("g")
-  .attr('transform', `translate(${width*0.06}, ${tree_origin_y})`);
-
-  var circles = groups.selectAll("circle") // start a nested selection
-  .data( (d, i) => {
-    return d.values; // tell d3 where the children are
-  })
-  .enter().append("circle")
-  .style('fill', d => {
-    return '#00FFCC';
-  })
-  .attr("stroke", (d) =>  {
-    return "cyan"
-    //return color(d.shortName);
-  })
-  .attr('stroke-width', d => {
-    return mag_size * 0.6;
-  })
-  .attr('opacity', d => 0.8)
-  .attr('cursor', 'pointer')
-  .attr("cx", function(d, i) {
-   return  20 * d.term_level
-    //return  18 * i ;
-   //return x(d.sampleDate) // use the fields directly; no reference to "values"
-  })
-  .attr("cy", function(d, i) {
-     return 50 * i;
-
-    // return 60 * d.term_level;
-    //return y(d.pfcLevel)
-  })
-  .attr("r",  mag_size * 3, 5)
-  .append('title')
-      .text((d,i) => {
-        return ' Title:  ' 
-        + d.data.term_title 
-        + " Code: " 
-        + d.data.term_code
-        + " "
-        + " Term Level " 
-        + d.term_level;
-      });
-
-//////////////////////////  
-
-//////////////////////////////
-};//diagram
 
 
 };//class Draw
@@ -781,7 +874,8 @@ for (let i = 0; i < data.length; i++) {
         id: a_id,
         term_use: a_term_use,
         term_title: a_term_title,
-        term_see_tab: a_term_see_codes,
+        term_see_tab: a_term_see_tab,
+        term_see_codes: a_term_see_codes,
         term_see: a_term_see,
         term_nemod: a_term_nemod, 
         term_codes: a_term_codes,
@@ -795,7 +889,7 @@ for (let i = 0; i < data.length; i++) {
 };//for
 
    
-     this.build_edges(g);
+     //this.build_edges(g);
      this.build_nodes(g)
 
     return g;
@@ -806,16 +900,28 @@ for (let i = 0; i < data.length; i++) {
 /////////////////////////000001
 
 build_nodes(graph){
+  
   graph.forEachNode((node, attributes) => {
-    let template_i =    this.insert_to_template(node,  attributes );
-   })//graph1 
-   
+     let template_i =    this.insert_to_template(node,  attributes );
+
+  })//graph1 
+  
+
+/*
+  let nested_data =  nest(injury_template)
+      console.log("NESTED DATA " + JSON.stringify(nested_data) )
+*/
+
 
  nested_data = d3.nest()
    .key(function(d) { return d.term_level; }).sortKeys(d3.ascending)
+   //.map(injury_template);
    .entries(injury_template);
+//   console.log("00NESTED DATA " + JSON.stringify(nested_data) )
+
+  
    
-  };//build_nodes
+};//build_nodes
 /////////////////////
 
 get_parent(term_level){
@@ -823,12 +929,13 @@ get_parent(term_level){
   for(let i = 0; i < parent_child_template.length; i++ ){
     let template_i = parent_child_template[i];
     if (template_i["term_level"] == term_level) {
+       
         this.parent = template_i["parent"]; 
       
     };//if
     };//for
-
-    return parent;
+    //console.log("get parent" + this.parent )
+    return this.parent;
 
 }
 /////////////////////////////
@@ -842,16 +949,27 @@ get_children(term_level){
     };//if
     };//for
 
-    return parent;
+    return this.children;
 
 }/////
+///////////////////////////
+insert_from_edge(){
+  
 
+
+}
+////////////////////
 insert_to_template(node, attributes){
-  //let level = attributes["term_level"];
   let parent = this.get_parent(attributes["term_level"])
   let children = this.get_children(attributes["term_level"])
 
+// console.log("PARENT : " + parent +  " CHILDREN " + children +" LEVEL  " + attributes["term_level"])
+
+
+
   let an_item =  {
+    //id: attributes["term_level"], 
+    id: node,
     term_level:     attributes["term_level"],
     term_code:      attributes["term_code"],
     term_title:     attributes["term_title"],
@@ -862,10 +980,11 @@ insert_to_template(node, attributes){
     term_level:     attributes["term_level"],
     term_codes:     attributes["term_codes"],
     term_code:      attributes["term_code"],
-    parent:         parent,
+    parent_id:      parent,
     children:       children
 
 };//an_item 
+
 
 
 injury_template.push( an_item);
@@ -879,10 +998,56 @@ build_edges(graph) {
   
   graph.forEachNode((node, attributes) => {
     let all_edges = this.set_edge(graph, node);
+   
    });//graph.forEach
+ 
+   let data_a = graph.forEachEdge(
+    (
+        edge,
+        attributes,
+        source,
+        target,
+        sourceAttributes,
+        targetAttributes,
+    ) => {
+
+        let data_i = {
+            name: target,
+            parent: source,
+            attributes: targetAttributes
+        };
+
+        injury_template.push(data_i);
+    },
+);
+
+let dataMap = injury_template.reduce(function (map, node) {
+  map[node.name] = node;
+  return map;
+}, {});
+
+ injury_template.forEach(function (node) {
+  // add to parent
+  let parent = dataMap[node.parent];
+  if (parent) {
+      // create child array if it doesn't exist
+      parent.children || (parent.children = []);
+      // add node to child array
+      parent.children.push(node);
+  } else {
+      // parent is null or missing
+      nested_data.push(node);
+
+  }
+  return nested_data[0]
+});
+
+
+
 
 //////////////////////////
 };//buiild edges
+/////////////////////////////////
 
 ////////////////////////
 set_edge(graph,  source){
@@ -898,6 +1063,8 @@ graph.forEachNode((node, attributes) => {
   
   if(term_level ==  next_level){
     let target = node;
+    
+    
     if (typeof target !== 'undefined' && target) {
       let key = term_level + next_level + source + "_" + target;
        let edge = graph.addEdgeWithKey(key, source, target);
@@ -941,6 +1108,10 @@ class Prep_data{
 
 start() {
   let graph = this.g.set_graph();
+
+//console.log(" INJURY TEMPLATE: "+ JSON.stringify(injury_template, getCircularReplacer()));;
+
+//console.log(" INJURY TEMPLATE: "+JSON.stringify(injury_template) + " length " + injury_template.length)
 //  console.log("NODES DATA: "+JSON.stringify(nodes_data) + " length " + nodes_data.length)
   /*
   console.log("***********************************");
@@ -1079,7 +1250,7 @@ class Utils{
 constructor(){
 
 };//constructor
-
+/////////////////////////////
 convert(namesArray) {
   let result = {};
   let nestedObj = result;
@@ -1090,12 +1261,50 @@ convert(namesArray) {
 
   return result;
 }
+
+
+
+
+
+unflatten(arr) {
+  var tree = [],
+      mappedArr = {},
+      arrElem,
+      mappedElem;
+
+  // First map the nodes of the array to an object -> create a hash table.
+  for(var i = 0, len = arr.length; i < len; i++) {
+    arrElem = arr[i];
+    mappedArr[arrElem.id] = arrElem;
+    mappedArr[arrElem.id]['children'] = [];
+  }
+
+
+  for (var id in mappedArr) {
+    if (mappedArr.hasOwnProperty(id)) {
+      mappedElem = mappedArr[id];
+      // If the element is not at the root level, add it to its parent array of children.
+      if (mappedElem.parentid) {
+        mappedArr[mappedElem['parentid']]['children'].push(mappedElem);
+      }
+      // If the element is at the root level, add it to first level elements array.
+      else {
+        tree.push(mappedElem);
+      }
+    }
+  }
+  return tree;
+}
+
+
+
 create_tree(arr, topItem = "Top") {
   const node = (name, parent = null) => ({
     name,
     parent,
     children: []
   });
+
   const addNode = (parent, child) => {
     parent.children.push(child);
 
