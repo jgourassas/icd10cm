@@ -708,9 +708,7 @@ end
 
     term_level = a["term_level"]
     intend = level_intend(term_level)
-
-    term_level = a["term_level"]
-
+    #term_level = a["term_level"]
     term_title = a["term_title"]
     term_nemod = a["term_nemod"]
     term_codes = a["term_codes"]

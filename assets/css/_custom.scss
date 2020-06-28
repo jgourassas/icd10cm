@@ -206,5 +206,19 @@ background: "#740707";
 
 }
 /*************************************/
-
+#tooltip{
+  position: absolute;
+  z-index: 2;
+  background: rgba(0,153,76,0.8);
+  width:130px;
+  height:20px;
+  color:white;
+  font-size: 14px;
+  padding:5px;
+  top:-150px;
+  left:-150px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light",
+  "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  }
+  
 /***********************************/
