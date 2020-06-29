@@ -1,6 +1,8 @@
-<h1>Show Icd10pcs</h1>
 
-<ul>
+<div class="title_form">
+<h4>Show Icd-10-PCS</h4>
+</div>
+<ul  class = "no-bullet frame_1">
 
   <li>
     <strong>Order number:</strong>
@@ -115,4 +117,5 @@
 </ul>
 
 <span><%#= link "Edit", to: Routes.icd10pcs_path(@conn, :edit, @icd10pcs) %></span>
-<span><%= link "Back", to: Routes.pcs_path(@conn, :index) %></span>
+<span><%= link "Back To PCS Index", 
+to: Routes.pcs_path(@conn, :index) ,  class: " primary button expanded" %></span>

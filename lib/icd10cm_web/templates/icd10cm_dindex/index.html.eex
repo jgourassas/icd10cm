@@ -40,7 +40,7 @@ Accidental | Intentional | Assault | Undetermined | Adverse effect  | Underdosin
       </div><!-- small-6 large-centered columns -->
 </div>
 </div><!--------search form----------------------->
-<table class= "table responsive hover stack table-scroll">
+<table class= "table responsive hover stack table-scroll frame_1">
 <caption> ICD10-CM DRUG  List</caption>
   <thead>
     <tr>

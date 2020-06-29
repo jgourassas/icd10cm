@@ -1,6 +1,7 @@
-<h1>Show Ctd</h1>
-
-<ul>
+<div class="title_form">
+<h4>Show CTD</h4>
+</div>
+<ul  class = "no-bullet frame_1">
 
   <li>
     <strong>Diseasename:</strong>

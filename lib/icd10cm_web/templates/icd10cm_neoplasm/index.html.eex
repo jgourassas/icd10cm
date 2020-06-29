@@ -39,7 +39,7 @@
 </div>
 </div><!--------search form----------------------->
 
-<table class= "table responsive hover stack table-scroll" >
+<table class= "table responsive hover stack table-scroll frame_1" >
 <caption> ICD10-CM Neoplasm List</caption>
   <thead>
     <tr>

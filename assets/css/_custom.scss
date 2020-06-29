@@ -206,6 +206,23 @@ background: "#740707";
 
 }
 /*************************************/
+
+.frame_1{
+  padding: rem-calc(50);
+  margin-bottom: rem-calc(35);
+  border:solid 8px #DEDEDE;
+  background-color: "#fff";
+  //overflow-x: scroll;
+  //overflow-y: scroll;
+  @include border_radius(14px);
+  @include box_shadow();
+}
+
+
+
+
+
+/*************************************/
 #icd10cm_title{
   position: absolute;
   z-index: 2;

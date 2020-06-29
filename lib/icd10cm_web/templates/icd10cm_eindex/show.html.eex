@@ -29,4 +29,4 @@
 </ul>
 
 <span><%= link "Back", to: Routes.icd10cm_eindex_path(@conn, :index), 
-class: "button primary " %></span>
+class: "button primary expanded " %></span>

@@ -1,6 +1,8 @@
-<h1>Show Icd10clinical</h1>
 
-<ul>
+<div class="title_form">
+<h4>Show Icd-10-CM Clinical </h4>
+</div>
+<ul  class = "no-bullet frame_1">
 
   <li>
     <strong>Order number:</strong>
@@ -110,4 +112,4 @@
 </ul>
 
 <span><%= link "Back", to: Routes.icd10clinical_path(@conn, :index),
-  class: "bx--btn bx--btn--primary bx--btn--sm"%></span>
+  class: " primary button expanded"%></span>

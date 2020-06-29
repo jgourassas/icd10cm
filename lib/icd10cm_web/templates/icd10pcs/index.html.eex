@@ -1,13 +1,54 @@
 <% alias Icd10cm.Codes %>
 <% alias Icd10cm.Repo %>
 
-<div class="element_info"><h5>ICD-10-PCS</h5> </div>
+<div class="title_form">
+<h4>Listing Icd-10-PCS</h4>
+</div>
+<!-------------START SEARCH FORM-------------------------------------------->
+<div class="search_form">
+  <div class="large-6 medium-6 small-6 large-centered columns">
+    <ul class="has-form">
+               <%#= link "ICD-10-PCS", to: Routes.pcs_path(@conn, :index) %>
+               <%= form_for @conn, Routes.icd10pcs_path(@conn, :search_pcs),
+                   [as: :search_pcs], fn f -> %>
+            <div class="row collapse">
+                <div class="large-4 small-9 columns">
+                    <%=  select(f, :selection,
+                        ["Long Description": "long_description",
+                        "Used Codes": "codes_2"
+                        ],
+                        prompt: "---Select---",   required: true,
+                        class: "form-control f-dropdown"  ) %>
+                </div><!--large-8 small-9 columns-->
 
-<table class="table responsive  stack table-scroll" >
+                <div class="large-6 medium-6 small-9 columns">
+                    <%= text_input f, :query, placeholder: "Your Query",
+                    class: "form-control ",
+                    minLength: 4 %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-2 small-9 columns">
+                    <%= submit "Search", class:  "button primary expanded"  %>
+
+                </div><!--large-4 small-9 columns-->
+
+
+            </div><!--row collapse-->
+
+
+    <% end %>
+             </ul>
+
+      </div><!-- small-6 large-centered columns -->
+</div>
+</div><!--------search form----------------------->
+<!-------------END SEARCH FORM-------------------------------------------->
+
+<table class="table responsive  stack table-scroll frame_1" >
   <thead>
     <tr>
+      <th>Original Codes</th>
       <th>Codes</th>
-      <th>Codes-2</th>
       <th>Is header? </th>
       <th>Short description</th>
       <th>Long description</th>
@@ -45,10 +86,9 @@
     
       <% end%>
      
-    
-      
+          
       </td>
-      <td><%= icd10pcs.short_description %></td>
+      <td><em><%= icd10pcs.short_description %></em></td>
       <td><%= icd10pcs.long_description %></td>
 
       <td>

@@ -69,16 +69,16 @@ defmodule Icd10cmWeb.Icd10pcsController do
     |> redirect(to: Routes.icd10pcs_path(conn, :index))
   end
 
-  def search_pcses(
+  def search_pcs(
     conn,
-    %{"search_pcses" => %{"query" => query, "selection" => selection}} = params
+    %{"search_pcs" => %{"query" => query, "selection" => selection}} = params
   )
   do
 trim_query = String.trim(query)
 
 page =
-  Icd10cm.Codes.search_pcses(trim_query, selection)
-  |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
+  Icd10cm.Codes.search_pcs(trim_query, selection)
+  |> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
 
 render(conn, "index.html", icd10_pcses: page.entries, page: page)
 end

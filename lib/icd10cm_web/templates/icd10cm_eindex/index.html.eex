@@ -39,7 +39,7 @@
 </div>
 </div><!--------search form----------------------->
 <% alias Icd10cm.Codes %>
-<table class="table responsive stack table-scroll">
+<table class="table responsive stack table-scroll frame_1">
   <thead>
     <tr>
       <th>E-index Term</th>

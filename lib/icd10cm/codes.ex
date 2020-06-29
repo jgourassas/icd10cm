@@ -1489,4 +1489,38 @@ end
   def change_icd10pcs(%Icd10pcs{} = icd10pcs, attrs \\ %{}) do
     Icd10pcs.changeset(icd10pcs, attrs)
   end
+
+###############################
+def search_pcs(query, selection) do
+    case selection do
+      "codes_2" -> search_pcs_code_2(query)
+      "long_description" -> search_pcs_long_description(query)
+      _ -> ""
+    end
+
+end
+################################
+def search_pcs_code_2(term) do
+  IO.puts("---------TERM--------------------------- " )
+  IO.inspect(term)
+  from p in Icd10pcs,
+  order_by: [asc: p.long_description],
+  where: fragment("(?) ilike(?)", p.icd10pcs_code_2,   ^("#{term}%") )   ,
+  limit: 25
+  end
+
+#################################
+def search_pcs_long_description(term) do
+    from p in Icd10pcs,
+    order_by: [asc: p.long_description],
+    where: fragment("(?) @@ plainto_tsquery(?)", p.long_description,   ^("#{term}%")  )
+     or fragment("(?) ilike(?)", p.icd10pcs_code_2,   ^("#{term}%") )   ,
+    #select: [ p.icd10pcs_code_2, p.long_description, p.is_header],
+    limit: 25
+
+
+  end
+################################
+
+
 end

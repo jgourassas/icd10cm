@@ -1,0 +1,85 @@
+            page_path  GET     /                                        Icd10cmWeb.PageController :index
+   icd10clinical_path  POST    /icd10clinicals/search_clinicals         Icd10cmWeb.Icd10clinicalController :search_clinicals
+   icd10clinical_path  GET     /icd10clinicals                          Icd10cmWeb.Icd10clinicalController :index
+   icd10clinical_path  GET     /icd10clinicals/:id/edit                 Icd10cmWeb.Icd10clinicalController :edit
+   icd10clinical_path  GET     /icd10clinicals/new                      Icd10cmWeb.Icd10clinicalController :new
+   icd10clinical_path  GET     /icd10clinicals/:id                      Icd10cmWeb.Icd10clinicalController :show
+   icd10clinical_path  POST    /icd10clinicals                          Icd10cmWeb.Icd10clinicalController :create
+   icd10clinical_path  PATCH   /icd10clinicals/:id                      Icd10cmWeb.Icd10clinicalController :update
+                       PUT     /icd10clinicals/:id                      Icd10cmWeb.Icd10clinicalController :update
+   icd10clinical_path  DELETE  /icd10clinicals/:id                      Icd10cmWeb.Icd10clinicalController :delete
+icd10cm_neoplasm_path  GET     /icd10cm_neoplasms                       Icd10cmWeb.Icd10cm_neoplasmController :index
+icd10cm_neoplasm_path  GET     /icd10cm_neoplasms/:id/edit              Icd10cmWeb.Icd10cm_neoplasmController :edit
+icd10cm_neoplasm_path  GET     /icd10cm_neoplasms/new                   Icd10cmWeb.Icd10cm_neoplasmController :new
+icd10cm_neoplasm_path  GET     /icd10cm_neoplasms/:id                   Icd10cmWeb.Icd10cm_neoplasmController :show
+icd10cm_neoplasm_path  POST    /icd10cm_neoplasms                       Icd10cmWeb.Icd10cm_neoplasmController :create
+icd10cm_neoplasm_path  PATCH   /icd10cm_neoplasms/:id                   Icd10cmWeb.Icd10cm_neoplasmController :update
+                       PUT     /icd10cm_neoplasms/:id                   Icd10cmWeb.Icd10cm_neoplasmController :update
+icd10cm_neoplasm_path  DELETE  /icd10cm_neoplasms/:id                   Icd10cmWeb.Icd10cm_neoplasmController :delete
+icd10cm_neoplasm_path  POST    /icd10cm_neoplasms/search_neoplasms      Icd10cmWeb.Icd10cm_neoplasmController :search_neoplasms
+  icd10cm_eindex_path  GET     /icd10cm_eindexes                        Icd10cmWeb.Icd10cm_eindexController :index
+  icd10cm_eindex_path  GET     /icd10cm_eindexes/:id/edit               Icd10cmWeb.Icd10cm_eindexController :edit
+  icd10cm_eindex_path  GET     /icd10cm_eindexes/new                    Icd10cmWeb.Icd10cm_eindexController :new
+  icd10cm_eindex_path  GET     /icd10cm_eindexes/:id                    Icd10cmWeb.Icd10cm_eindexController :show
+  icd10cm_eindex_path  POST    /icd10cm_eindexes                        Icd10cmWeb.Icd10cm_eindexController :create
+  icd10cm_eindex_path  PATCH   /icd10cm_eindexes/:id                    Icd10cmWeb.Icd10cm_eindexController :update
+                       PUT     /icd10cm_eindexes/:id                    Icd10cmWeb.Icd10cm_eindexController :update
+  icd10cm_eindex_path  DELETE  /icd10cm_eindexes/:id                    Icd10cmWeb.Icd10cm_eindexController :delete
+  icd10cm_eindex_path  POST    /icd10cm_eindexes/search_eindexes        Icd10cmWeb.Icd10cm_eindexController :search_eindexes
+   icd10cm_order_path  GET     /icd10cm_orders                          Icd10cmWeb.Icd10cm_orderController :index
+   icd10cm_order_path  GET     /icd10cm_orders/:id/edit                 Icd10cmWeb.Icd10cm_orderController :edit
+   icd10cm_order_path  GET     /icd10cm_orders/new                      Icd10cmWeb.Icd10cm_orderController :new
+   icd10cm_order_path  GET     /icd10cm_orders/:id                      Icd10cmWeb.Icd10cm_orderController :show
+   icd10cm_order_path  POST    /icd10cm_orders                          Icd10cmWeb.Icd10cm_orderController :create
+   icd10cm_order_path  PATCH   /icd10cm_orders/:id                      Icd10cmWeb.Icd10cm_orderController :update
+                       PUT     /icd10cm_orders/:id                      Icd10cmWeb.Icd10cm_orderController :update
+   icd10cm_order_path  DELETE  /icd10cm_orders/:id                      Icd10cmWeb.Icd10cm_orderController :delete
+   icd10cm_order_path  POST    /icd10cm_orders/search_orders            Icd10cmWeb.Icd10cm_orderController :search_orders
+             ctd_path  GET     /ctds                                    Icd10cmWeb.CtdController :index
+             ctd_path  GET     /ctds/:id/edit                           Icd10cmWeb.CtdController :edit
+             ctd_path  GET     /ctds/new                                Icd10cmWeb.CtdController :new
+             ctd_path  GET     /ctds/:id                                Icd10cmWeb.CtdController :show
+             ctd_path  POST    /ctds                                    Icd10cmWeb.CtdController :create
+             ctd_path  PATCH   /ctds/:id                                Icd10cmWeb.CtdController :update
+                       PUT     /ctds/:id                                Icd10cmWeb.CtdController :update
+             ctd_path  DELETE  /ctds/:id                                Icd10cmWeb.CtdController :delete
+             ctd_path  POST    /ctds/search_ctds                        Icd10cmWeb.CtdController :search_ctds
+  icd10cm_dindex_path  GET     /icd10cm_dindexes                        Icd10cmWeb.Icd10cm_dindexController :index
+  icd10cm_dindex_path  GET     /icd10cm_dindexes/:id/edit               Icd10cmWeb.Icd10cm_dindexController :edit
+  icd10cm_dindex_path  GET     /icd10cm_dindexes/new                    Icd10cmWeb.Icd10cm_dindexController :new
+  icd10cm_dindex_path  GET     /icd10cm_dindexes/:id                    Icd10cmWeb.Icd10cm_dindexController :show
+  icd10cm_dindex_path  POST    /icd10cm_dindexes                        Icd10cmWeb.Icd10cm_dindexController :create
+  icd10cm_dindex_path  PATCH   /icd10cm_dindexes/:id                    Icd10cmWeb.Icd10cm_dindexController :update
+                       PUT     /icd10cm_dindexes/:id                    Icd10cmWeb.Icd10cm_dindexController :update
+  icd10cm_dindex_path  DELETE  /icd10cm_dindexes/:id                    Icd10cmWeb.Icd10cm_dindexController :delete
+  icd10cm_dindex_path  POST    /icd10cm_dindexes/search_dindexes        Icd10cmWeb.Icd10cm_dindexController :search_dindexes
+             pcs_path  GET     /icd10_pcses                             Icd10cmWeb.Icd10pcsController :index
+             pcs_path  GET     /icd10_pcses/:id/edit                    Icd10cmWeb.Icd10pcsController :edit
+             pcs_path  GET     /icd10_pcses/new                         Icd10cmWeb.Icd10pcsController :new
+             pcs_path  GET     /icd10_pcses/:id                         Icd10cmWeb.Icd10pcsController :show
+             pcs_path  POST    /icd10_pcses                             Icd10cmWeb.Icd10pcsController :create
+             pcs_path  PATCH   /icd10_pcses/:id                         Icd10cmWeb.Icd10pcsController :update
+                       PUT     /icd10_pcses/:id                         Icd10cmWeb.Icd10pcsController :update
+             pcs_path  DELETE  /icd10_pcses/:id                         Icd10cmWeb.Icd10pcsController :delete
+        icd10pcs_path  POST    /icd10_pcses/search_pcs                  Icd10cmWeb.Icd10pcsController :search_pcs
+  live_dashboard_path  GET     /dashboard                               Phoenix.LiveView.Plug :home
+  live_dashboard_path  GET     /dashboard/:node                         Phoenix.LiveView.Plug :home
+  live_dashboard_path  GET     /dashboard/:node/os                      Phoenix.LiveView.Plug :os_mon
+  live_dashboard_path  GET     /dashboard/:node/metrics                 Phoenix.LiveView.Plug :metrics
+  live_dashboard_path  GET     /dashboard/:node/metrics/:group          Phoenix.LiveView.Plug :metrics
+  live_dashboard_path  GET     /dashboard/:node/ports                   Phoenix.LiveView.Plug :ports
+  live_dashboard_path  GET     /dashboard/:node/ports/:port             Phoenix.LiveView.Plug :ports
+  live_dashboard_path  GET     /dashboard/:node/processes               Phoenix.LiveView.Plug :processes
+  live_dashboard_path  GET     /dashboard/:node/processes/:pid          Phoenix.LiveView.Plug :processes
+  live_dashboard_path  GET     /dashboard/:node/ets                     Phoenix.LiveView.Plug :ets
+  live_dashboard_path  GET     /dashboard/:node/ets/:ref                Phoenix.LiveView.Plug :ets
+  live_dashboard_path  GET     /dashboard/:node/sockets                 Phoenix.LiveView.Plug :sockets
+  live_dashboard_path  GET     /dashboard/:node/sockets/:port           Phoenix.LiveView.Plug :sockets
+  live_dashboard_path  GET     /dashboard/:node/applications            Phoenix.LiveView.Plug :applications
+  live_dashboard_path  GET     /dashboard/:node/request_logger          Phoenix.LiveView.Plug :request_logger
+  live_dashboard_path  GET     /dashboard/:node/request_logger/:stream  Phoenix.LiveView.Plug :request_logger
+            websocket  WS      /live/websocket                          Phoenix.LiveView.Socket
+             longpoll  GET     /live/longpoll                           Phoenix.LiveView.Socket
+             longpoll  POST    /live/longpoll                           Phoenix.LiveView.Socket
+            websocket  WS      /socket/websocket                        Icd10cmWeb.UserSocket
+
