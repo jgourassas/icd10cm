@@ -639,4 +639,105 @@ defmodule Icd10cm.CodesTest do
       assert %Ecto.Changeset{} = Codes.change_icd10cm_dindex(icd10cm_dindex)
     end
   end
+
+  describe "icd10_pcses" do
+    alias Icd10cm.Codes.Icd10pcs
+
+    @valid_attrs %{approach: "some approach", approach_title: "some approach_title", body_part: "some body_part", body_part_title: "some body_part_title", body_system: "some body_system", body_system_title: "some body_system_title", device: "some device", device_title: "some device_title", icd10pcs_code: "some icd10pcs_code", icd10pcs_code_2: "some icd10pcs_code_2", icd10pcs_code_2_ltree: "some icd10pcs_code_2_ltree", icd10pcs_code_ltree: "some icd10pcs_code_ltree", is_header: "some is_header", long_description: "some long_description", order_number: 42, qualifier: "some qualifier", qualifier_title: "some qualifier_title", root_operation: "some root_operation", root_operation_title: "some root_operation_title", section: "some section", section_title: "some section_title", short_description: "some short_description"}
+    @update_attrs %{approach: "some updated approach", approach_title: "some updated approach_title", body_part: "some updated body_part", body_part_title: "some updated body_part_title", body_system: "some updated body_system", body_system_title: "some updated body_system_title", device: "some updated device", device_title: "some updated device_title", icd10pcs_code: "some updated icd10pcs_code", icd10pcs_code_2: "some updated icd10pcs_code_2", icd10pcs_code_2_ltree: "some updated icd10pcs_code_2_ltree", icd10pcs_code_ltree: "some updated icd10pcs_code_ltree", is_header: "some updated is_header", long_description: "some updated long_description", order_number: 43, qualifier: "some updated qualifier", qualifier_title: "some updated qualifier_title", root_operation: "some updated root_operation", root_operation_title: "some updated root_operation_title", section: "some updated section", section_title: "some updated section_title", short_description: "some updated short_description"}
+    @invalid_attrs %{approach: nil, approach_title: nil, body_part: nil, body_part_title: nil, body_system: nil, body_system_title: nil, device: nil, device_title: nil, icd10pcs_code: nil, icd10pcs_code_2: nil, icd10pcs_code_2_ltree: nil, icd10pcs_code_ltree: nil, is_header: nil, long_description: nil, order_number: nil, qualifier: nil, qualifier_title: nil, root_operation: nil, root_operation_title: nil, section: nil, section_title: nil, short_description: nil}
+
+    def icd10pcs_fixture(attrs \\ %{}) do
+      {:ok, icd10pcs} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Codes.create_icd10pcs()
+
+      icd10pcs
+    end
+
+    test "list_icd10_pcses/0 returns all icd10_pcses" do
+      icd10pcs = icd10pcs_fixture()
+      assert Codes.list_icd10_pcses() == [icd10pcs]
+    end
+
+    test "get_icd10pcs!/1 returns the icd10pcs with given id" do
+      icd10pcs = icd10pcs_fixture()
+      assert Codes.get_icd10pcs!(icd10pcs.id) == icd10pcs
+    end
+
+    test "create_icd10pcs/1 with valid data creates a icd10pcs" do
+      assert {:ok, %Icd10pcs{} = icd10pcs} = Codes.create_icd10pcs(@valid_attrs)
+      assert icd10pcs.approach == "some approach"
+      assert icd10pcs.approach_title == "some approach_title"
+      assert icd10pcs.body_part == "some body_part"
+      assert icd10pcs.body_part_title == "some body_part_title"
+      assert icd10pcs.body_system == "some body_system"
+      assert icd10pcs.body_system_title == "some body_system_title"
+      assert icd10pcs.device == "some device"
+      assert icd10pcs.device_title == "some device_title"
+      assert icd10pcs.icd10pcs_code == "some icd10pcs_code"
+      assert icd10pcs.icd10pcs_code_2 == "some icd10pcs_code_2"
+      assert icd10pcs.icd10pcs_code_2_ltree == "some icd10pcs_code_2_ltree"
+      assert icd10pcs.icd10pcs_code_ltree == "some icd10pcs_code_ltree"
+      assert icd10pcs.is_header == "some is_header"
+      assert icd10pcs.long_description == "some long_description"
+      assert icd10pcs.order_number == 42
+      assert icd10pcs.qualifier == "some qualifier"
+      assert icd10pcs.qualifier_title == "some qualifier_title"
+      assert icd10pcs.root_operation == "some root_operation"
+      assert icd10pcs.root_operation_title == "some root_operation_title"
+      assert icd10pcs.section == "some section"
+      assert icd10pcs.section_title == "some section_title"
+      assert icd10pcs.short_description == "some short_description"
+    end
+
+    test "create_icd10pcs/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Codes.create_icd10pcs(@invalid_attrs)
+    end
+
+    test "update_icd10pcs/2 with valid data updates the icd10pcs" do
+      icd10pcs = icd10pcs_fixture()
+      assert {:ok, %Icd10pcs{} = icd10pcs} = Codes.update_icd10pcs(icd10pcs, @update_attrs)
+      assert icd10pcs.approach == "some updated approach"
+      assert icd10pcs.approach_title == "some updated approach_title"
+      assert icd10pcs.body_part == "some updated body_part"
+      assert icd10pcs.body_part_title == "some updated body_part_title"
+      assert icd10pcs.body_system == "some updated body_system"
+      assert icd10pcs.body_system_title == "some updated body_system_title"
+      assert icd10pcs.device == "some updated device"
+      assert icd10pcs.device_title == "some updated device_title"
+      assert icd10pcs.icd10pcs_code == "some updated icd10pcs_code"
+      assert icd10pcs.icd10pcs_code_2 == "some updated icd10pcs_code_2"
+      assert icd10pcs.icd10pcs_code_2_ltree == "some updated icd10pcs_code_2_ltree"
+      assert icd10pcs.icd10pcs_code_ltree == "some updated icd10pcs_code_ltree"
+      assert icd10pcs.is_header == "some updated is_header"
+      assert icd10pcs.long_description == "some updated long_description"
+      assert icd10pcs.order_number == 43
+      assert icd10pcs.qualifier == "some updated qualifier"
+      assert icd10pcs.qualifier_title == "some updated qualifier_title"
+      assert icd10pcs.root_operation == "some updated root_operation"
+      assert icd10pcs.root_operation_title == "some updated root_operation_title"
+      assert icd10pcs.section == "some updated section"
+      assert icd10pcs.section_title == "some updated section_title"
+      assert icd10pcs.short_description == "some updated short_description"
+    end
+
+    test "update_icd10pcs/2 with invalid data returns error changeset" do
+      icd10pcs = icd10pcs_fixture()
+      assert {:error, %Ecto.Changeset{}} = Codes.update_icd10pcs(icd10pcs, @invalid_attrs)
+      assert icd10pcs == Codes.get_icd10pcs!(icd10pcs.id)
+    end
+
+    test "delete_icd10pcs/1 deletes the icd10pcs" do
+      icd10pcs = icd10pcs_fixture()
+      assert {:ok, %Icd10pcs{}} = Codes.delete_icd10pcs(icd10pcs)
+      assert_raise Ecto.NoResultsError, fn -> Codes.get_icd10pcs!(icd10pcs.id) end
+    end
+
+    test "change_icd10pcs/1 returns a icd10pcs changeset" do
+      icd10pcs = icd10pcs_fixture()
+      assert %Ecto.Changeset{} = Codes.change_icd10pcs(icd10pcs)
+    end
+  end
 end

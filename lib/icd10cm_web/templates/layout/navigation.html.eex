@@ -25,12 +25,17 @@
                         <%= link "ICD10-External Injuries",  to: Routes.icd10cm_eindex_path(@conn, :index) %>
                      </li>
                      <li>
-                        <%= link "ICD-10-CM Ordered List",  to: Routes.icd10cm_order_path(@conn, :index) %>
+                        <%= link "ICD-10-CM Ordered List",  
+                        to: Routes.icd10cm_order_path(@conn, :index) %>
                      </li>
-<li>
+                        
+                     <li>
                         <%= link "For Synonyms. Comparative Toxicogenomics Database",  to: Routes.ctd_path(@conn, :index) %>
                      </li>
 
+                   <li> 
+                   <%= link "ICD-10-PCS", to: Routes.pcs_path(@conn, :index) %>
+                   </li>
                 </ul>
             </li>
 

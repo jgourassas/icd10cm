@@ -1,0 +1,64 @@
+<% alias Icd10cm.Codes %>
+<% alias Icd10cm.Repo %>
+
+<div class="element_info"><h5>ICD-10-PCS</h5> </div>
+
+<table class="table responsive  stack table-scroll" >
+  <thead>
+    <tr>
+      <th>Codes</th>
+      <th>Codes-2</th>
+      <th>Is header? </th>
+      <th>Short description</th>
+      <th>Long description</th>
+
+      <th>Show</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for icd10pcs <- @icd10_pcses do %>
+    <tr>
+     <td><%= icd10pcs.icd10pcs_code %></td>
+      <td>
+       <span style="color:#08088A;">
+      <strong>
+      <%= icd10pcs.icd10pcs_code_2 %>
+      </strong>
+      </span>
+      </td>
+      <td>
+           <%= if icd10pcs.is_header == "0" do %>
+      <span style="color:red">
+      Yes-
+      <%= icd10pcs.is_header %>
+      </span>
+      
+      <%else %>
+      <span style="color:#117A65;">
+       <i class="fa fa-heart-o" style="font-size:14px;color:#117A65;" ></i>
+         No
+      </span>
+
+      <span style="color:#BDBDBD">
+      (<%= icd10pcs.is_header %>)
+      </span>
+    
+      <% end%>
+     
+    
+      
+      </td>
+      <td><%= icd10pcs.short_description %></td>
+      <td><%= icd10pcs.long_description %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.pcs_path(@conn, :show, icd10pcs),  class: "small primary button expanded"  %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+ <div class="pagination text-center" role="navigation" aria-label="Pagination">
+     <%= pagination_links @page %>
+    </div>
+<span><%#= link "New Icd10pcs", to: Routes.icd10pcs_path(@conn, :new) %></span>

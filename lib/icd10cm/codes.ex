@@ -1386,4 +1386,107 @@ def find_dindex_code(title, poisoning) do
 
 end#def
   #############################
+
+  alias Icd10cm.Codes.Icd10pcs
+
+  @doc """
+  Returns the list of icd10_pcses.
+
+  ## Examples
+
+      iex> list_icd10_pcses()
+      [%Icd10pcs{}, ...]
+
+  """
+  def list_icd10_pcses(_params) do
+    _page =
+    Icd10pcs
+    |> order_by([p], [p.long_description])
+end
+
+
+  def list_icd10_pcses do
+    Repo.all(Icd10pcs)
+  end
+
+  @doc """
+  Gets a single icd10pcs.
+
+  Raises `Ecto.NoResultsError` if the Icd10pcs does not exist.
+
+  ## Examples
+
+      iex> get_icd10pcs!(123)
+      %Icd10pcs{}
+
+      iex> get_icd10pcs!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_icd10pcs!(id), do: Repo.get!(Icd10pcs, id)
+
+  @doc """
+  Creates a icd10pcs.
+
+  ## Examples
+
+      iex> create_icd10pcs(%{field: value})
+      {:ok, %Icd10pcs{}}
+
+      iex> create_icd10pcs(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_icd10pcs(attrs \\ %{}) do
+    %Icd10pcs{}
+    |> Icd10pcs.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a icd10pcs.
+
+  ## Examples
+
+      iex> update_icd10pcs(icd10pcs, %{field: new_value})
+      {:ok, %Icd10pcs{}}
+
+      iex> update_icd10pcs(icd10pcs, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_icd10pcs(%Icd10pcs{} = icd10pcs, attrs) do
+    icd10pcs
+    |> Icd10pcs.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a icd10pcs.
+
+  ## Examples
+
+      iex> delete_icd10pcs(icd10pcs)
+      {:ok, %Icd10pcs{}}
+
+      iex> delete_icd10pcs(icd10pcs)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_icd10pcs(%Icd10pcs{} = icd10pcs) do
+    Repo.delete(icd10pcs)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking icd10pcs changes.
+
+  ## Examples
+
+      iex> change_icd10pcs(icd10pcs)
+      %Ecto.Changeset{data: %Icd10pcs{}}
+
+  """
+  def change_icd10pcs(%Icd10pcs{} = icd10pcs, attrs \\ %{}) do
+    Icd10pcs.changeset(icd10pcs, attrs)
+  end
 end

@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.13
 -- Dumped by pg_dump version 9.6.13
 
--- Started on 2020-06-04 15:34:13 EEST
+-- Started on 2020-06-29 12:09:43 EEST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 2510 (class 0 OID 58703)
+-- TOC entry 2516 (class 0 OID 58703)
 -- Dependencies: 193
 -- Data for Name: icd10cm_eindexes; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -341,7 +341,7 @@ INSERT INTO public.icd10cm_eindexes (id, title, main_term_text, main_term_jsonb,
 
 
 --
--- TOC entry 2516 (class 0 OID 0)
+-- TOC entry 2522 (class 0 OID 0)
 -- Dependencies: 192
 -- Name: iicd10cm_eindexes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -349,7 +349,7 @@ INSERT INTO public.icd10cm_eindexes (id, title, main_term_text, main_term_jsonb,
 SELECT pg_catalog.setval('public.iicd10cm_eindexes_id_seq', 1, false);
 
 
--- Completed on 2020-06-04 15:34:13 EEST
+-- Completed on 2020-06-29 12:09:44 EEST
 
 --
 -- PostgreSQL database dump complete

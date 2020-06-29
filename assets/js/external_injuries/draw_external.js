@@ -405,8 +405,6 @@ class Draw {
     let links = json_graph.edges
     let nodes = json_graph.nodes
 
-    //console.log("JSON GRAPH" + JSON.stringify(links));
-    ////////jgour
 
 
     let svg = group.append("svg")
@@ -518,51 +516,38 @@ class Draw {
     /////////////////////////
   }
 
-  
+
 
 
 
   ////////////////
   diagram(group) {
-    let tree_origin_x = width * 0.06;
-    let tree_origin_y = height * 0.07;
+    let tree_origin_x = width * 0.08;
+    let tree_origin_y = height * 0.09;
 
 
+    // declares a tree layout and assigns the size
+    let treemap = d3.tree()
+      .size([width, height - 200])
 
-    let tree = d3.tree()
-      .size([width, height])
+    let nodes = d3.hierarchy(nested_data)
+    nodes = treemap(nodes);
 
-    ////////jgour
-    //   let nodes = d3.hierarchy(nested_data)
-    let nodes = d3.hierarchy(nested_data, d => d.term_level);
-    nodes = tree(nodes)
-    /*
-     console.log("jgour" + JSON.stringify( injury_template ) )
-     console.log("links" + JSON.stringify( links) )
-     stratify = d3.stratify()
-     .id(d => source)
-     .parentId(d => source)
-    (links)
-      console.log("jgour" + JSON.stringify( links) )
-   // let  app_links = nodes.links();
-*/
 
+    ///////////////////////
     let svg = group.append("svg")
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("id", "svg_group")
+      .attr("id", "group_svg")
       .attr('transform', `translate(${tree_origin_x}, ${tree_origin_y})`);
-
-
-
 
     // declares a tree layout and assigns the size
     let node = svg.selectAll(".node")
       .data(nested_data)
+      //   .data(nodes.descendants())
       .enter().append("svg:g")
       .attr("class", "node")
-
 
 
 
@@ -593,6 +578,7 @@ class Draw {
 
       })
       .append("title")
+      .attr("id", "icd10cm_title")
       .attr("cursor", "pointer")
       .text((d) => {
         return " Level: "
@@ -605,13 +591,6 @@ class Draw {
       );//text
 
 
-
-
-
-  
-
-    
-    //////////////////////////////
 
     ////////////////////
   };//diagram
@@ -727,7 +706,7 @@ class Data_graph {
 
     this.build_edges(g);
     this.build_nodes(g)
-
+    //this.insert_children_to_template(g);
     return g;
 
   };
@@ -738,22 +717,17 @@ class Data_graph {
   build_nodes(graph) {
 
     graph.forEachNode((node, attributes) => {
-      let template_i = this.insert_to_template(node, attributes);
+      let template_i = this.insert_nodes_to_template(graph, node, attributes);
 
-    })//graph1 
-
+    })//graph
 
     /*
       let nested_data =  nest(injury_template)
           console.log("NESTED DATA " + JSON.stringify(nested_data) )
     */
     console.log("-----------------------")
-    //console.log("EXPORT" + JSON.stringify(graph.export()));
-    //console.log(" INJURY TEMPLATE " + JSON.stringify( injury_template));
-
     set_json_graph(graph)
-
-
+    //console.log("JSON GRAPH " +  JSON.stringify(json_graph ) )
     console.log("-----------------------")
 
     nested_data = d3.nest()
@@ -777,36 +751,69 @@ class Data_graph {
 
       };//if
     };//for
-    //console.log("get parent" + this.parent )
+
     return this.parent;
 
   }
   /////////////////////////////
+
+
   get_children(term_level) {
-    let children = "";
+    //console.log("term_level-------> " + term_level);
+    let children = [];
     for (let i = 0; i < parent_child_template.length; i++) {
       let template_i = parent_child_template[i];
       if (template_i["term_level"] == term_level) {
-        this.children = template_i["children"];
-
+        children.push(template_i["children"]);
       };//if
     };//for
-
-    return this.children;
-
+    //console.log("term_level children -------> " + children);
+    return children
   }/////
   ///////////////////////////
-  add_child(node, pos){
-    this.children.splice(pos, 0, node);
-    node.parent = this;
+
+
+
+
+
+  insert_children_to_template(graph) {
+
+    graph.forEachNode((node, attributes) => {
+      let all_children = []
+
+      let term_level = attributes["term_level"]
+      let child = this.get_children(term_level);
+
+      if (graph.hasNode(child)) {
+
+        let children_attr = graph.getNodeAttributes(Number(child))
+
+        ////////////////////////////
+        for (let i = 0; i < injury_template.length; i++) {
+          let template_i = injury_template[i];
+
+          if (template_i["id"] == node) {
+            all_children.push(children_attr)
+
+          };//if template_i
+          ///   injury_template.push(["children" + this.all_children ])
+
+
+        };//for
+        //console.log("CHILDREN " + JSON.stringify( children_attr ) + " " + node );
+        //////////////////////////////////
+        // injury_template.push({ "children": children_attr } );
+        injury_template.push(["children" + all_children])
+      };//if graph
+
+    });//graph.forEach
+
+
   }
-  ////////////////////
-  insert_to_template(node, attributes) {
+
+  /////////////////////////////
+  insert_nodes_to_template(graph, node, attributes) {
     let parent = this.get_parent(attributes["term_level"])
-    let children = this.get_children(attributes["term_level"])
-
-    // console.log("PARENT : " + parent +  " CHILDREN " + children +" LEVEL  " + attributes["term_level"])
-
 
 
     let a_node = {
@@ -821,14 +828,33 @@ class Data_graph {
       term_level: attributes["term_level"],
       term_codes: attributes["term_codes"],
       term_code: attributes["term_code"],
-      parent: parent,
-      children: children
-
+      parent: parent
     };//an_item 
 
 
-
     injury_template.push(a_node);
+
+
+
+    /*
+    {
+    "name": "Top Level",
+    "children": [
+      {
+        "name": "Level 2: A",
+        "children": [
+          { "name": "Son of A" },
+          { "name": "Daughter of A" }
+        ]
+      },
+      { "name": "Level 2: B" }
+    ]
+  };
+  
+    */
+
+
+
 
 
   };//insert_to_template
@@ -954,7 +980,10 @@ class Prep_data {
     let graph = this.g.set_graph();
 
 
-    //console.log(" INJURY TEMPLATE: "+JSON.stringify(injury_template) + " length " + injury_template.length)
+   // console.log(" INJURY TEMPLATE: "
+   //   + JSON.stringify(injury_template)
+   //   + " length " + injury_template.length)
+
     //  console.log("NODES DATA: "+JSON.stringify(nodes_data) + " length " + nodes_data.length)
     /*
     console.log("***********************************");
@@ -967,26 +996,27 @@ class Prep_data {
     
     console.log("-----start ---edges---------------------------");
   */
-
-    console.log("----------end edges ----------------------");
-    graph.forEachEdge(
-      (edge, attributes, source, target, sourceAttributes, targetAttributes) => {
-        console.log(`Edge from ${source} to ${target}`)
-        console.log(`sourceAttributes  ${JSON.stringify(sourceAttributes)} 
-            targetAttributes  ${JSON.stringify(targetAttributes)}`)
-      });
-    console.log('Size: Number of edges in the graph ' + graph.size);
-    console.log("----------end edges ----------------------");
-
-
     /*
-     graph.forEachNode((node, attributes) => {
-        console.log(" NODE----------- ID "+JSON.stringify(node) + 
-        "ATTRIBUTES " + JSON.stringify(attributes))
-       //console.log(`node attributes ${node} to ${attributes}`);
-        });
-    
+        console.log("----------end edges ----------------------");
+        graph.forEachEdge(
+          (edge, attributes, source, target, sourceAttributes, targetAttributes) => {
+            console.log(`Edge from ${source} to ${target}`)
+            console.log(`sourceAttributes  ${JSON.stringify(sourceAttributes)} 
+                targetAttributes  ${JSON.stringify(targetAttributes)}`)
+          });
+        console.log('Size: Number of edges in the graph ' + graph.size);
+        console.log("----------end edges ----------------------");
     */
+    /*
+        
+         graph.forEachNode((node, attributes) => {
+            console.log(" NODE----------- ID "+JSON.stringify(node) + 
+            "ATTRIBUTES " + JSON.stringify(attributes))
+           //console.log(`node attributes ${node} to ${attributes}`);
+            });
+        
+      */
+
 
 
 

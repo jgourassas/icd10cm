@@ -206,11 +206,12 @@ background: "#740707";
 
 }
 /*************************************/
-#tooltip{
+#icd10cm_title{
   position: absolute;
   z-index: 2;
-  background: rgba(0,153,76,0.8);
-  width:130px;
+  //background: rgba(0,153,76,0.8);
+  background: "yellow";
+  width:230px;
   height:20px;
   color:white;
   font-size: 14px;

@@ -104,6 +104,60 @@ ALTER SEQUENCE public.ctds_id_seq OWNED BY public.ctds.id;
 
 
 --
+-- Name: icd10_pcses; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.icd10_pcses (
+    id bigint NOT NULL,
+    order_number integer,
+    icd10pcs_code character varying(255),
+    icd10pcs_code_2 character varying(255),
+    icd10pcs_code_2_ltree character varying(255),
+    is_header character varying(255),
+    short_description character varying(255),
+    long_description character varying(255),
+    section character varying(255),
+    section_title character varying(255),
+    body_system character varying(255),
+    body_system_title character varying(255),
+    root_operation character varying(255),
+    root_operation_title character varying(255),
+    body_part character varying(255),
+    body_part_title character varying(255),
+    approach character varying(255),
+    approach_title character varying(255),
+    device character varying(255),
+    device_title character varying(255),
+    qualifier character varying(255),
+    qualifier_title character varying(255),
+    icd10pcs_code_ltree character varying(255)
+);
+
+
+ALTER TABLE public.icd10_pcses OWNER TO postgres;
+
+--
+-- Name: icd10_pcses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.icd10_pcses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.icd10_pcses_id_seq OWNER TO postgres;
+
+--
+-- Name: icd10_pcses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.icd10_pcses_id_seq OWNED BY public.icd10_pcses.id;
+
+
+--
 -- Name: icd10clinicals; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -323,6 +377,13 @@ ALTER TABLE ONLY public.ctds ALTER COLUMN id SET DEFAULT nextval('public.ctds_id
 
 
 --
+-- Name: icd10_pcses id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.icd10_pcses ALTER COLUMN id SET DEFAULT nextval('public.icd10_pcses_id_seq'::regclass);
+
+
+--
 -- Name: icd10clinicals id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -363,6 +424,14 @@ ALTER TABLE ONLY public.icd10cm_orders ALTER COLUMN id SET DEFAULT nextval('publ
 
 ALTER TABLE ONLY public.ctds
     ADD CONSTRAINT ctds_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: icd10_pcses icd10_pcses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.icd10_pcses
+    ADD CONSTRAINT icd10_pcses_pkey PRIMARY KEY (id);
 
 
 --

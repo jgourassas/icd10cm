@@ -1,0 +1,118 @@
+<h1>Show Icd10pcs</h1>
+
+<ul>
+
+  <li>
+    <strong>Order number:</strong>
+    <%= @icd10pcs.order_number %>
+  </li>
+
+  <li>
+    <strong>Icd10pcs code:</strong>
+    <%= @icd10pcs.icd10pcs_code %>
+  </li>
+
+  <li>
+    <strong>Icd10pcs code 2:</strong>
+    <%= @icd10pcs.icd10pcs_code_2 %>
+  </li>
+
+  <li>
+    <strong>Icd10pcs code 2 ltree:</strong>
+    <%= @icd10pcs.icd10pcs_code_2_ltree %>
+  </li>
+
+  <li>
+    <strong>Is header:</strong>
+    <%= @icd10pcs.is_header %>
+  </li>
+
+  <li>
+    <strong>Short description:</strong>
+    <%= @icd10pcs.short_description %>
+  </li>
+
+  <li>
+    <strong>Long description:</strong>
+    <%= @icd10pcs.long_description %>
+  </li>
+
+  <li>
+    <strong>Section:</strong>
+    <%= @icd10pcs.section %>
+  </li>
+
+  <li>
+    <strong>Section title:</strong>
+    <%= @icd10pcs.section_title %>
+  </li>
+
+  <li>
+    <strong>Body system:</strong>
+    <%= @icd10pcs.body_system %>
+  </li>
+
+  <li>
+    <strong>Body system title:</strong>
+    <%= @icd10pcs.body_system_title %>
+  </li>
+
+  <li>
+    <strong>Root operation:</strong>
+    <%= @icd10pcs.root_operation %>
+  </li>
+
+  <li>
+    <strong>Root operation title:</strong>
+    <%= @icd10pcs.root_operation_title %>
+  </li>
+
+  <li>
+    <strong>Body part:</strong>
+    <%= @icd10pcs.body_part %>
+  </li>
+
+  <li>
+    <strong>Body part title:</strong>
+    <%= @icd10pcs.body_part_title %>
+  </li>
+
+  <li>
+    <strong>Approach:</strong>
+    <%= @icd10pcs.approach %>
+  </li>
+
+  <li>
+    <strong>Approach title:</strong>
+    <%= @icd10pcs.approach_title %>
+  </li>
+
+  <li>
+    <strong>Device:</strong>
+    <%= @icd10pcs.device %>
+  </li>
+
+  <li>
+    <strong>Device title:</strong>
+    <%= @icd10pcs.device_title %>
+  </li>
+
+  <li>
+    <strong>Qualifier:</strong>
+    <%= @icd10pcs.qualifier %>
+  </li>
+
+  <li>
+    <strong>Qualifier title:</strong>
+    <%= @icd10pcs.qualifier_title %>
+  </li>
+
+  <li>
+    <strong>Icd10pcs code ltree:</strong>
+    <%= @icd10pcs.icd10pcs_code_ltree %>
+  </li>
+
+</ul>
+
+<span><%#= link "Edit", to: Routes.icd10pcs_path(@conn, :edit, @icd10pcs) %></span>
+<span><%= link "Back", to: Routes.pcs_path(@conn, :index) %></span>

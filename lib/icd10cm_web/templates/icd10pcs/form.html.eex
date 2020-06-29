@@ -1,0 +1,99 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :order_number %>
+  <%= number_input f, :order_number %>
+  <%= error_tag f, :order_number %>
+
+  <%= label f, :icd10pcs_code %>
+  <%= text_input f, :icd10pcs_code %>
+  <%= error_tag f, :icd10pcs_code %>
+
+  <%= label f, :icd10pcs_code_2 %>
+  <%= text_input f, :icd10pcs_code_2 %>
+  <%= error_tag f, :icd10pcs_code_2 %>
+
+  <%= label f, :icd10pcs_code_2_ltree %>
+  <%= text_input f, :icd10pcs_code_2_ltree %>
+  <%= error_tag f, :icd10pcs_code_2_ltree %>
+
+  <%= label f, :is_header %>
+  <%= text_input f, :is_header %>
+  <%= error_tag f, :is_header %>
+
+  <%= label f, :short_description %>
+  <%= text_input f, :short_description %>
+  <%= error_tag f, :short_description %>
+
+  <%= label f, :long_description %>
+  <%= text_input f, :long_description %>
+  <%= error_tag f, :long_description %>
+
+  <%= label f, :section %>
+  <%= text_input f, :section %>
+  <%= error_tag f, :section %>
+
+  <%= label f, :section_title %>
+  <%= text_input f, :section_title %>
+  <%= error_tag f, :section_title %>
+
+  <%= label f, :body_system %>
+  <%= text_input f, :body_system %>
+  <%= error_tag f, :body_system %>
+
+  <%= label f, :body_system_title %>
+  <%= text_input f, :body_system_title %>
+  <%= error_tag f, :body_system_title %>
+
+  <%= label f, :root_operation %>
+  <%= text_input f, :root_operation %>
+  <%= error_tag f, :root_operation %>
+
+  <%= label f, :root_operation_title %>
+  <%= text_input f, :root_operation_title %>
+  <%= error_tag f, :root_operation_title %>
+
+  <%= label f, :body_part %>
+  <%= text_input f, :body_part %>
+  <%= error_tag f, :body_part %>
+
+  <%= label f, :body_part_title %>
+  <%= text_input f, :body_part_title %>
+  <%= error_tag f, :body_part_title %>
+
+  <%= label f, :approach %>
+  <%= text_input f, :approach %>
+  <%= error_tag f, :approach %>
+
+  <%= label f, :approach_title %>
+  <%= text_input f, :approach_title %>
+  <%= error_tag f, :approach_title %>
+
+  <%= label f, :device %>
+  <%= text_input f, :device %>
+  <%= error_tag f, :device %>
+
+  <%= label f, :device_title %>
+  <%= text_input f, :device_title %>
+  <%= error_tag f, :device_title %>
+
+  <%= label f, :qualifier %>
+  <%= text_input f, :qualifier %>
+  <%= error_tag f, :qualifier %>
+
+  <%= label f, :qualifier_title %>
+  <%= text_input f, :qualifier_title %>
+  <%= error_tag f, :qualifier_title %>
+
+  <%= label f, :icd10pcs_code_ltree %>
+  <%= text_input f, :icd10pcs_code_ltree %>
+  <%= error_tag f, :icd10pcs_code_ltree %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>
