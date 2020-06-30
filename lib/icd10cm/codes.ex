@@ -1494,6 +1494,7 @@ end
 def search_pcs(query, selection) do
     case selection do
       "codes_2" -> search_pcs_code_2(query)
+      "long_codes" -> search_pcs_long_codes(query)
       "long_description" -> search_pcs_long_description(query)
       _ -> ""
     end
@@ -1510,7 +1511,7 @@ def search_pcs_code_2(term) do
   end
 
 #################################
-def search_pcs_long_description(term) do
+def search_pcs_long_codes(term) do
     from p in Icd10pcs,
     order_by: [asc: p.long_description],
     where: fragment("(?) @@ plainto_tsquery(?)", p.long_description,   ^("#{term}%")  )
@@ -1521,6 +1522,139 @@ def search_pcs_long_description(term) do
 
   end
 ################################
+def search_pcs_long_description(term) do
+  from p in Icd10pcs,
+  order_by: [asc: p.long_description],
+  where: fragment("(?) @@ plainto_tsquery(?)", p.long_description,   ^("#{term}%")  ),
+  limit: 25
 
 
+end
+################################
+
+
+  alias Icd10cm.Codes.Icd10pcs_defs
+
+  @doc """
+  Returns the list of icd10pcs_defs.
+
+  ## Examples
+
+      iex> list_icd10pcs_defs()
+      [%Icd10pcs_defs{}, ...]
+
+  """
+  def list_icd10pcs_defs(_params) do
+
+      _page =
+      Icd10pcs_defs
+      |> order_by([p], [p.term_titles])
+
+    end
+
+  @doc """
+  Gets a single icd10pcs_defs.
+
+  Raises `Ecto.NoResultsError` if the Icd10pcs defs does not exist.
+
+  ## Examples
+
+      iex> get_icd10pcs_defs!(123)
+      %Icd10pcs_defs{}
+
+      iex> get_icd10pcs_defs!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_icd10pcs_defs!(id), do: Repo.get!(Icd10pcs_defs, id)
+
+  @doc """
+  Creates a icd10pcs_defs.
+
+  ## Examples
+
+      iex> create_icd10pcs_defs(%{field: value})
+      {:ok, %Icd10pcs_defs{}}
+
+      iex> create_icd10pcs_defs(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_icd10pcs_defs(attrs \\ %{}) do
+    %Icd10pcs_defs{}
+    |> Icd10pcs_defs.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a icd10pcs_defs.
+
+  ## Examples
+
+      iex> update_icd10pcs_defs(icd10pcs_defs, %{field: new_value})
+      {:ok, %Icd10pcs_defs{}}
+
+      iex> update_icd10pcs_defs(icd10pcs_defs, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_icd10pcs_defs(%Icd10pcs_defs{} = icd10pcs_defs, attrs) do
+    icd10pcs_defs
+    |> Icd10pcs_defs.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a icd10pcs_defs.
+
+  ## Examples
+
+      iex> delete_icd10pcs_defs(icd10pcs_defs)
+      {:ok, %Icd10pcs_defs{}}
+
+      iex> delete_icd10pcs_defs(icd10pcs_defs)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_icd10pcs_defs(%Icd10pcs_defs{} = icd10pcs_defs) do
+    Repo.delete(icd10pcs_defs)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking icd10pcs_defs changes.
+
+  ## Examples
+
+      iex> change_icd10pcs_defs(icd10pcs_defs)
+      %Ecto.Changeset{data: %Icd10pcs_defs{}}
+
+  """
+  def change_icd10pcs_defs(%Icd10pcs_defs{} = icd10pcs_defs, attrs \\ %{}) do
+    Icd10pcs_defs.changeset(icd10pcs_defs, attrs)
+  end
+
+####################################
+def search_pcs_defs(query, selection) do
+  case selection do
+    "term_title" -> search_pcs_defs_term_titles(query)
+    #"long_codes" -> search_pcs_long_codes(query)
+    #"long_description" -> search_pcs_long_description(query)
+    _ -> ""
+  end
+
+end
+####################################
+def search_pcs_defs_term_titles(query) do
+  from p in Icd10pcs_defs,
+  order_by: [asc: p.term_titles],
+  where: fragment("(?) @@ plainto_tsquery(?)", p.term_titles,   ^("#{query}%")  ),
+  #select: %{terms: fragment("? ", p.terms),
+  #          section_title: fragment(" ? ",  p.section_title),
+  #          section: fragment(" ? ", p.section)
+  #}
+  limit: 10
+
+end
+
+####################################
 end

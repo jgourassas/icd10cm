@@ -14,8 +14,10 @@
             <div class="row collapse">
                 <div class="large-4 small-9 columns">
                     <%=  select(f, :selection,
-                        ["Long Description": "long_description",
-                        "Used Codes": "codes_2"
+                        ["Long Description and Codes": "long_codes",
+                        "Only Description": "long_description",
+                        "Used Codes": "codes_2",
+
                         ],
                         prompt: "---Select---",   required: true,
                         class: "form-control f-dropdown"  ) %>

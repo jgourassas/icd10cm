@@ -316,6 +316,48 @@ CREATE TABLE public.icd10cm_orders (
 ALTER TABLE public.icd10cm_orders OWNER TO postgres;
 
 --
+-- Name: icd10pcs_defs; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.icd10pcs_defs (
+    id bigint NOT NULL,
+    section character varying(1),
+    section_title character varying(100),
+    axis_code character varying(1),
+    axis_title character varying(255),
+    title_tsv tsvector,
+    term_definition text,
+    term_explanation text,
+    term_titles text,
+    term_includes text,
+    terms jsonb
+);
+
+
+ALTER TABLE public.icd10pcs_defs OWNER TO postgres;
+
+--
+-- Name: icd10pcs_defs_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.icd10pcs_defs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.icd10pcs_defs_id_seq OWNER TO postgres;
+
+--
+-- Name: icd10pcs_defs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.icd10pcs_defs_id_seq OWNED BY public.icd10pcs_defs.id;
+
+
+--
 -- Name: iicd10cm_eindexes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -419,6 +461,13 @@ ALTER TABLE ONLY public.icd10cm_orders ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: icd10pcs_defs id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.icd10pcs_defs ALTER COLUMN id SET DEFAULT nextval('public.icd10pcs_defs_id_seq'::regclass);
+
+
+--
 -- Name: ctds ctds_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -456,6 +505,14 @@ ALTER TABLE ONLY public.icd10cm_dindexes
 
 ALTER TABLE ONLY public.icd10cm_neoplasms
     ADD CONSTRAINT icd10cm_neoplasms_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: icd10pcs_defs icd10pcs_defs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.icd10pcs_defs
+    ADD CONSTRAINT icd10pcs_defs_pkey PRIMARY KEY (id);
 
 
 --

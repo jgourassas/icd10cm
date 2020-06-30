@@ -1,0 +1,58 @@
+<h1>Show Icd10pcs defs</h1>
+
+<ul>
+
+  <li>
+    <strong>Section:</strong>
+    <%= @icd10pcs_defs.section %>
+  </li>
+
+  <li>
+    <strong>Section title:</strong>
+    <%= @icd10pcs_defs.section_title %>
+  </li>
+
+  <li>
+    <strong>Axis code:</strong>
+    <%= @icd10pcs_defs.axis_code %>
+  </li>
+
+  <li>
+    <strong>Axis title:</strong>
+    <%= @icd10pcs_defs.axis_title %>
+  </li>
+
+  <li>
+    <strong>Terms:</strong>
+    <%= @icd10pcs_defs.terms %>
+  </li>
+
+  <li>
+    <strong>Title tsv:</strong>
+    <%= @icd10pcs_defs.title_tsv %>
+  </li>
+
+  <li>
+    <strong>Term definition:</strong>
+    <%= @icd10pcs_defs.term_definition %>
+  </li>
+
+  <li>
+    <strong>Term explanation:</strong>
+    <%= @icd10pcs_defs.term_explanation %>
+  </li>
+
+  <li>
+    <strong>Term titles:</strong>
+    <%= @icd10pcs_defs.term_titles %>
+  </li>
+
+  <li>
+    <strong>Term includes:</strong>
+    <%= @icd10pcs_defs.term_includes %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.icd10pcs_defs_path(@conn, :edit, @icd10pcs_defs) %></span>
+<span><%= link "Back", to: Routes.icd10pcs_defs_path(@conn, :index) %></span>

@@ -1,0 +1,95 @@
+<% alias Icd10cm.Codes %>
+<% alias Icd10cm.Repo %>
+
+<div class="title_form">
+<h4>Listing Icd-10-PCS Definitions</h4>
+</div>
+<!-------------search-------------------------------------->
+<!-------------START SEARCH FORM-------------------------------------------->
+<div class="search_form">
+  <div class="large-6 medium-6 small-6 large-centered columns">
+    <ul class="has-form">
+               <%#= link "ICD-10-PCS", to: Routes.pcs_path(@conn, :index) %>
+               <%= form_for @conn, Routes.icd10pcs_defs_path(@conn, :search_pcs_defs),
+                   [as: :search_pcs_defs], fn f -> %>
+            <div class="row collapse">
+                <div class="large-4 small-9 columns">
+                    <%=  select(f, :selection,
+                        ["Term Title": "term_title",
+                        #"Only Description": "long_description",
+                        #"Used Codes": "codes_2",
+
+                        ],
+                        prompt: "---Select---",   required: true,
+                        class: "form-control f-dropdown"  ) %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-6 medium-6 small-9 columns">
+                    <%= text_input f, :query, placeholder: "Your Query",
+                    class: "form-control ",
+                    minLength: 4 %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-2 small-9 columns">
+                    <%= submit "Search", class:  "button primary expanded"  %>
+
+                </div><!--large-4 small-9 columns-->
+
+
+            </div><!--row collapse-->
+
+
+    <% end %>
+             </ul>
+
+      </div><!-- small-6 large-centered columns -->
+</div>
+</div><!--------search form----------------------->
+<!-------------END SEARCH FORM-------------------------------------------->
+
+
+
+<!-------------search-------------------------------------->
+
+<table class="table responsive  stack table-scroll frame_1">
+  <thead>
+    <tr>
+     <th>Term titles</th>
+      <th>Term definition</th>
+      <th>Term explanation</th>
+      <th>Term includes</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+<%= for icd10pcs_defs <- @icd10pcs_defs do %>
+    <tr>
+    <td>
+         <% term_titles = icd10pcs_defs.term_titles %> 
+        <span style="color:#8000FF;"> 
+        <i class="fa fa-stethoscope" aria-hidden="true"></i>
+        </span>
+        <%=  raw Codes.format_column(term_titles)%>
+       <br/>
+       <span style="color:gray;">
+       Section: <%= icd10pcs_defs.section_title %>
+       </span>
+      </td>
+        <td><em> <%= icd10pcs_defs.term_definition %> </em></td>
+        <td><%= icd10pcs_defs.term_explanation %></td>
+          <td>
+           <% term_includes = icd10pcs_defs.term_includes %> 
+           <span style="font-size:10px;">
+          <%= raw Codes.format_column(term_includes) %>
+          </span>
+          
+          </td>
+   
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<div class="pagination text-center" role="navigation" aria-label="Pagination">
+     <%= pagination_links @page %>
+    </div>
+<span><%#= link "New Icd10pcs defs", to: Routes.icd10pcs_defs_path(@conn, :new) %></span>

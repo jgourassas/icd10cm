@@ -7,12 +7,9 @@ $grey: #adb9c9;
 $dark-grey: #8393a7;
 $darker-grey: #53657d;
 $darkest-grey: #26353f;
-
-
 $white_smoke: #FFFFFF;
 $white: #fff;
 $blue: #0066FF;
-$min_height: rem-calc(650);
 $primary-color:#1779ba;
 $secondary-color:#767676;
 $primary: #1779ba;
@@ -30,7 +27,7 @@ $acc_warning: #E08514;
 $acc_error:	#c32231; 
 
 $azure: hsl(180, 100%, 97%);
-
+$min_height: rem-calc(650);
 
 @mixin border_radius($radius) {
     -webkit-border-radius: $radius;
@@ -165,17 +162,13 @@ td {
 
   .top-bar{
     background-color: $grayCadet;
-    width: 95%;
+    width: 98%;
     margin-left:auto;
     margin-right: auto;
     margin-bottom: rem-calc(25);
     margin-top: rem-calc(25);
   }
   
-.top-bar-section li a:not(.button)
-{
-background: "#740707";
-}
 
 
 .search_form {

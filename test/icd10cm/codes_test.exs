@@ -740,4 +740,81 @@ defmodule Icd10cm.CodesTest do
       assert %Ecto.Changeset{} = Codes.change_icd10pcs(icd10pcs)
     end
   end
+
+  describe "icd10pcs_defs" do
+    alias Icd10cm.Codes.Icd10pcs_defs
+
+    @valid_attrs %{axis_code: "some axis_code", axis_title: "some axis_title", section: "some section", section_title: "some section_title", term_definition: "some term_definition", term_explanation: "some term_explanation", term_includes: "some term_includes", term_titles: "some term_titles", terms: "some terms", title_tsv: "some title_tsv"}
+    @update_attrs %{axis_code: "some updated axis_code", axis_title: "some updated axis_title", section: "some updated section", section_title: "some updated section_title", term_definition: "some updated term_definition", term_explanation: "some updated term_explanation", term_includes: "some updated term_includes", term_titles: "some updated term_titles", terms: "some updated terms", title_tsv: "some updated title_tsv"}
+    @invalid_attrs %{axis_code: nil, axis_title: nil, section: nil, section_title: nil, term_definition: nil, term_explanation: nil, term_includes: nil, term_titles: nil, terms: nil, title_tsv: nil}
+
+    def icd10pcs_defs_fixture(attrs \\ %{}) do
+      {:ok, icd10pcs_defs} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Codes.create_icd10pcs_defs()
+
+      icd10pcs_defs
+    end
+
+    test "list_icd10pcs_defs/0 returns all icd10pcs_defs" do
+      icd10pcs_defs = icd10pcs_defs_fixture()
+      assert Codes.list_icd10pcs_defs() == [icd10pcs_defs]
+    end
+
+    test "get_icd10pcs_defs!/1 returns the icd10pcs_defs with given id" do
+      icd10pcs_defs = icd10pcs_defs_fixture()
+      assert Codes.get_icd10pcs_defs!(icd10pcs_defs.id) == icd10pcs_defs
+    end
+
+    test "create_icd10pcs_defs/1 with valid data creates a icd10pcs_defs" do
+      assert {:ok, %Icd10pcs_defs{} = icd10pcs_defs} = Codes.create_icd10pcs_defs(@valid_attrs)
+      assert icd10pcs_defs.axis_code == "some axis_code"
+      assert icd10pcs_defs.axis_title == "some axis_title"
+      assert icd10pcs_defs.section == "some section"
+      assert icd10pcs_defs.section_title == "some section_title"
+      assert icd10pcs_defs.term_definition == "some term_definition"
+      assert icd10pcs_defs.term_explanation == "some term_explanation"
+      assert icd10pcs_defs.term_includes == "some term_includes"
+      assert icd10pcs_defs.term_titles == "some term_titles"
+      assert icd10pcs_defs.terms == "some terms"
+      assert icd10pcs_defs.title_tsv == "some title_tsv"
+    end
+
+    test "create_icd10pcs_defs/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Codes.create_icd10pcs_defs(@invalid_attrs)
+    end
+
+    test "update_icd10pcs_defs/2 with valid data updates the icd10pcs_defs" do
+      icd10pcs_defs = icd10pcs_defs_fixture()
+      assert {:ok, %Icd10pcs_defs{} = icd10pcs_defs} = Codes.update_icd10pcs_defs(icd10pcs_defs, @update_attrs)
+      assert icd10pcs_defs.axis_code == "some updated axis_code"
+      assert icd10pcs_defs.axis_title == "some updated axis_title"
+      assert icd10pcs_defs.section == "some updated section"
+      assert icd10pcs_defs.section_title == "some updated section_title"
+      assert icd10pcs_defs.term_definition == "some updated term_definition"
+      assert icd10pcs_defs.term_explanation == "some updated term_explanation"
+      assert icd10pcs_defs.term_includes == "some updated term_includes"
+      assert icd10pcs_defs.term_titles == "some updated term_titles"
+      assert icd10pcs_defs.terms == "some updated terms"
+      assert icd10pcs_defs.title_tsv == "some updated title_tsv"
+    end
+
+    test "update_icd10pcs_defs/2 with invalid data returns error changeset" do
+      icd10pcs_defs = icd10pcs_defs_fixture()
+      assert {:error, %Ecto.Changeset{}} = Codes.update_icd10pcs_defs(icd10pcs_defs, @invalid_attrs)
+      assert icd10pcs_defs == Codes.get_icd10pcs_defs!(icd10pcs_defs.id)
+    end
+
+    test "delete_icd10pcs_defs/1 deletes the icd10pcs_defs" do
+      icd10pcs_defs = icd10pcs_defs_fixture()
+      assert {:ok, %Icd10pcs_defs{}} = Codes.delete_icd10pcs_defs(icd10pcs_defs)
+      assert_raise Ecto.NoResultsError, fn -> Codes.get_icd10pcs_defs!(icd10pcs_defs.id) end
+    end
+
+    test "change_icd10pcs_defs/1 returns a icd10pcs_defs changeset" do
+      icd10pcs_defs = icd10pcs_defs_fixture()
+      assert %Ecto.Changeset{} = Codes.change_icd10pcs_defs(icd10pcs_defs)
+    end
+  end
 end

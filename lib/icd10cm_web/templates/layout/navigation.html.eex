@@ -1,17 +1,22 @@
+<div class="top-bar">
 
-<nav class="top-bar" data-topbar data-options="is_hover: false">
-           
-   
-  <ul class="dropdown vertical medium-horizontal menu" data-dropdown-menu >
-  
-            <li><a href="/">Home</a></li>
-            <!-- ================== -->
-            <li>
-                <a href="#">ICD10</a>
-              
-                <ul class="menu vertical">
+<div class="top-bar-title">
+    <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
+     <button class="menu-icon dark" type="button" data-toggle></button>
+    </span>
+    <strong>ICD-10</strong>
+  </div>
 
-                    <li>
+<ul class="vertical medium-horizontal menu" data-responsive-menu="drilldown medium-dropdown">
+   <li><a href="/">Home</a></li>
+
+  <li>
+    <a href="#">ICD-10-CM</a>
+    <ul class="vertical menu">
+      
+        <ul class="vertical menu">
+
+    <li>
                      <%= link "ICD10-Clinicals",  to: Routes.icd10clinical_path(@conn, :index) %>
                     </li>
                     
@@ -32,20 +37,39 @@
                      <li>
                         <%= link "For Synonyms. Comparative Toxicogenomics Database",  to: Routes.ctd_path(@conn, :index) %>
                      </li>
-
-                   <li> 
-                   <%= link "ICD-10-PCS", to: Routes.pcs_path(@conn, :index) %>
-                   </li>
-                </ul>
-            </li>
-
-            <!-- ======================== -->
-
-
-        <li><a href="#">Notifications</a></li>
-
         </ul>
-</nav><!----class top-bar-------------------------------->
+      
+      </ul>
+  </li>
+  <li>
+    <a href="#">ICD-10-PCS</a>
+    <ul class="vertical menu">
+
+       <li> 
+        <%= link "ICD-10-PCS", to: Routes.pcs_path(@conn, :index) %>
+         
+         <li> 
+        <%= link "ICD-10-PCS Definitions", to: Routes.pcs_defs_path(@conn, :index) %>
+       </li>
+       
+       </li>
+    </ul>
+  </li>
+<!------
+  <li>
+    <a href="#">Item 3</a>
+    <ul class="vertical menu">
+      <li><a href="#">Item 3A</a></li>
+      <li><a href="#">Item 3B</a></li>
+    </ul>
+  </li>
+  -->
+
+</ul>
+
+ 
+
+</div><!----class top-bar-------------------------------->
 <script>
      // $(document).ready(function() {
      //   console.log("jQuery is working");

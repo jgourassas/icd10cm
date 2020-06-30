@@ -1,0 +1,51 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :section %>
+  <%= text_input f, :section %>
+  <%= error_tag f, :section %>
+
+  <%= label f, :section_title %>
+  <%= text_input f, :section_title %>
+  <%= error_tag f, :section_title %>
+
+  <%= label f, :axis_code %>
+  <%= text_input f, :axis_code %>
+  <%= error_tag f, :axis_code %>
+
+  <%= label f, :axis_title %>
+  <%= text_input f, :axis_title %>
+  <%= error_tag f, :axis_title %>
+
+  <%= label f, :terms %>
+  <%= textarea f, :terms %>
+  <%= error_tag f, :terms %>
+
+  <%= label f, :title_tsv %>
+  <%= text_input f, :title_tsv %>
+  <%= error_tag f, :title_tsv %>
+
+  <%= label f, :term_definition %>
+  <%= textarea f, :term_definition %>
+  <%= error_tag f, :term_definition %>
+
+  <%= label f, :term_explanation %>
+  <%= textarea f, :term_explanation %>
+  <%= error_tag f, :term_explanation %>
+
+  <%= label f, :term_titles %>
+  <%= textarea f, :term_titles %>
+  <%= error_tag f, :term_titles %>
+
+  <%= label f, :term_includes %>
+  <%= textarea f, :term_includes %>
+  <%= error_tag f, :term_includes %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

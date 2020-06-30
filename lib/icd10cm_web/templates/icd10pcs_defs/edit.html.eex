@@ -1,0 +1,5 @@
+<h1>Edit Icd10pcs defs</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.icd10pcs_defs_path(@conn, :update, @icd10pcs_defs)) %>
+
+<span><%= link "Back", to: Routes.icd10pcs_defs_path(@conn, :index) %></span>
