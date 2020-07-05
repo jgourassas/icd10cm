@@ -2,7 +2,7 @@
 <% alias Icd10cm.Repo %>
 
 <div class="title_form">
-<h4>Listing Icd-10-PCS Definitions</h4>
+<h4>Listing ICD-10-PCS Definitions</h4>
 </div>
 <!-------------search-------------------------------------->
 <!-------------START SEARCH FORM-------------------------------------------->
@@ -54,6 +54,7 @@
 <table class="table responsive  stack table-scroll frame_1">
   <thead>
     <tr>
+    <th>#</th>
      <th>Term titles</th>
       <th>Term definition</th>
       <th>Term explanation</th>
@@ -61,9 +62,12 @@
      
     </tr>
   </thead>
+
   <tbody>
-<%= for icd10pcs_defs <- @icd10pcs_defs do %>
+   <%= for {icd10pcs_defs, index} <- Enum.with_index(@icd10pcs_defs) do %>
+<%#= for icd10pcs_defs <- @icd10pcs_defs do %>
     <tr>
+   <td> <%= index + 1  %></td>
     <td>
          <% term_titles = icd10pcs_defs.term_titles %> 
         <span style="color:#8000FF;"> 

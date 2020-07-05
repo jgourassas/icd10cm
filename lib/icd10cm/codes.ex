@@ -100,6 +100,9 @@ defmodule Icd10cm.Codes do
   end
 
   def list_icd10clinicals(_params) do
+   ####### ugly to make json file in data dir ######################
+   ## make_icd10cm_json()
+  ##############################
     _page =
       Icd10clinical
       |> order_by([p], [p.icd10cm_code_2])
@@ -143,10 +146,22 @@ defmodule Icd10cm.Codes do
       "codefirst" -> search_icd10clinicals_codefirst(query)
       "codealso" -> search_icd10clinicals_codealso(query)
       "useadditionalcode" -> search_icd10clinicals_useadditionalcode(query)
+      "chapter" -> search_icd10clinicals_chapter(query)
       _ -> ""
     end
   end
  ######################
+def search_icd10clinicals_chapter(query) do
+  query =
+  from(
+   p in Icd10clinical,
+    where: fragment("(?) @@ plainto_tsquery(?)", p.chapter_description, ^query),
+    order_by: [asc: p.chapter_description]
+     )
+
+
+ end
+ ###################################
  def search_icd10clinicals_useadditionalcode(code_2) do
 
   query =
@@ -404,7 +419,6 @@ end
       Enum.map(records_b, fn rec ->
         main_term_rec = rec[:main_term]
 
-        #IO.inspect(main_term_rec)
 
         case code_order do
           "primary" ->
@@ -468,7 +482,6 @@ end
         # case
       end)
 
-      # IO.inspect  primary_code
     end
   end
 
@@ -673,10 +686,6 @@ end
           "main_see_tab "<>  "#{main_see_tab}" <>
           " " <>
           "main_use_probe "<>  "#{main_use_probe}"
-
-        #IO.puts("-----------formated---------------------" )
-        #IO.inspect formated
-        #IO.puts("----------------------------------------")
 
           # format_jsonb(formated)
 
@@ -992,10 +1001,6 @@ end)
 
 result
 
-#IO.puts("------text----------------")
-#IO.inspect result
-#[["V89.2"], ["V89.2XXA"], ["V89.2XXD"], ["V89.2XXS"]]
-#result = String.split(text, ",")
 
 
 end
@@ -1118,8 +1123,6 @@ def format_ctd_colums(synonyms) do
     <> "<br/>"
     <> "</span>"
   end)
-   #IO.puts("------------------synonyms---------------")
-   #IO.inspect result
 end#if
 
 end#format_ctd_columns
@@ -1145,8 +1148,6 @@ def search_ctds_definitions(orders_long_description) do
   #)
   #res = Repo.all(defs)
 
-  #IO.puts("----------------------")
-  #IO.inspect(res)
 end
 #############################
 def search_ctds_diseasnames(query) do
@@ -1160,15 +1161,13 @@ from(
 end
 ##########################
 def search_ctds_synonyms(query) do
- synonym =  from(
+ _synonym =  from(
     d in Ctd,
     where: fragment("(?) @@ plainto_tsquery(?)", d.synonyms, ^query),
     # or  where: ilike(d.long_description, ^"#{query}%"),
     order_by: [asc: d.diseasename]
   )
 
-  #IO.puts("---synonym-------")
-  #IO.inspect synonym
 
 end
 ################
@@ -1502,8 +1501,6 @@ def search_pcs(query, selection) do
 end
 ################################
 def search_pcs_code_2(term) do
-  IO.puts("---------TERM--------------------------- " )
-  IO.inspect(term)
   from p in Icd10pcs,
   order_by: [asc: p.long_description],
   where: fragment("(?) ilike(?)", p.icd10pcs_code_2,   ^("#{term}%") )   ,
@@ -1655,6 +1652,155 @@ def search_pcs_defs_term_titles(query) do
   limit: 10
 
 end
+##################################
+"""
+"id": "chapter:1",
+"parentid": 0,
+"code": 1,
+"name": "Chapter:Certain infectious and parasitic diseases (A00-B99)",
+"children": [
+    {
+        "id": "chapter:1section:A00-A09",
+        "parentid": "chapter:1",
+        "code": "A00-A09",
+        "name": "Section: Intestinal infectious diseases (A00-A09)",
+        "children": [
+            {
+                "id": "chapter:1section:A00-A09category:A00",
+                "parentid": "chapter:1section:A00-A09",
+                "code": "A00",
+                "name": "Cholera",
+                "children": [
+"""
+#####################################3
+def make_icd10cm_json() do
 
-####################################
+  {:ok, res_agent} = Agent.start_link(fn -> [] end)
+
+  chapters = get_icd10cm_chapters()
+
+  for chapter <- chapters do
+    chapter_name =  Enum.at(chapter, 0)
+    chapter_desctiption = Enum.at(chapter, 1)
+    sections =  get_sections(chapter_name)
+
+   Agent.update(res_agent, fn res ->
+            res ++ [ %{   "id": Integer.to_string(chapter_name),
+                          "parentid": 0,
+                          "name": chapter_desctiption,
+                          "code": Integer.to_string(chapter_name),
+                          #"children": sections
+                           } ]
+             end )
+
+  #################################
+  for section <- sections do
+    categories = get_categories(section)
+
+
+   Agent.update(res_agent, fn res ->
+    res ++ [ %{"id":  Integer.to_string(chapter_name)  <> section,
+               "parentid": Integer.to_string(chapter_name),
+                "code": section,
+                "children": categories } ]
+    #res ++ [ %{"parent": section,   "children": categories } ]
+    end )
+
+  end#for section
+
+  ##################################
+
+ end#for chapter
+
+
+ results = Agent.get(res_agent, fn res -> res end)
+
+  Agent.stop(res_agent)
+
+  output_file = "/home/jgour/work/icd10cm/data/icd10cm_clinicals.json"
+
+
+  File.open(output_file, [:write])
+  File.write(output_file, Poison.encode!(results), [:binary ])
+  File.close(output_file)
+  #results |> Stream.into( File.stream!(output_file) )
+  #|> Stream.run
+
+
+
+end
+############################
+def get_icd10cm_chapters() do
+ chapters =
+ from(p in Icd10clinical,
+ distinct: p.chapter_name,
+ select:  [p.chapter_name, p.chapter_description]
+
+ )
+
+ Repo.all(chapters)
+
+ #IO.puts("------------------chapters-----------------------------------")
+ #IO.inspect(results)
+
+end
+##############################Icd10clinical######
+def get_sections(chapter_name) do
+    sections =
+    from(p in Icd10clinical,
+    distinct: p.section_id,
+    where: p.chapter_name == ^chapter_name,
+    select: p.section_id)
+
+    Repo.all(sections)
+
+
+end
+##################################3
+def get_categories(section_id) do
+  categories =
+  from(p in Icd10clinical,
+  where: p.section_id == ^section_id ,
+  select: [
+           p.chapter_name,
+           p.chapter_description,
+           p.section_id,
+           p.section_description,
+           p.icd10cm_code_2,
+           p.long_description],
+  order_by: p.chapter_name
+           )
+
+ results =  Repo.all(categories)
+########################################3
+
+data = Enum.reduce(results, [], fn(res, acc) ->
+  if res !== nil do
+   category = make_category(res)
+   acc ++ category
+  end
+end)
+
+end#function
+####################################333
+def make_category(res) do
+  chapter_name =  Enum.at(res, 0)
+  chapter_description =  Enum.at(res, 1)
+  section_id =  Enum.at(res, 2)
+  section_desc =  Enum.at(res, 3)
+  code_2 =  Enum.at(res, 4)
+  name =  Enum.at(res, 5)
+
+   data = [ %{"id":  Integer.to_string(chapter_name)  <> section_id <>  code_2,
+            "parentid": Integer.to_string(chapter_name) <> section_id,
+             "code": code_2,
+             "name": name } ]
+
+end
+###############################################
+def row_to_map(col_nms, vals) do
+  Stream.zip(col_nms, vals)
+  |> Enum.into(Map.new(), &(&1))
+end
+################################################
 end

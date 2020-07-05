@@ -1,6 +1,6 @@
 
 <%alias Icd10cm.Codes %>
-<div class="element_info"><h5>ICD-10-NEOPLASMS </h5> </div>
+<div class="element_info"><h5>ICD-10-CM NEOPLASMS </h5> </div>
 
  <div class="search_form">
   <div class="large-6 medium-6 small-6 large-centered columns">

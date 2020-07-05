@@ -2,7 +2,7 @@
 <% alias Icd10cm.Repo %>
 
 <div class="title_form">
-<h4>Listing Icd-10-PCS</h4>
+<h4>Listing ICD-10-PCS</h4>
 </div>
 <!-------------START SEARCH FORM-------------------------------------------->
 <div class="search_form">
@@ -49,6 +49,7 @@
 <table class="table responsive  stack table-scroll frame_1" >
   <thead>
     <tr>
+   <th>#</th>
       <th>Original Codes</th>
       <th>Codes</th>
       <th>Is header? </th>
@@ -59,8 +60,12 @@
     </tr>
   </thead>
   <tbody>
-<%= for icd10pcs <- @icd10_pcses do %>
+  <%= for {icd10pcs, index} <- Enum.with_index(@icd10_pcses) do %>
+<%#= for icd10pcs <- @icd10_pcses do %>
     <tr>
+    <td>  
+    <%= index + 1  %>
+    </td>
      <td><%= icd10pcs.icd10pcs_code %></td>
       <td>
        <span style="color:#08088A;">

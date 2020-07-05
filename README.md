@@ -2,7 +2,8 @@
 
 ICD10 is an open source software web application developed in Elixir - Phoenix - Zurb Foundation
 
-This module uses the Clinical Modification - USA
+This module uses the ICD-10-CM (USA) and ICD-10-PCS
+ 
 
 We take no father responsibility. The software is provided as it is
 

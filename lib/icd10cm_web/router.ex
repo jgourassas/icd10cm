@@ -35,6 +35,9 @@ defmodule Icd10cmWeb.Router do
     post("/icd10_pcses/search_pcs", Icd10pcsController, :search_pcs)
     resources( "/icd10pcs_defs", Icd10pcs_defsController, as: :pcs_defs)
     post("/icd10pcs_defs/search_pcs_defs", Icd10pcs_defsController, :search_pcs_defs)
+
+
+
   end
 
   # Other scopes may use custom stacks.

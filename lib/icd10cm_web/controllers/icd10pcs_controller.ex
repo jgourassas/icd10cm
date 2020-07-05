@@ -79,8 +79,7 @@ trim_query = String.trim(query)
 page =
   Icd10cm.Codes.search_pcs(trim_query, selection)
   |> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
-
-render(conn, "index.html", icd10_pcses: page.entries, page: page)
+   render(conn, "index.html", icd10_pcses: page.entries, page: page)
 end
 
 

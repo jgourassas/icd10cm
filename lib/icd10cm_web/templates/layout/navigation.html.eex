@@ -33,10 +33,7 @@
                         <%= link "ICD-10-CM Ordered List",  
                         to: Routes.icd10cm_order_path(@conn, :index) %>
                      </li>
-                        
-                     <li>
-                        <%= link "For Synonyms. Comparative Toxicogenomics Database",  to: Routes.ctd_path(@conn, :index) %>
-                     </li>
+                  
         </ul>
       
       </ul>
@@ -55,16 +52,25 @@
        </li>
     </ul>
   </li>
+
+  <li>
+    <a href="#">Utilities</a>
+    <ul class="vertical menu">
+     <li>
+     <%= link "For Synonyms. Comparative Toxicogenomics Database",  to: Routes.ctd_path(@conn, :index) %>
+     </li>
+
+    </ul>
+  </li>
 <!------
   <li>
-    <a href="#">Item 3</a>
+    <a href="#">Utilities</a>
     <ul class="vertical menu">
       <li><a href="#">Item 3A</a></li>
       <li><a href="#">Item 3B</a></li>
     </ul>
   </li>
   -->
-
 </ul>
 
  

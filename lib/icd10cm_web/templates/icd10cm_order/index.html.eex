@@ -1,6 +1,6 @@
 <%alias Icd10cm.Codes  %>
 <div class="title_form">
-<h4>Listing Icd-10-CM Table (order)</h4>
+<h4>Listing ICD-10-CM  Ordered List (AlphaBetical Index)</h4>
 </div>
 <div class="search_form">
   <div class="large-6 medium-6 small-6 large-centered columns">
@@ -78,9 +78,10 @@
       <td>
       
       <%= if icd10cm_order.is_header == "0" do %>
-      <span style="color:red">
+      <span style="color:#b7410e;">
+       <i class="fa fa-stop-circle" style="font-size:16px;color:#b7410e;" ></i>
       Yes-
-      <%= icd10cm_order.is_header %>
+      <%#= icd10cm_order.is_header %>
       </span>
       
       <%else %>
@@ -90,7 +91,7 @@
       </span>
 
       <span>
-      <%= icd10cm_order.is_header %>
+      <%#= icd10cm_order.is_header %>
       </span>
     
       <% end%>
