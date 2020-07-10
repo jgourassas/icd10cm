@@ -17,7 +17,8 @@ defmodule Icd10cmWeb.Router do
     pipe_through :browser
 
     get("/", PageController, :index)
-    # get "/page", PageController, :index, as: :pages
+
+   get "/page", PageController, :index, as: :pages
 
     post("/icd10clinicals/search_clinicals", Icd10clinicalController, :search_clinicals)
     resources("/icd10clinicals", Icd10clinicalController)
@@ -35,8 +36,8 @@ defmodule Icd10cmWeb.Router do
     post("/icd10_pcses/search_pcs", Icd10pcsController, :search_pcs)
     resources( "/icd10pcs_defs", Icd10pcs_defsController, as: :pcs_defs)
     post("/icd10pcs_defs/search_pcs_defs", Icd10pcs_defsController, :search_pcs_defs)
-
-
+    resources("/Icd10cm_tree", Icd10cm_treeController, as: :icd10cm_tree)
+    post("/icd10cm_tree/get_icd10cm_clinicals_json", Icd10cm_treeController,:get_icd10cm_clinicals_json)
 
   end
 

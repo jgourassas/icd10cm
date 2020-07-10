@@ -29,6 +29,7 @@ module.exports = (env, options) => {
       app: ['./js/app.js'].concat(glob.sync('./vendor/**/*.js')),
       //'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js']),
       draw_external: './js/external_injuries/draw_external.js',
+      icd10cm_tree: './js/icd10cm_tree/icd10cm_tree.js',
     },
     output: {
       filename: '[name].js',

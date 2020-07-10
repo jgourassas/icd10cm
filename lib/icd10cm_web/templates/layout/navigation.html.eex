@@ -33,6 +33,10 @@
                         <%= link "ICD-10-CM Ordered List",  
                         to: Routes.icd10cm_order_path(@conn, :index) %>
                      </li>
+                     <li>
+                        <%= link "ICD-10-CM GRAPHICAL",  
+                        to: Routes.icd10cm_tree_path(@conn, :index) %>
+                     </li>
                   
         </ul>
       

@@ -1802,5 +1802,24 @@ def row_to_map(col_nms, vals) do
   Stream.zip(col_nms, vals)
   |> Enum.into(Map.new(), &(&1))
 end
-################################################
+###############################################
+def get_json(filename) do
+
+ exists = File.exists?(filename)
+
+ {:ok, result} =  case exists do
+    true ->
+     json =  File.read(filename)
+      false ->
+      IO.puts("--- Sorry File Not Found  ---" )
+    _ ->
+      IO.puts("No Input text")
+  end
+  result
+
+end#get_json
+
+#################################################
+
+#################################################3
 end
