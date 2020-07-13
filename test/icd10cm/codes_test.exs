@@ -505,9 +505,39 @@ defmodule Icd10cm.CodesTest do
   describe "ctds" do
     alias Icd10cm.Codes.Ctd
 
-    @valid_attrs %{altdiseaseids: "some altdiseaseids", definition: "some definition", diseaseid: "some diseaseid", diseasename: "some diseasename", parentids: "some parentids", parenttreenumbers: "some parenttreenumbers", slimmappings: "some slimmappings", synonyms: "some synonyms", treenumbers: "some treenumbers"}
-    @update_attrs %{altdiseaseids: "some updated altdiseaseids", definition: "some updated definition", diseaseid: "some updated diseaseid", diseasename: "some updated diseasename", parentids: "some updated parentids", parenttreenumbers: "some updated parenttreenumbers", slimmappings: "some updated slimmappings", synonyms: "some updated synonyms", treenumbers: "some updated treenumbers"}
-    @invalid_attrs %{altdiseaseids: nil, definition: nil, diseaseid: nil, diseasename: nil, parentids: nil, parenttreenumbers: nil, slimmappings: nil, synonyms: nil, treenumbers: nil}
+    @valid_attrs %{
+      altdiseaseids: "some altdiseaseids",
+      definition: "some definition",
+      diseaseid: "some diseaseid",
+      diseasename: "some diseasename",
+      parentids: "some parentids",
+      parenttreenumbers: "some parenttreenumbers",
+      slimmappings: "some slimmappings",
+      synonyms: "some synonyms",
+      treenumbers: "some treenumbers"
+    }
+    @update_attrs %{
+      altdiseaseids: "some updated altdiseaseids",
+      definition: "some updated definition",
+      diseaseid: "some updated diseaseid",
+      diseasename: "some updated diseasename",
+      parentids: "some updated parentids",
+      parenttreenumbers: "some updated parenttreenumbers",
+      slimmappings: "some updated slimmappings",
+      synonyms: "some updated synonyms",
+      treenumbers: "some updated treenumbers"
+    }
+    @invalid_attrs %{
+      altdiseaseids: nil,
+      definition: nil,
+      diseaseid: nil,
+      diseasename: nil,
+      parentids: nil,
+      parenttreenumbers: nil,
+      slimmappings: nil,
+      synonyms: nil,
+      treenumbers: nil
+    }
 
     def ctd_fixture(attrs \\ %{}) do
       {:ok, ctd} =
@@ -581,7 +611,11 @@ defmodule Icd10cm.CodesTest do
     alias Icd10cm.Codes.Icd10cm_dindex
 
     @valid_attrs %{main_term: %{}, title: "some title", title_tsv: "some title_tsv"}
-    @update_attrs %{main_term: %{}, title: "some updated title", title_tsv: "some updated title_tsv"}
+    @update_attrs %{
+      main_term: %{},
+      title: "some updated title",
+      title_tsv: "some updated title_tsv"
+    }
     @invalid_attrs %{main_term: nil, title: nil, title_tsv: nil}
 
     def icd10cm_dindex_fixture(attrs \\ %{}) do
@@ -616,7 +650,10 @@ defmodule Icd10cm.CodesTest do
 
     test "update_icd10cm_dindex/2 with valid data updates the icd10cm_dindex" do
       icd10cm_dindex = icd10cm_dindex_fixture()
-      assert {:ok, %Icd10cm_dindex{} = icd10cm_dindex} = Codes.update_icd10cm_dindex(icd10cm_dindex, @update_attrs)
+
+      assert {:ok, %Icd10cm_dindex{} = icd10cm_dindex} =
+               Codes.update_icd10cm_dindex(icd10cm_dindex, @update_attrs)
+
       assert icd10cm_dindex.main_term == %{}
       assert icd10cm_dindex.title == "some updated title"
       assert icd10cm_dindex.title_tsv == "some updated title_tsv"
@@ -624,7 +661,10 @@ defmodule Icd10cm.CodesTest do
 
     test "update_icd10cm_dindex/2 with invalid data returns error changeset" do
       icd10cm_dindex = icd10cm_dindex_fixture()
-      assert {:error, %Ecto.Changeset{}} = Codes.update_icd10cm_dindex(icd10cm_dindex, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Codes.update_icd10cm_dindex(icd10cm_dindex, @invalid_attrs)
+
       assert icd10cm_dindex == Codes.get_icd10cm_dindex!(icd10cm_dindex.id)
     end
 
@@ -643,9 +683,78 @@ defmodule Icd10cm.CodesTest do
   describe "icd10_pcses" do
     alias Icd10cm.Codes.Icd10pcs
 
-    @valid_attrs %{approach: "some approach", approach_title: "some approach_title", body_part: "some body_part", body_part_title: "some body_part_title", body_system: "some body_system", body_system_title: "some body_system_title", device: "some device", device_title: "some device_title", icd10pcs_code: "some icd10pcs_code", icd10pcs_code_2: "some icd10pcs_code_2", icd10pcs_code_2_ltree: "some icd10pcs_code_2_ltree", icd10pcs_code_ltree: "some icd10pcs_code_ltree", is_header: "some is_header", long_description: "some long_description", order_number: 42, qualifier: "some qualifier", qualifier_title: "some qualifier_title", root_operation: "some root_operation", root_operation_title: "some root_operation_title", section: "some section", section_title: "some section_title", short_description: "some short_description"}
-    @update_attrs %{approach: "some updated approach", approach_title: "some updated approach_title", body_part: "some updated body_part", body_part_title: "some updated body_part_title", body_system: "some updated body_system", body_system_title: "some updated body_system_title", device: "some updated device", device_title: "some updated device_title", icd10pcs_code: "some updated icd10pcs_code", icd10pcs_code_2: "some updated icd10pcs_code_2", icd10pcs_code_2_ltree: "some updated icd10pcs_code_2_ltree", icd10pcs_code_ltree: "some updated icd10pcs_code_ltree", is_header: "some updated is_header", long_description: "some updated long_description", order_number: 43, qualifier: "some updated qualifier", qualifier_title: "some updated qualifier_title", root_operation: "some updated root_operation", root_operation_title: "some updated root_operation_title", section: "some updated section", section_title: "some updated section_title", short_description: "some updated short_description"}
-    @invalid_attrs %{approach: nil, approach_title: nil, body_part: nil, body_part_title: nil, body_system: nil, body_system_title: nil, device: nil, device_title: nil, icd10pcs_code: nil, icd10pcs_code_2: nil, icd10pcs_code_2_ltree: nil, icd10pcs_code_ltree: nil, is_header: nil, long_description: nil, order_number: nil, qualifier: nil, qualifier_title: nil, root_operation: nil, root_operation_title: nil, section: nil, section_title: nil, short_description: nil}
+    @valid_attrs %{
+      approach: "some approach",
+      approach_title: "some approach_title",
+      body_part: "some body_part",
+      body_part_title: "some body_part_title",
+      body_system: "some body_system",
+      body_system_title: "some body_system_title",
+      device: "some device",
+      device_title: "some device_title",
+      icd10pcs_code: "some icd10pcs_code",
+      icd10pcs_code_2: "some icd10pcs_code_2",
+      icd10pcs_code_2_ltree: "some icd10pcs_code_2_ltree",
+      icd10pcs_code_ltree: "some icd10pcs_code_ltree",
+      is_header: "some is_header",
+      long_description: "some long_description",
+      order_number: 42,
+      qualifier: "some qualifier",
+      qualifier_title: "some qualifier_title",
+      root_operation: "some root_operation",
+      root_operation_title: "some root_operation_title",
+      section: "some section",
+      section_title: "some section_title",
+      short_description: "some short_description"
+    }
+    @update_attrs %{
+      approach: "some updated approach",
+      approach_title: "some updated approach_title",
+      body_part: "some updated body_part",
+      body_part_title: "some updated body_part_title",
+      body_system: "some updated body_system",
+      body_system_title: "some updated body_system_title",
+      device: "some updated device",
+      device_title: "some updated device_title",
+      icd10pcs_code: "some updated icd10pcs_code",
+      icd10pcs_code_2: "some updated icd10pcs_code_2",
+      icd10pcs_code_2_ltree: "some updated icd10pcs_code_2_ltree",
+      icd10pcs_code_ltree: "some updated icd10pcs_code_ltree",
+      is_header: "some updated is_header",
+      long_description: "some updated long_description",
+      order_number: 43,
+      qualifier: "some updated qualifier",
+      qualifier_title: "some updated qualifier_title",
+      root_operation: "some updated root_operation",
+      root_operation_title: "some updated root_operation_title",
+      section: "some updated section",
+      section_title: "some updated section_title",
+      short_description: "some updated short_description"
+    }
+    @invalid_attrs %{
+      approach: nil,
+      approach_title: nil,
+      body_part: nil,
+      body_part_title: nil,
+      body_system: nil,
+      body_system_title: nil,
+      device: nil,
+      device_title: nil,
+      icd10pcs_code: nil,
+      icd10pcs_code_2: nil,
+      icd10pcs_code_2_ltree: nil,
+      icd10pcs_code_ltree: nil,
+      is_header: nil,
+      long_description: nil,
+      order_number: nil,
+      qualifier: nil,
+      qualifier_title: nil,
+      root_operation: nil,
+      root_operation_title: nil,
+      section: nil,
+      section_title: nil,
+      short_description: nil
+    }
 
     def icd10pcs_fixture(attrs \\ %{}) do
       {:ok, icd10pcs} =
@@ -744,9 +853,42 @@ defmodule Icd10cm.CodesTest do
   describe "icd10pcs_defs" do
     alias Icd10cm.Codes.Icd10pcs_defs
 
-    @valid_attrs %{axis_code: "some axis_code", axis_title: "some axis_title", section: "some section", section_title: "some section_title", term_definition: "some term_definition", term_explanation: "some term_explanation", term_includes: "some term_includes", term_titles: "some term_titles", terms: "some terms", title_tsv: "some title_tsv"}
-    @update_attrs %{axis_code: "some updated axis_code", axis_title: "some updated axis_title", section: "some updated section", section_title: "some updated section_title", term_definition: "some updated term_definition", term_explanation: "some updated term_explanation", term_includes: "some updated term_includes", term_titles: "some updated term_titles", terms: "some updated terms", title_tsv: "some updated title_tsv"}
-    @invalid_attrs %{axis_code: nil, axis_title: nil, section: nil, section_title: nil, term_definition: nil, term_explanation: nil, term_includes: nil, term_titles: nil, terms: nil, title_tsv: nil}
+    @valid_attrs %{
+      axis_code: "some axis_code",
+      axis_title: "some axis_title",
+      section: "some section",
+      section_title: "some section_title",
+      term_definition: "some term_definition",
+      term_explanation: "some term_explanation",
+      term_includes: "some term_includes",
+      term_titles: "some term_titles",
+      terms: "some terms",
+      title_tsv: "some title_tsv"
+    }
+    @update_attrs %{
+      axis_code: "some updated axis_code",
+      axis_title: "some updated axis_title",
+      section: "some updated section",
+      section_title: "some updated section_title",
+      term_definition: "some updated term_definition",
+      term_explanation: "some updated term_explanation",
+      term_includes: "some updated term_includes",
+      term_titles: "some updated term_titles",
+      terms: "some updated terms",
+      title_tsv: "some updated title_tsv"
+    }
+    @invalid_attrs %{
+      axis_code: nil,
+      axis_title: nil,
+      section: nil,
+      section_title: nil,
+      term_definition: nil,
+      term_explanation: nil,
+      term_includes: nil,
+      term_titles: nil,
+      terms: nil,
+      title_tsv: nil
+    }
 
     def icd10pcs_defs_fixture(attrs \\ %{}) do
       {:ok, icd10pcs_defs} =
@@ -787,7 +929,10 @@ defmodule Icd10cm.CodesTest do
 
     test "update_icd10pcs_defs/2 with valid data updates the icd10pcs_defs" do
       icd10pcs_defs = icd10pcs_defs_fixture()
-      assert {:ok, %Icd10pcs_defs{} = icd10pcs_defs} = Codes.update_icd10pcs_defs(icd10pcs_defs, @update_attrs)
+
+      assert {:ok, %Icd10pcs_defs{} = icd10pcs_defs} =
+               Codes.update_icd10pcs_defs(icd10pcs_defs, @update_attrs)
+
       assert icd10pcs_defs.axis_code == "some updated axis_code"
       assert icd10pcs_defs.axis_title == "some updated axis_title"
       assert icd10pcs_defs.section == "some updated section"
@@ -802,7 +947,10 @@ defmodule Icd10cm.CodesTest do
 
     test "update_icd10pcs_defs/2 with invalid data returns error changeset" do
       icd10pcs_defs = icd10pcs_defs_fixture()
-      assert {:error, %Ecto.Changeset{}} = Codes.update_icd10pcs_defs(icd10pcs_defs, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Codes.update_icd10pcs_defs(icd10pcs_defs, @invalid_attrs)
+
       assert icd10pcs_defs == Codes.get_icd10pcs_defs!(icd10pcs_defs.id)
     end
 

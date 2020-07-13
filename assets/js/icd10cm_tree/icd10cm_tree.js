@@ -1,3 +1,5 @@
+import { json } from "d3";
+
 var d3 = require("d3");
 const axios = require('axios').default;
 
@@ -16,14 +18,11 @@ let margin = {
   //let colors = d3.schemeSet2()
   
   const mag_size = 1.9;
-  let root_icd10cm = []
 
-
+  
 /////////////////////////////
  
-
-
-let get_data= () => {
+let get_data= (group) => {
   
   let field = '';
 
@@ -43,21 +42,16 @@ let get_data= () => {
     });
 
   request.done(function(res) {
-   return res;
-   
-    //      console.log( JSON.stringify( res));
-
-
-  })
+    let draw = new Draw()
+     draw.icd10cm(group, res);
+    
+  });//requst
   
 
+
 };//get_data
-
+/////////////////////////////////////
  
- let tree = d3.tree()
-    .size([height, 160]);
-
-
 //////////////////////////
 class Graphical{
 constructor(){
@@ -110,67 +104,118 @@ constructor(){
   //////////////////////////
   class Draw{
     constructor(){
+      this.utils = new Utils();
+    }
+  
+    //////////////////
+    icd10cm(group, treeData){
+     /*
+      treeData.each(function(d){
+        if (d.name == "name") 
+            d3.select(this).remove();});
+        link.each(function(d){
+        if (d.source.name == "name") 
+            d3.select(this).remove();});
+
+    let root = d3.stratify()
+      .id( (d) => { return d.id; })
+      .parentId( (d) => { return d.parentid; })
+      (treeData)
+      
+      //console.log("------data-------------------------")
+     // console.log(JSON.stringify( root));
+
+*/
+
+
+     ////////////////////////////
     
 
-    }
-
+    let tree_origin_x = width * 0.09;
+      let tree_origin_y = height * 0.09;
   
-    icd10cm(group){
+      let svg = group.append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("id", "group_svg")
+         .attr('transform', `translate(${tree_origin_x}, ${tree_origin_y})`);
+  
+      // declares a tree layout and assigns the size
+      let treemap = d3.tree()
+        .size([width, height - 200])
   
 
-     let utils = new Utils();
-
-     let  icd10cm_json = get_data();
-    /*
-     icd10cm_json.x0 = 0;
-     icd10cm_json.y0 = 0;
-     
-     for(let i = 0; i< icd10cm_json.length; i++ ){
-       //let children = icd10cm_json[i]["children"]; 
-       let children = icd10cm_json[i]; 
-       utils.collapse(children)
-     }
-  */
-
-  //     this.icd10cm_update(root_icd10cm = icd10cm_json. group);
-/*
-     d3.json("../../../data/icd10cm_clinicals.json", function(tree_data) { 
-        // d3.json("icd10cm_2013.json", function(tree_data) {
-        // this.build_tree(tree_data, group) 
-      })
-*/
- 
-
-};//funct
-  
-//////////////////////////////////////
-icd10cm_update(source, group) {
-
-  // Compute the flattened node list. TODO use d3.layout.hierarchy.
-   //var icd10cm_nodes = tree.nodes(root_icd10cm);
-   let icd10cm_nodes = d3.hierarchy(root_icd10cm);
-  // Compute the "layout".
-   icd10cm_nodes.forEach(function(n, i) {
-     n.x = i * barHeight;
-   });
-
-   
-  let svg = group.append("svg")
-  .attr("width", width)
-  .attr("height", height)
-  .append("g")
-  .attr("id", "group_svg")
-  .attr('transform', `translate(${tree_origin_x}, ${tree_origin_y})`);///////////////
-  
-  let node = svg.selectAll("g.node")
-  .data(icd10cm_nodes, function(d) { return d.id || (d.id = ++i); });
-
-  var nodeEnter = node.enter().append("svg:g")
+      let nodes = d3.hierarchy(treeData)
+      
+       nodes = treemap(nodes);
+      
+          
+      let node = svg.selectAll(".node")
+       .data(nodes.descendants())
+      //.data(nodes.descendants() , function(d, i) { return d.children || (d.children = ++i); })
+      .enter().append("g")
       .attr("class", "node")
-     .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-      .style("opacity", 1);
+      //.attr("transform", function (d) {
+       // return "translate(" + d.x + "," + d.y + ")";
+     // })
 
-      nodeEnter.append("svg:rect")
+      d3.selectAll("g.node")
+      .append("circle")
+      .attr("r", 4.5)
+      .attr("stroke", (d) => {
+        return "cyan"
+      })
+      .style("fill", "yellow")
+
+    let dots = node.selectAll("circle")
+      //.data(function (d) { return d.values; })
+      .data( (d, i) => { 
+        console.log(JSON.stringify( d["data"][i]["children"]) )
+        return d["data"][i]["children"]
+       })
+      .enter()
+      .append("svg:circle")
+      .attr("id", (d, i) => {
+        "circle"
+      })
+      .attr("cx", function (d, i) {
+        return mag_size * 9 * i;
+      })
+      .attr("cy", function (d, i) {
+        // return 25 * i;
+        return 40 
+      })
+      .attr("r", mag_size * 2.8)
+      .style("fill", (d, i) => {
+        return "#fff"
+      })
+      .style("stroke", "#fff")
+      .style("stoke-width", (d, i) => {
+        return mag_size;
+
+      })
+
+    
+      let a_title = node.append('title')
+      //.attr("class", "tooltip");
+      .style('font', 'sans-serif')
+      .style('font-size', '0.85em')
+      .style('text-align', 'center')
+      .attr('cursor', 'pointer')
+      .style('background-color', 'cyan')
+      .text( (d, i, j) => {
+        console.log( "--------children j "+JSON.stringify(d["data"][i]["children"][i][3]) + "Test")
+
+        return d["data"][i]["children"][i]
+
+      }
+      );
+    
+   
+      /*
+
+      node.append("svg:rect")
       .attr("y", -barHeight / 2)
       .attr("height", barHeight)
 			.attr("rx", 5)
@@ -179,66 +224,63 @@ icd10cm_update(source, group) {
       .style("stroke","#FFFCE5")
       .attr("stroke-width", 2)
       .style("opacity",0.9)
-      .style("fill", "yellow")
-      //.style("fill", icd10cm_desc_color)
-      //.on("click", icd10cm_click); 
-
-
-
-  };//icd10cm_update
-/////////////////////////
-    //////////////////////////////
-    build_tree(tree_data, group){
-      console.log( "jgour ------33333 ------------");
-      //console.log( JSON.stringify(tree_data) )
-
-      let tree_origin_x = width * 0.08;
-      let tree_origin_y = height * 0.09;
+*/
+    // adds the circle to the nod
   
-    
-      // declares a tree layout and assigns the size
-      let treemap = d3.tree()
-        .size([width, height - 200])
-      
-            
-      let nodes = d3.hierarchy(tree_data, (d) => {
-        return d.children
+  
 
-      })
-
-      //let nodes = d3.hierarchy(tree_data)
-      nodes = treemap(nodes);
-
-      let svg = group.append("svg")
-      .attr("width", width)
-      .attr("height", height)
-      .append("g")
-      .attr("id", "group_svg")
-      .attr('transform', `translate(${tree_origin_x}, ${tree_origin_y})`);
-      
-      let node = svg.selectAll(".node")
-      .enter()
-      .enter().append("svg:g")
-      .attr("class", "node")
-
-      
-
-    
-      svg.selectAll("circle")
-                   .data(nodes.descendants())
-                   .enter()
-                   .append("circle")
-                   .style("fill", "#fff")
-                   .attr("cx", function(d, i) {
-                       return (i * 50) +25; })
-                   .attr("cy", (d, i) => { 30 * i  })//height/2)
-                   .attr("r", function(d, i) {
-                               return 10 });
-                
-
-
-
+    /*---------------------------------------*/
     };//icd10cm
+
+    /////////////////////////
+    icd10cm_1(group, icd10cm_json){
+     let utils = new Utils();
+     let tree_origin_x = width * 0.08;
+     let tree_origin_y = height * 0.09;
+    // console.log(JSON.stringify(icd10cm_json) )
+     
+    // icd10cm_json.children.forEach(utils.collapse); 
+    const root = d3.hierarchy(icd10cm_json);
+    
+    
+    
+    root.x0 = 0;
+    root.y0 = 0;
+
+     root.descendants().forEach((d, i) => {
+      d.id = i;
+      d._children = d.children;
+       if (d.depth && d.data.name.length !== 7) d.children = null;
+    });
+
+    
+    let svg = group.append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("id", "group_svg")
+    //.attr('transform', `translate(${tree_origin_x}, ${tree_origin_y})`);///////////////
+
+    const gLink = svg.append("g")
+    .attr("fill", "none")
+    .attr("stroke", "#fff")
+    .attr("stroke-opacity", 0.4)
+    .attr("stroke-width", 1.5);
+
+const gNode = svg.append("g")
+    .attr("cursor", "pointer")
+    .attr("pointer-events", "all");
+////////////////////////////////////
+  // Compute the new tree layout.
+  tree(root);
+///////////////
+
+
+ 
+
+};//funct
+
+    
   };//class
 ///////////////////////////////
   export class Tree_buttons {
@@ -283,8 +325,10 @@ icd10cm_update(source, group) {
               let vis = setup.vis();
               let guides = new Guides();
               let bullets_group = guides.make_bullets(vis);
-              let draw = new Draw()
-              draw.icd10cm(vis);
+              get_data(vis);
+
+              //let draw = new Draw()
+              //draw.icd10cm(vis);
               //draw.prototype(vis);
             }
           }, //click
@@ -378,10 +422,7 @@ icd10cm_update(source, group) {
           ' ICD-10-CM Graphical Tree'
         );
   
-  
-  
-  
-  
+   
       return bullets_group;
     } //make_bullets
   } //class Cuides
@@ -393,23 +434,35 @@ class Utils{
   constructor(){}
    
   collapse(d) { 
-
+    console.log("collapse ------------------")
     //console.log("---> " + JSON.stringify(d["children"]) );
-      
+   /*   
     if (d["children"]) { 
       d._children = d["children"]; 
       d._children.forEach(this.collapse); 
       d["children"] = null; 
           }
-   /*        
+  */        
     if (d.children) { 
         d._children = d.children; 
-        d._children.forEach(this.collapse); 
+        d._children.forEach(collapse); 
         d.children = null; 
             }
- */            
+            
 }//collapse
 
+ title(element) {
+    let a_title = element
+      .append('title')
+      //.attr("class", "tooltip");
+      .style('font', 'sans-serif')
+      .style('font-size', '0.85em')
+      .style('text-align', 'center')
+      .style('cursor', 'default')
+      .style('background-color', 'cyan');
+
+    return a_title;
+  }
 
 };//Utils
 

@@ -12,15 +12,24 @@ defmodule Icd10cm.Codes.Ctd do
     field :slimmappings, :string
     field :synonyms, :string
     field :treenumbers, :string
-
   end
 
   @doc false
   def changeset(ctd, attrs) do
     ctd
-    |> cast(attrs, [:diseasename, :diseaseid, :altdiseaseids, :definition, :parentids, :treenumbers, :parenttreenumbers, :synonyms, :slimmappings])
+    |> cast(attrs, [
+      :diseasename,
+      :diseaseid,
+      :altdiseaseids,
+      :definition,
+      :parentids,
+      :treenumbers,
+      :parenttreenumbers,
+      :synonyms,
+      :slimmappings
+    ])
     |> validate_required([])
 
-    #|> validate_required([:diseasename, :diseaseid, :altdiseaseids, :definition, :parentids, :treenumbers, :parenttreenumbers, :synonyms, :slimmappings])
+    # |> validate_required([:diseasename, :diseaseid, :altdiseaseids, :definition, :parentids, :treenumbers, :parenttreenumbers, :synonyms, :slimmappings])
   end
 end

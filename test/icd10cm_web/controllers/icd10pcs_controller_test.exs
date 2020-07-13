@@ -3,9 +3,78 @@ defmodule Icd10cmWeb.Icd10pcsControllerTest do
 
   alias Icd10cm.Codes
 
-  @create_attrs %{approach: "some approach", approach_title: "some approach_title", body_part: "some body_part", body_part_title: "some body_part_title", body_system: "some body_system", body_system_title: "some body_system_title", device: "some device", device_title: "some device_title", icd10pcs_code: "some icd10pcs_code", icd10pcs_code_2: "some icd10pcs_code_2", icd10pcs_code_2_ltree: "some icd10pcs_code_2_ltree", icd10pcs_code_ltree: "some icd10pcs_code_ltree", is_header: "some is_header", long_description: "some long_description", order_number: 42, qualifier: "some qualifier", qualifier_title: "some qualifier_title", root_operation: "some root_operation", root_operation_title: "some root_operation_title", section: "some section", section_title: "some section_title", short_description: "some short_description"}
-  @update_attrs %{approach: "some updated approach", approach_title: "some updated approach_title", body_part: "some updated body_part", body_part_title: "some updated body_part_title", body_system: "some updated body_system", body_system_title: "some updated body_system_title", device: "some updated device", device_title: "some updated device_title", icd10pcs_code: "some updated icd10pcs_code", icd10pcs_code_2: "some updated icd10pcs_code_2", icd10pcs_code_2_ltree: "some updated icd10pcs_code_2_ltree", icd10pcs_code_ltree: "some updated icd10pcs_code_ltree", is_header: "some updated is_header", long_description: "some updated long_description", order_number: 43, qualifier: "some updated qualifier", qualifier_title: "some updated qualifier_title", root_operation: "some updated root_operation", root_operation_title: "some updated root_operation_title", section: "some updated section", section_title: "some updated section_title", short_description: "some updated short_description"}
-  @invalid_attrs %{approach: nil, approach_title: nil, body_part: nil, body_part_title: nil, body_system: nil, body_system_title: nil, device: nil, device_title: nil, icd10pcs_code: nil, icd10pcs_code_2: nil, icd10pcs_code_2_ltree: nil, icd10pcs_code_ltree: nil, is_header: nil, long_description: nil, order_number: nil, qualifier: nil, qualifier_title: nil, root_operation: nil, root_operation_title: nil, section: nil, section_title: nil, short_description: nil}
+  @create_attrs %{
+    approach: "some approach",
+    approach_title: "some approach_title",
+    body_part: "some body_part",
+    body_part_title: "some body_part_title",
+    body_system: "some body_system",
+    body_system_title: "some body_system_title",
+    device: "some device",
+    device_title: "some device_title",
+    icd10pcs_code: "some icd10pcs_code",
+    icd10pcs_code_2: "some icd10pcs_code_2",
+    icd10pcs_code_2_ltree: "some icd10pcs_code_2_ltree",
+    icd10pcs_code_ltree: "some icd10pcs_code_ltree",
+    is_header: "some is_header",
+    long_description: "some long_description",
+    order_number: 42,
+    qualifier: "some qualifier",
+    qualifier_title: "some qualifier_title",
+    root_operation: "some root_operation",
+    root_operation_title: "some root_operation_title",
+    section: "some section",
+    section_title: "some section_title",
+    short_description: "some short_description"
+  }
+  @update_attrs %{
+    approach: "some updated approach",
+    approach_title: "some updated approach_title",
+    body_part: "some updated body_part",
+    body_part_title: "some updated body_part_title",
+    body_system: "some updated body_system",
+    body_system_title: "some updated body_system_title",
+    device: "some updated device",
+    device_title: "some updated device_title",
+    icd10pcs_code: "some updated icd10pcs_code",
+    icd10pcs_code_2: "some updated icd10pcs_code_2",
+    icd10pcs_code_2_ltree: "some updated icd10pcs_code_2_ltree",
+    icd10pcs_code_ltree: "some updated icd10pcs_code_ltree",
+    is_header: "some updated is_header",
+    long_description: "some updated long_description",
+    order_number: 43,
+    qualifier: "some updated qualifier",
+    qualifier_title: "some updated qualifier_title",
+    root_operation: "some updated root_operation",
+    root_operation_title: "some updated root_operation_title",
+    section: "some updated section",
+    section_title: "some updated section_title",
+    short_description: "some updated short_description"
+  }
+  @invalid_attrs %{
+    approach: nil,
+    approach_title: nil,
+    body_part: nil,
+    body_part_title: nil,
+    body_system: nil,
+    body_system_title: nil,
+    device: nil,
+    device_title: nil,
+    icd10pcs_code: nil,
+    icd10pcs_code_2: nil,
+    icd10pcs_code_2_ltree: nil,
+    icd10pcs_code_ltree: nil,
+    is_header: nil,
+    long_description: nil,
+    order_number: nil,
+    qualifier: nil,
+    qualifier_title: nil,
+    root_operation: nil,
+    root_operation_title: nil,
+    section: nil,
+    section_title: nil,
+    short_description: nil
+  }
 
   def fixture(:icd10pcs) do
     {:ok, icd10pcs} = Codes.create_icd10pcs(@create_attrs)
@@ -75,6 +144,7 @@ defmodule Icd10cmWeb.Icd10pcsControllerTest do
     test "deletes chosen icd10pcs", %{conn: conn, icd10pcs: icd10pcs} do
       conn = delete(conn, Routes.icd10pcs_path(conn, :delete, icd10pcs))
       assert redirected_to(conn) == Routes.icd10pcs_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.icd10pcs_path(conn, :show, icd10pcs))
       end

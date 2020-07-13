@@ -70,25 +70,27 @@ defmodule Icd10cmWeb.Icd10clinicalController do
     |> put_flash(:info, "Icd10clinical deleted successfully.")
     |> redirect(to: Routes.icd10clinical_path(conn, :index))
   end
-###########################
-def search_clinicals_2(
+
+  ###########################
+  def search_clinicals_2(
         conn,
         %{"search_clinicals" => %{"query" => query, "selection" => selection}} = params
       ) do
     trim_query = String.trim(query)
+
     page =
-    Icd10cm.Codes.search_clinicals(trim_query, selection)
-    |> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
+      Icd10cm.Codes.search_clinicals(trim_query, selection)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
 
     render(conn, "index.html", icd10clinicals: page.entries, page: page)
-
   end
-####################################
-#def search_index(icd10clinicals, page) do
-#  render(conn, "search_index.html", icd10clinicals: page.entries, page: page)
-#end
 
-#############################3
+  ####################################
+  # def search_index(icd10clinicals, page) do
+  #  render(conn, "search_index.html", icd10clinicals: page.entries, page: page)
+  # end
+
+  ############################# 3
   def search_clinicals(
         conn,
         %{"search_clinicals" => %{"query" => query, "selection" => selection}} = params
@@ -98,8 +100,9 @@ def search_clinicals_2(
     page =
       Icd10cm.Codes.search_clinicals(trim_query, selection)
       |> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
-      render(conn, "index.html", icd10clinicals: page.entries, page: page)
 
+    render(conn, "index.html", icd10clinicals: page.entries, page: page)
   end
-#############################
+
+  #############################
 end

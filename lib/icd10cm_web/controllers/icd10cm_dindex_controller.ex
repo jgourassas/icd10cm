@@ -11,9 +11,10 @@ defmodule Icd10cmWeb.Icd10cm_dindexController do
     page =
       Codes.list_icd10cm_dindexes(params)
       |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
-      render(conn, "index.html", icd10cm_dindexes: page.entries, page: page)
-    #icd10cm_dindexes = Codes.list_icd10cm_dindexes()
-    #render(conn, "index.html", icd10cm_dindexes: icd10cm_dindexes)
+
+    render(conn, "index.html", icd10cm_dindexes: page.entries, page: page)
+    # icd10cm_dindexes = Codes.list_icd10cm_dindexes()
+    # render(conn, "index.html", icd10cm_dindexes: icd10cm_dindexes)
   end
 
   def new(conn, _params) do
@@ -69,20 +70,19 @@ defmodule Icd10cmWeb.Icd10cm_dindexController do
 
   ######################
   def search_dindexes(
-    conn,
-    %{"search_dindexes" => %{"query" => query, "selection" => selection}} = params
-  )
-  do
-trim_query = String.trim(query)
+        conn,
+        %{"search_dindexes" => %{"query" => query, "selection" => selection}} = params
+      ) do
+    trim_query = String.trim(query)
 
-page =
-  Icd10cm.Codes.search_dindexes(trim_query, selection)
-  |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
+    page =
+      Icd10cm.Codes.search_dindexes(trim_query, selection)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
 
-  render(conn, "index.html", icd10cm_dindexes: page.entries, page: page)
-end
+    render(conn, "index.html", icd10cm_dindexes: page.entries, page: page)
+  end
 
-######
+  ######
 
   ######################
 end

@@ -25,8 +25,6 @@ defmodule Icd10cm.Repo.Migrations.CreateIcd10Pcses do
       add :qualifier, :string
       add :qualifier_title, :string
       add :icd10pcs_code_ltree, :string
-
     end
-
   end
 end

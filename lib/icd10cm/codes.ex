@@ -100,9 +100,9 @@ defmodule Icd10cm.Codes do
   end
 
   def list_icd10clinicals(_params) do
-   ####### ugly to make json file in data dir ######################
-   ## make_icd10cm_json()
-  ##############################
+    ####### ugly to make json file in data dir ######################
+    #make_icd10cm_json()
+    ##############################
     _page =
       Icd10clinical
       |> order_by([p], [p.icd10cm_code_2])
@@ -133,16 +133,15 @@ defmodule Icd10cm.Codes do
 
   #################
 
-
   ####################
-  def search_clinicals(query, selection ) do
+  def search_clinicals(query, selection) do
     case selection do
       "codes" -> search_icd10clinicals_codes(query)
       "long_desc" -> search_icd10clinicals_long_desc(query)
       "includes" -> search_icd10clinicals_includes(query)
-      "inclusionterm"-> search_icd10clinicals_inclusionterm(query)
-      "excludes1"-> search_icd10clinicals_excludes1(query)
-      "excludes2"-> search_icd10clinicals_excludes2(query)
+      "inclusionterm" -> search_icd10clinicals_inclusionterm(query)
+      "excludes1" -> search_icd10clinicals_excludes1(query)
+      "excludes2" -> search_icd10clinicals_excludes2(query)
       "codefirst" -> search_icd10clinicals_codefirst(query)
       "codealso" -> search_icd10clinicals_codealso(query)
       "useadditionalcode" -> search_icd10clinicals_useadditionalcode(query)
@@ -150,118 +149,118 @@ defmodule Icd10cm.Codes do
       _ -> ""
     end
   end
- ######################
-def search_icd10clinicals_chapter(query) do
-  query =
-  from(
-   p in Icd10clinical,
-    where: fragment("(?) @@ plainto_tsquery(?)", p.chapter_description, ^query),
-    order_by: [asc: p.chapter_description]
-     )
 
-
- end
- ###################################
- def search_icd10clinicals_useadditionalcode(code_2) do
-
-  query =
-    from(
-     p in Icd10clinical,
-      where: p.icd10cm_code_2 ==  ^"#{code_2}",
-      select: [p.useadditionalcode],
-      order_by: [asc: p.icd10cm_code_2] )
-
-      res = Repo.all(query)
-      str_split = List.to_string(res)
-end
-
- ######################
-
- def search_icd10clinicals_codealso(code_2) do
-
-  query =
-    from(
-     p in Icd10clinical,
-      where: p.icd10cm_code_2 ==  ^"#{code_2}",
-      select: [p.codealso],
-      order_by: [asc: p.icd10cm_code_2] )
-
-      res = Repo.all(query)
-      str_split = List.to_string(res)
-end
-
- ######################
- def search_icd10clinicals_codefirst(code_2) do
-
-  query =
-    from(
-     p in Icd10clinical,
-      where: p.icd10cm_code_2 ==  ^"#{code_2}",
-      select: [p.codefirst],
-      order_by: [asc: p.icd10cm_code_2] )
-
-      res = Repo.all(query)
-      str_split = List.to_string(res)
-
-  end
- ######################
- def search_icd10clinicals_excludes2(code_2) do
-
-  query =
-    from(
-     p in Icd10clinical,
-      where: p.icd10cm_code_2 ==  ^"#{code_2}",
-      select: [p.excludes2],
-      order_by: [asc: p.icd10cm_code_2] )
-
-      res = Repo.all(query)
-      str_split = List.to_string(res)
-
-  end
-#########################
-
- def search_icd10clinicals_excludes1(code_2) do
-
-  query =
-    from(
-     p in Icd10clinical,
-      where: p.icd10cm_code_2 ==  ^"#{code_2}",
-      select: [p.excludes1],
-      order_by: [asc: p.icd10cm_code_2] )
-
-      res = Repo.all(query)
-      str_split = List.to_string(res)
-
-  end
-#########################
   ######################
-  def search_icd10clinicals_inclusionterm(code_2) do
-
+  def search_icd10clinicals_chapter(query) do
     query =
       from(
-       p in Icd10clinical,
-        where: p.icd10cm_code_2 ==  ^"#{code_2}",
+        p in Icd10clinical,
+        where: fragment("(?) @@ plainto_tsquery(?)", p.chapter_description, ^query),
+        order_by: [asc: p.chapter_description]
+      )
+  end
+
+  ###################################
+  def search_icd10clinicals_useadditionalcode(code_2) do
+    query =
+      from(
+        p in Icd10clinical,
+        where: p.icd10cm_code_2 == ^"#{code_2}",
+        select: [p.useadditionalcode],
+        order_by: [asc: p.icd10cm_code_2]
+      )
+
+    res = Repo.all(query)
+    str_split = List.to_string(res)
+  end
+
+  ######################
+
+  def search_icd10clinicals_codealso(code_2) do
+    query =
+      from(
+        p in Icd10clinical,
+        where: p.icd10cm_code_2 == ^"#{code_2}",
+        select: [p.codealso],
+        order_by: [asc: p.icd10cm_code_2]
+      )
+
+    res = Repo.all(query)
+    str_split = List.to_string(res)
+  end
+
+  ######################
+  def search_icd10clinicals_codefirst(code_2) do
+    query =
+      from(
+        p in Icd10clinical,
+        where: p.icd10cm_code_2 == ^"#{code_2}",
+        select: [p.codefirst],
+        order_by: [asc: p.icd10cm_code_2]
+      )
+
+    res = Repo.all(query)
+    str_split = List.to_string(res)
+  end
+
+  ######################
+  def search_icd10clinicals_excludes2(code_2) do
+    query =
+      from(
+        p in Icd10clinical,
+        where: p.icd10cm_code_2 == ^"#{code_2}",
+        select: [p.excludes2],
+        order_by: [asc: p.icd10cm_code_2]
+      )
+
+    res = Repo.all(query)
+    str_split = List.to_string(res)
+  end
+
+  #########################
+
+  def search_icd10clinicals_excludes1(code_2) do
+    query =
+      from(
+        p in Icd10clinical,
+        where: p.icd10cm_code_2 == ^"#{code_2}",
+        select: [p.excludes1],
+        order_by: [asc: p.icd10cm_code_2]
+      )
+
+    res = Repo.all(query)
+    str_split = List.to_string(res)
+  end
+
+  #########################
+  ######################
+  def search_icd10clinicals_inclusionterm(code_2) do
+    query =
+      from(
+        p in Icd10clinical,
+        where: p.icd10cm_code_2 == ^"#{code_2}",
         select: [p.inclusionterm],
-        order_by: [asc: p.icd10cm_code_2] )
+        order_by: [asc: p.icd10cm_code_2]
+      )
 
-        res = Repo.all(query)
-        str_split = List.to_string(res)
+    res = Repo.all(query)
+    str_split = List.to_string(res)
+  end
 
-    end
   #########################
   def search_icd10clinicals_includes(code_2) do
+    query =
+      from(
+        p in Icd10clinical,
+        where: p.icd10cm_code_2 == ^"#{code_2}",
+        select: [p.includes],
+        order_by: [asc: p.icd10cm_code_2]
+      )
 
-  query =
-    from(
-     p in Icd10clinical,
-      where: p.icd10cm_code_2 ==  ^"#{code_2}",
-      select: [p.includes],
-      order_by: [asc: p.icd10cm_code_2] )
-
-      res = Repo.all(query)
-      str_split = List.to_string(res)
-
+    res = Repo.all(query)
+    str_split = List.to_string(res)
   end
+
   ##########################
   def search_icd10clinicals_codes(query) do
     _query =
@@ -394,7 +393,7 @@ end
       from p in Icd10cm_neoplasm,
         order_by: [asc: p.title],
         where: p.title == ^"#{term}",
-        #where: fragment("(?) @@ plainto_tsquery(?)", p.title,   ^("#{term}%")  ),
+        # where: fragment("(?) @@ plainto_tsquery(?)", p.title,   ^("#{term}%")  ),
         select: %{main_term: fragment("? ", p.main_term), title: fragment(" ? ", p.title)},
         limit: 10
 
@@ -418,7 +417,6 @@ end
     if Enum.any?(records_b) do
       Enum.map(records_b, fn rec ->
         main_term_rec = rec[:main_term]
-
 
         case code_order do
           "primary" ->
@@ -481,7 +479,6 @@ end
 
         # case
       end)
-
     end
   end
 
@@ -620,44 +617,49 @@ end
 
     query |> Repo.all()
   end
-####################################
-def search_eindexes(query, selection) do
-  case selection do
-    "title" -> search_icd10cm_eindex_title(query)
-    "main_term_jsonb" -> search_icd10cm_eindex_main_term(query)
-    _ -> ""
+
+  ####################################
+  def search_eindexes(query, selection) do
+    case selection do
+      "title" -> search_icd10cm_eindex_title(query)
+      "main_term_jsonb" -> search_icd10cm_eindex_main_term(query)
+      _ -> ""
+    end
   end
-end
-##########################################
-def search_icd10cm_eindex_title(title) do
-  query =
-  from(
-    p in Icd10cm_eindex,
-    where: ilike(p.title, ^"#{title}%"),
-    limit: 5
-  )
-end
-#########################################
-def search_icd10cm_eindex_main_term(query) do
-  query = from(
-    d in Icd10cm_eindex,
-    #where: fragment("(?) @@ toquery (?)", d.main_term_jsonb, ^query),
-    #or_where: jsonb_each( '{"name": "Alice", "agent": {"bot": true} }'::jsonb );
-    # ilike(d.long_description, ^"#{query}%"),
-   # where: fragment("? @> ?", d.main_term_jsonb, ^query),
-  # select: [d.main_term_jsonb, d.title],
-   where: fragment("?->> ?  = ? ", d.main_term_jsonb,  "term_title" ,  ^"#{query}%"    ),
-   order_by: [asc: d.title]
-  )
- # query |> Repo.all()
 
-  #movement_id = 2
-  #from wo in Workout,
- #   where: fragment(~s(?#>'{movements}' @> ?), wo.details, ^[%{id: movement_id}])
- # from(t in Team, where: t.owner_id == ^user_id and fragment("?->>'see_owner' = ?", t.config, true))
-end
+  ##########################################
+  def search_icd10cm_eindex_title(title) do
+    query =
+      from(
+        p in Icd10cm_eindex,
+        where: ilike(p.title, ^"#{title}%"),
+        limit: 5
+      )
+  end
 
-############################################
+  #########################################
+  def search_icd10cm_eindex_main_term(query) do
+    query =
+      from(
+        d in Icd10cm_eindex,
+        # where: fragment("(?) @@ toquery (?)", d.main_term_jsonb, ^query),
+        # or_where: jsonb_each( '{"name": "Alice", "agent": {"bot": true} }'::jsonb );
+        # ilike(d.long_description, ^"#{query}%"),
+        # where: fragment("? @> ?", d.main_term_jsonb, ^query),
+        # select: [d.main_term_jsonb, d.title],
+        where: fragment("?->> ?  = ? ", d.main_term_jsonb, "term_title", ^"#{query}%"),
+        order_by: [asc: d.title]
+      )
+
+    # query |> Repo.all()
+
+    # movement_id = 2
+    # from wo in Workout,
+    #   where: fragment(~s(?#>'{movements}' @> ?), wo.details, ^[%{id: movement_id}])
+    # from(t in Team, where: t.owner_id == ^user_id and fragment("?->>'see_owner' = ?", t.config, true))
+  end
+
+  ############################################
   def make_icd10cm_eindexes_jsonb(title) do
     records = find_icd10cm_eindexes_records(title)
 
@@ -674,20 +676,26 @@ end
       main_use_probe = Enum.map(l, fn x -> x["main_use"] end)
 
       formated =
-        "main title " <> "#{main_title}" <>
-         "main_code " <> "#{main_code}" <>
+        "main title " <>
+          "#{main_title}" <>
+          "main_code " <>
+          "#{main_code}" <>
           " " <>
-          "main_codes " <> "#{main_codes}" <>
+          "main_codes " <>
+          "#{main_codes}" <>
           " " <>
-          "main_see_probe " <>"#{main_see_probe}" <>
+          "main_see_probe " <>
+          "#{main_see_probe}" <>
           " " <>
-          "main_see_codes " <>  "#{main_see_codes}" <>
+          "main_see_codes " <>
+          "#{main_see_codes}" <>
           " " <>
-          "main_see_tab "<>  "#{main_see_tab}" <>
+          "main_see_tab " <>
+          "#{main_see_tab}" <>
           " " <>
-          "main_use_probe "<>  "#{main_use_probe}"
+          "main_use_probe " <> "#{main_use_probe}"
 
-          # format_jsonb(formated)
+      # format_jsonb(formated)
 
       if Enum.any?(terms_l) do
         Enum.map(terms_l, fn terms ->
@@ -717,7 +725,7 @@ end
 
     term_level = a["term_level"]
     intend = level_intend(term_level)
-    #term_level = a["term_level"]
+    # term_level = a["term_level"]
     term_title = a["term_title"]
     term_nemod = a["term_nemod"]
     term_codes = a["term_codes"]
@@ -784,11 +792,10 @@ end
           "<span style='margin-left:10px; margin-top:20px;margin-bottom:20px;color:#e41a1c;'>" <>
             "1- " <>
             "<i class= 'fa fa-snowflake-o' style='color:#e41a1c; margin-top:15px;' ></i> " <>
-
             "</span>"
 
         "2" ->
-           "<span style='margin-left:30px; color:#377eb8;'>" <>
+          "<span style='margin-left:30px; color:#377eb8;'>" <>
             "2- - " <>
             "<i class= 'fa  fa-chevron-right' style='color:#377eb8;margin-top:5px;'' ></i> " <>
             "</span>"
@@ -823,11 +830,12 @@ end
             "<i class= 'fa fa-chevron-right' style='color:#a65628;margin-top:5px;'></i> " <>
             "</span>"
 
-            "8" ->
-              "<span style='margin-left:150px;color:#a65628;'>" <>
-                "8- - - - - - - - " <>
-                "<i class= 'fa fa-chevron-right' style='color:#4575b4;margin-top:5px;'></i> " <>
-                "</span>"
+        "8" ->
+          "<span style='margin-left:150px;color:#a65628;'>" <>
+            "8- - - - - - - - " <>
+            "<i class= 'fa fa-chevron-right' style='color:#4575b4;margin-top:5px;'></i> " <>
+            "</span>"
+
         _ ->
           "\t"
       end
@@ -935,76 +943,71 @@ end
     Icd10cm_order.changeset(icd10cm_order, attrs)
   end
 
-
   def list_icd10cm_orders(_params) do
     _page =
       Icd10cm_order
       |> order_by([p], [p.long_description])
   end
 
-################################
- ################# 33
- def search_orders(query, selection) do
-  case selection do
-    "codes_2" -> search_icd10cm_order_codes(query)
-    "long_description" -> search_icd10cm_order_long_description(query)
-    _ -> ""
+  ################################
+  ################# 33
+  def search_orders(query, selection) do
+    case selection do
+      "codes_2" -> search_icd10cm_order_codes(query)
+      "long_description" -> search_icd10cm_order_long_description(query)
+      _ -> ""
+    end
   end
-end
 
-######################
-def search_icd10cm_order_codes(query) do
+  ######################
+  def search_icd10cm_order_codes(query) do
+    _query =
+      from(
+        p in Icd10cm_order,
+        where: ilike(p.icd10cm_code_2, ^"#{query}%"),
+        limit: 50,
+        order_by: [asc: p.icd10cm_code_2]
+      )
+  end
 
-  _query =
-  from(
-    p in Icd10cm_order,
-    where: ilike(p.icd10cm_code_2, ^"#{query}%"),
-    limit: 50,
-    order_by: [asc: p.icd10cm_code_2]
-  )
+  ################################### 3
+  def search_icd10cm_order_long_description(query) do
+    from(
+      d in Icd10cm_order,
+      # this is not working properly ?
+      where: fragment("(?) @@ plainto_tsquery(?)", d.long_description_tsv, ^query),
+      # where: fragment("(?) @@ plainto_tsquery(?)", d.long_description, ^query),
+      or_where: ilike(d.long_description, ^"#{query}%"),
+      order_by: [asc: d.long_description]
+    )
+  end
 
-end
-###################################3
-def search_icd10cm_order_long_description(query) do
-  from(
-    d in Icd10cm_order,
-    #this is not working properly ?
-    where: fragment("(?) @@ plainto_tsquery(?)", d.long_description_tsv, ^query),
-    #where: fragment("(?) @@ plainto_tsquery(?)", d.long_description, ^query),
-    or_where: ilike(d.long_description, ^"#{query}%"),
-    order_by: [asc: d.long_description]
-  )
+  #################################
+  def search_icd10cm_order_codes_from_clinical(query) do
+    query =
+      from(
+        p in Icd10cm_order,
+        where: ilike(p.icd10cm_code_2, ^"#{query}%"),
+        select: [p.icd10cm_code_2, p.long_description],
+        limit: 20
+      )
 
+    text = query |> Repo.all()
+    flatten = List.flatten(text)
 
-end
-#################################
-def search_icd10cm_order_codes_from_clinical(query) do
-  query =
-  from(
-    p in Icd10cm_order,
-    where: ilike(p.icd10cm_code_2, ^"#{query}%"),
-    select: [p.icd10cm_code_2, p.long_description],
-    limit: 20
-  )
+    result =
+      Enum.map(flatten, fn item ->
+        "<tr>" <>
+          "<td>" <>
+          item <>
+          "</td>" <>
+          "</tr>"
+      end)
 
-text = query |> Repo.all()
-flatten = List.flatten(text)
+    result
+  end
 
-
-result = Enum.map(flatten, fn item ->
-  "<tr>"
-  <> "<td>"
-  <> item
-  <> "</td>"
-  <> "</tr>"
-end)
-
-result
-
-
-
-end
-#####################3
+  ##################### 3
 
   alias Icd10cm.Codes.Ctd
 
@@ -1101,76 +1104,79 @@ end
   def change_ctd(%Ctd{} = ctd, attrs \\ %{}) do
     Ctd.changeset(ctd, attrs)
   end
-#####################
-def list_ctds(_params) do
-  _page =
-    Ctd
-    |> order_by([p], [p.diseasename])
-end
-####################
-def format_ctd_colums(synonyms) do
-  if(synonyms !== nil) do
 
-  split = String.split(synonyms, "|")
-
-  _result =
-  Enum.map(split, fn item ->
-    "<span > "
-    <> "<i class='fa fa-caret-right' style='font-size:20px;color:#1b9e77;''></i>"
-    <> " "
-    <> item
-    <> "&nbsp;&nbsp;&nbsp;&nbsp;"
-    <> "<br/>"
-    <> "</span>"
-  end)
-end#if
-
-end#format_ctd_columns
-#####################
-def search_ctds(query, selection) do
-  case selection do
-    "diseasenames" -> search_ctds_diseasnames(query)
-    "synonyms" -> search_ctds_synonyms(query)
-    "definitions" -> search_ctds_definitions(query)
-
-    _ -> ""
+  #####################
+  def list_ctds(_params) do
+    _page =
+      Ctd
+      |> order_by([p], [p.diseasename])
   end
-end
-#######################3
-def search_ctds_definitions(orders_long_description) do
 
-  #defs = from(
-  #  d in Ctd,
-  #  where: fragment("(?) @@ plainto_tsquery(?)", d.diseasename, ^"#{orders_long_description}"),
-  #  #or_where: ilike(d.diseasename, ^"#{orders_long_description}%"),
-  #  select: [d.definition],
-  #  order_by: [asc: d.diseasename]
-  #)
-  #res = Repo.all(defs)
+  ####################
+  def format_ctd_colums(synonyms) do
+    if(synonyms !== nil) do
+      split = String.split(synonyms, "|")
 
-end
-#############################
-def search_ctds_diseasnames(query) do
+      _result =
+        Enum.map(split, fn item ->
+          "<span > " <>
+            "<i class='fa fa-caret-right' style='font-size:20px;color:#1b9e77;''></i>" <>
+            " " <>
+            item <>
+            "&nbsp;&nbsp;&nbsp;&nbsp;" <>
+            "<br/>" <>
+            "</span>"
+        end)
+    end
 
-from(
+    # if
+  end
+
+  # format_ctd_columns
+  #####################
+  def search_ctds(query, selection) do
+    case selection do
+      "diseasenames" -> search_ctds_diseasnames(query)
+      "synonyms" -> search_ctds_synonyms(query)
+      "definitions" -> search_ctds_definitions(query)
+      _ -> ""
+    end
+  end
+
+  ####################### 3
+  def search_ctds_definitions(orders_long_description) do
+    # defs = from(
+    #  d in Ctd,
+    #  where: fragment("(?) @@ plainto_tsquery(?)", d.diseasename, ^"#{orders_long_description}"),
+    #  #or_where: ilike(d.diseasename, ^"#{orders_long_description}%"),
+    #  select: [d.definition],
+    #  order_by: [asc: d.diseasename]
+    # )
+    # res = Repo.all(defs)
+  end
+
+  #############################
+  def search_ctds_diseasnames(query) do
+    from(
       d in Ctd,
       where: fragment("(?) @@ plainto_tsquery(?)", d.diseasename, ^query),
       # or  where: ilike(d.long_description, ^"#{query}%"),
       order_by: [asc: d.diseasename]
     )
-end
-##########################
-def search_ctds_synonyms(query) do
- _synonym =  from(
-    d in Ctd,
-    where: fragment("(?) @@ plainto_tsquery(?)", d.synonyms, ^query),
-    # or  where: ilike(d.long_description, ^"#{query}%"),
-    order_by: [asc: d.diseasename]
-  )
+  end
 
+  ##########################
+  def search_ctds_synonyms(query) do
+    _synonym =
+      from(
+        d in Ctd,
+        where: fragment("(?) @@ plainto_tsquery(?)", d.synonyms, ^query),
+        # or  where: ilike(d.long_description, ^"#{query}%"),
+        order_by: [asc: d.diseasename]
+      )
+  end
 
-end
-################
+  ################
 
   alias Icd10cm.Codes.Icd10cm_dindex
 
@@ -1267,62 +1273,64 @@ end
   def change_icd10cm_dindex(%Icd10cm_dindex{} = icd10cm_dindex, attrs \\ %{}) do
     Icd10cm_dindex.changeset(icd10cm_dindex, attrs)
   end
-##########################
-def list_icd10cm_dindexes(_params) do
-  _page =
-    Icd10cm_dindex
-    |> order_by([p], [p.title])
 
-end
-##########################
-def search_dindexes(query, selection) do
-  case selection do
-    "title" -> get_dindex_from_title(query)
-    #"long_desc" -> search_icd10clinicals_long_desc(query)
-    _ -> ""
+  ##########################
+  def list_icd10cm_dindexes(_params) do
+    _page =
+      Icd10cm_dindex
+      |> order_by([p], [p.title])
   end
 
+  ##########################
+  def search_dindexes(query, selection) do
+    case selection do
+      "title" -> get_dindex_from_title(query)
+      # "long_desc" -> search_icd10clinicals_long_desc(query)
+      _ -> ""
+    end
+  end
 
-end
-###########################
-def get_dindex_from_title(title) do
-  main_term_q =
-  from p in Icd10cm_dindex,
-    order_by: [asc: p.title],
-    where: ilike(p.title, ^"#{title}%"),
-    #where: p.title == ^"#{title}",
-    limit: 30
+  ###########################
+  def get_dindex_from_title(title) do
+    main_term_q =
+      from p in Icd10cm_dindex,
+        order_by: [asc: p.title],
+        where: ilike(p.title, ^"#{title}%"),
+        # where: p.title == ^"#{title}",
+        limit: 30
+  end
 
-end
-###########################
-def get_dindex_title(title) do
-  main_term_q =
-  from p in Icd10cm_dindex,
-    order_by: [asc: p.title],
-    where: p.title == ^"#{title}",
-    select: %{main_term: fragment("? ", p.main_term), title: fragment(" ? ", p.title)},
-    limit: 10
+  ###########################
+  def get_dindex_title(title) do
+    main_term_q =
+      from p in Icd10cm_dindex,
+        order_by: [asc: p.title],
+        where: p.title == ^"#{title}",
+        select: %{main_term: fragment("? ", p.main_term), title: fragment(" ? ", p.title)},
+        limit: 10
 
-main_term_q |> Repo.all()
-end
-##########################
-def find_dindex_code(title, poisoning) do
-  records_b = get_dindex_title(title)
+    main_term_q |> Repo.all()
+  end
 
-  if Enum.any?(records_b) do
+  ##########################
+  def find_dindex_code(title, poisoning) do
+    records_b = get_dindex_title(title)
 
-    Enum.map(records_b, fn rec ->
-      main_term_rec = rec[:main_term]
-      case poisoning do
-        "accidental" ->
-          #code = main_term_rec["0.term_cell_l.0.cell_code"]
-          code = main_term_rec["main_cell_l.0.main_cell_code"]
+    if Enum.any?(records_b) do
+      Enum.map(records_b, fn rec ->
+        main_term_rec = rec[:main_term]
 
-          if(code !== nil) do
-            code
-          else
-            "None"
-          end
+        case poisoning do
+          "accidental" ->
+            # code = main_term_rec["0.term_cell_l.0.cell_code"]
+            code = main_term_rec["main_cell_l.0.main_cell_code"]
+
+            if(code !== nil) do
+              code
+            else
+              "None"
+            end
+
           "intentional" ->
             code = main_term_rec["main_cell_l.1.main_cell_code"]
 
@@ -1332,58 +1340,54 @@ def find_dindex_code(title, poisoning) do
               "None"
             end
 
+          "assault" ->
+            code = main_term_rec["main_cell_l.2.main_cell_code"]
 
-            "assault" ->
-              code = main_term_rec["main_cell_l.2.main_cell_code"]
+            if(code !== nil) do
+              code
+            else
+              "None"
+            end
 
-              if(code !== nil) do
-                code
-              else
-                "None"
-              end
+          "undetermined" ->
+            code = main_term_rec["main_cell_l.3.main_cell_code"]
 
+            if(code !== nil) do
+              code
+            else
+              "None"
+            end
 
-              "undetermined" ->
-                code = main_term_rec["main_cell_l.3.main_cell_code"]
+          "adverse_effect" ->
+            code = main_term_rec["main_cell_l.4.main_cell_code"]
 
-                if(code !== nil) do
-                  code
-                else
-                  "None"
-                end
+            if(code !== nil) do
+              code
+            else
+              "None"
+            end
 
+          "underdosing" ->
+            code = main_term_rec["main_cell_l.5.main_cell_code"]
 
-              "adverse_effect" ->
-                code = main_term_rec["main_cell_l.4.main_cell_code"]
-
-                if(code !== nil) do
-                  code
-                else
-                  "None"
-                end
-
-
-                "underdosing" ->
-                  code = main_term_rec["main_cell_l.5.main_cell_code"]
-
-                  if(code !== nil) do
-                    code
-                  else
-                    "None"
-                  end
+            if(code !== nil) do
+              code
+            else
+              "None"
+            end
 
           _ ->
             " "
-          end
+        end
 
-          # case
-        end)
+        # case
+      end)
+    end
 
+    # if
+  end
 
-  end#if
-
-
-end#def
+  # def
   #############################
 
   alias Icd10cm.Codes.Icd10pcs
@@ -1399,10 +1403,9 @@ end#def
   """
   def list_icd10_pcses(_params) do
     _page =
-    Icd10pcs
-    |> order_by([p], [p.long_description])
-end
-
+      Icd10pcs
+      |> order_by([p], [p.long_description])
+  end
 
   def list_icd10_pcses do
     Repo.all(Icd10pcs)
@@ -1489,46 +1492,44 @@ end
     Icd10pcs.changeset(icd10pcs, attrs)
   end
 
-###############################
-def search_pcs(query, selection) do
+  ###############################
+  def search_pcs(query, selection) do
     case selection do
       "codes_2" -> search_pcs_code_2(query)
       "long_codes" -> search_pcs_long_codes(query)
       "long_description" -> search_pcs_long_description(query)
       _ -> ""
     end
-
-end
-################################
-def search_pcs_code_2(term) do
-  from p in Icd10pcs,
-  order_by: [asc: p.long_description],
-  where: fragment("(?) ilike(?)", p.icd10pcs_code_2,   ^("#{term}%") )   ,
-  limit: 25
   end
 
-#################################
-def search_pcs_long_codes(term) do
+  ################################
+  def search_pcs_code_2(term) do
     from p in Icd10pcs,
-    order_by: [asc: p.long_description],
-    where: fragment("(?) @@ plainto_tsquery(?)", p.long_description,   ^("#{term}%")  )
-     or fragment("(?) ilike(?)", p.icd10pcs_code_2,   ^("#{term}%") )   ,
-    #select: [ p.icd10pcs_code_2, p.long_description, p.is_header],
-    limit: 25
-
-
+      order_by: [asc: p.long_description],
+      where: fragment("(?) ilike(?)", p.icd10pcs_code_2, ^"#{term}%"),
+      limit: 25
   end
-################################
-def search_pcs_long_description(term) do
-  from p in Icd10pcs,
-  order_by: [asc: p.long_description],
-  where: fragment("(?) @@ plainto_tsquery(?)", p.long_description,   ^("#{term}%")  ),
-  limit: 25
 
+  #################################
+  def search_pcs_long_codes(term) do
+    from p in Icd10pcs,
+      order_by: [asc: p.long_description],
+      where:
+        fragment("(?) @@ plainto_tsquery(?)", p.long_description, ^"#{term}%") or
+          fragment("(?) ilike(?)", p.icd10pcs_code_2, ^"#{term}%"),
+      # select: [ p.icd10pcs_code_2, p.long_description, p.is_header],
+      limit: 25
+  end
 
-end
-################################
+  ################################
+  def search_pcs_long_description(term) do
+    from p in Icd10pcs,
+      order_by: [asc: p.long_description],
+      where: fragment("(?) @@ plainto_tsquery(?)", p.long_description, ^"#{term}%"),
+      limit: 25
+  end
 
+  ################################
 
   alias Icd10cm.Codes.Icd10pcs_defs
 
@@ -1542,12 +1543,10 @@ end
 
   """
   def list_icd10pcs_defs(_params) do
-
-      _page =
+    _page =
       Icd10pcs_defs
       |> order_by([p], [p.term_titles])
-
-    end
+  end
 
   @doc """
   Gets a single icd10pcs_defs.
@@ -1630,196 +1629,423 @@ end
     Icd10pcs_defs.changeset(icd10pcs_defs, attrs)
   end
 
-####################################
-def search_pcs_defs(query, selection) do
-  case selection do
-    "term_title" -> search_pcs_defs_term_titles(query)
-    #"long_codes" -> search_pcs_long_codes(query)
-    #"long_description" -> search_pcs_long_description(query)
-    _ -> ""
+  ####################################
+  def search_pcs_defs(query, selection) do
+    case selection do
+      "term_title" -> search_pcs_defs_term_titles(query)
+      # "long_codes" -> search_pcs_long_codes(query)
+      # "long_description" -> search_pcs_long_description(query)
+      _ -> ""
+    end
   end
 
-end
+  ####################################
+  def search_pcs_defs_term_titles(query) do
+    from p in Icd10pcs_defs,
+      order_by: [asc: p.term_titles],
+      where: fragment("(?) @@ plainto_tsquery(?)", p.term_titles, ^"#{query}%"),
+      # select: %{terms: fragment("? ", p.terms),
+      #          section_title: fragment(" ? ",  p.section_title),
+      #          section: fragment(" ? ", p.section)
+      # }
+      limit: 10
+  end
+
 ####################################
-def search_pcs_defs_term_titles(query) do
-  from p in Icd10pcs_defs,
-  order_by: [asc: p.term_titles],
-  where: fragment("(?) @@ plainto_tsquery(?)", p.term_titles,   ^("#{query}%")  ),
-  #select: %{terms: fragment("? ", p.terms),
-  #          section_title: fragment(" ? ",  p.section_title),
-  #          section: fragment(" ? ", p.section)
-  #}
-  limit: 10
-
-end
-##################################
-"""
-"id": "chapter:1",
-"parentid": 0,
-"code": 1,
-"name": "Chapter:Certain infectious and parasitic diseases (A00-B99)",
-"children": [
-    {
-        "id": "chapter:1section:A00-A09",
-        "parentid": "chapter:1",
-        "code": "A00-A09",
-        "name": "Section: Intestinal infectious diseases (A00-A09)",
-        "children": [
-            {
-                "id": "chapter:1section:A00-A09category:A00",
-                "parentid": "chapter:1section:A00-A09",
-                "code": "A00",
-                "name": "Cholera",
-                "children": [
-"""
-#####################################3
 def make_icd10cm_json() do
-
+  ###########################
   {:ok, res_agent} = Agent.start_link(fn -> [] end)
 
   chapters = get_icd10cm_chapters()
 
-  for chapter <- chapters do
-    chapter_name =  Enum.at(chapter, 0)
-    chapter_desctiption = Enum.at(chapter, 1)
-    sections =  get_sections(chapter_name)
-
-   Agent.update(res_agent, fn res ->
-            res ++ [ %{   "id": Integer.to_string(chapter_name),
-                          "parentid": 0,
-                          "name": chapter_desctiption,
-                          "code": Integer.to_string(chapter_name),
-                          #"children": sections
-                           } ]
-             end )
-
-  #################################
-  for section <- sections do
-    categories = get_categories(section)
 
 
-   Agent.update(res_agent, fn res ->
-    res ++ [ %{"id":  Integer.to_string(chapter_name)  <> section,
-               "parentid": Integer.to_string(chapter_name),
-                "code": section,
-                "children": categories } ]
-    #res ++ [ %{"parent": section,   "children": categories } ]
-    end )
 
-  end#for section
+  Enum.each(chapters, fn(chapter) ->
+    chapter_name = chapter.id
+    chapter_desctiption = chapter.name
+
+    sections = get_sections(chapter_name)
+
+
+    Agent.update(res_agent, fn res ->
+      res ++
+        [
+          %{
+            id: Integer.to_string(chapter_name),
+            parentid: "start",
+            code: Integer.to_string(chapter_name),
+            name: chapter_desctiption,
+            children: sections
+            }
+        ]
+    end)
+
+
+
+  end )#chapters
+
+#####################
+
+results = Agent.get(res_agent, fn res -> res end)
+
+    Agent.stop(res_agent)
+
+    output_file = "/home/jgour/work/icd10cm/data/icd10cm_clinicals.json"
+
+    File.open(output_file, [:write])
+    File.write(output_file, Poison.encode!(results), [:binary])
+    File.close(output_file)
+    IO.puts("-------making json has finished------------------------------------")
+
+
+end#end icd
+
+########################################
+  def make_icd10cm_json_1() do
+    ###########################
+    {:ok, res_agent} = Agent.start_link(fn -> [] end)
+
+    chapters = get_icd10cm_chapters()
+
+
+    for chapter <- chapters do
+      chapter_name = Enum.at(chapter, 0)
+      chapter_desctiption = Enum.at(chapter, 1)
+
+
+      sections = get_sections(chapter_name)
+
+
+      Agent.update(res_agent, fn res ->
+        res ++
+          [
+            %{
+              id: Integer.to_string(chapter_name),
+              parentid: "",
+              code: Integer.to_string(chapter_name),
+              name: chapter_desctiption,
+              children: sections
+              }
+          ]
+      end)
+
+      for section <- sections do
+       # select: [p.chapter_name, p.section_id, p.icd10cm_code_2, p.section_description],
+        section_id = Enum.at(section, 1)
+        section_description = Enum.at(section, 3)
+
+        categories = get_categories(section_id)
+
+        Agent.update(res_agent, fn res ->
+          res ++
+            [
+              %{
+                id: Integer.to_string(chapter_name) <>  section_id,
+                parentid: Integer.to_string(chapter_name),
+                name: section_description,
+                code: section_id,
+                children: categories
+                }
+            ]
+
+        end)
+
+        for category <- categories do
+          #select: [p.chapter_name, p.section_id, p.icd10cm_code_2,p.long_description]
+
+          category_code_2 = Enum.at(category, 2)
+          category_name = Enum.at(category, 3)
+
+         subcategories = get_subcategories(category_code_2)
+
+          Agent.update(res_agent, fn res ->
+            res ++
+              [
+                %{
+                  id: Integer.to_string(chapter_name) <> section_id <> category_code_2,
+                  parentid: Integer.to_string(chapter_name) <>  section_id,
+                  code: category_code_2,
+                  name: category_name,
+                  children: subcategories
+
+                }
+              ]
+          end)
+
+          for subcategory <-  subcategories do
+            #select: [ p.chapter_name,  p.section_id, p.icd10cm_code_2, p.long_description],
+            #chapter_name = Enum.at(subcategory, 0)
+            #section_id = Enum.at(subcategory, 1)
+            sub_code_2 = Enum.at(subcategory, 2)
+            sub_name = Enum.at(subcategory, 3)
+
+
+
+            Agent.update(res_agent, fn res ->
+              res ++
+                [
+                  %{
+                    id: Integer.to_string(chapter_name) <> section_id <> sub_code_2 <> sub_code_2,
+                    parentid: Integer.to_string(chapter_name) <> section_id <> category_code_2,
+                    code: sub_code_2,
+                    name: sub_name,
+                    children: ""
+                    }
+                ]
+            end)
+
+          end#for subcategory
+
+
+        end
+        # categories
+
+      end
+      # sections
+     IO.puts("------- A  chapter------------------------------------")
+     IO.inspect(chapter_name)
+      Process.sleep(3000)
+      :erlang.garbage_collect()
+    end
+    # end chapters
+
+    results = Agent.get(res_agent, fn res -> res end)
+
+    Agent.stop(res_agent)
+
+    output_file = "/home/jgour/work/icd10cm/data/icd10cm_clinicals.json"
+
+    File.open(output_file, [:write])
+    File.write(output_file, Poison.encode!(results), [:binary])
+    File.close(output_file)
+    IO.puts("-------making json has finished------------------------------------")
+
+    ##########################
+  end
+
+  # end make_icdcm_json
+
+  ######################################
+
+
+  ############################
+  def get_icd10cm_chapters() do
+    query =
+      from(p in Icd10clinical,
+        distinct: [p.chapter_name, p.chapter_description],
+        where: p.chapter_name < 5,
+        select: [p.chapter_name, p.chapter_description],
+        order_by: p.chapter_name
+      )
+
+   chapters =  Repo.all(query)
+
+    data = Enum.reduce(chapters, [], fn(res, acc) ->
+      if res !== nil do
+       chapter = make_chapters(res)
+       acc ++ chapter
+      end
+   end)
+  end
+
+  ############################## Icd10clinical######
+def make_chapters(res) do
+  chapter_name = Enum.at(res, 0)
+
+  name = Enum.at(res, 1)
+
+ data = [
+    %{
+      id: chapter_name,
+      parentid: "start",
+      code: chapter_name,
+      name: name,
+    }
+  ]
+
+end
+##########################3
+  def get_sections(chapter_name) do
+    sections =
+      from(p in Icd10clinical,
+        distinct: [p.chapter_name, p.section_id, p.section_description],
+        where: p.chapter_name == ^chapter_name,
+        select: [p.chapter_name, p.section_id, p.icd10cm_code_2, p.section_description],
+        order_by: p.section_id
+      )
+
+    results = Repo.all(sections)
+
+ data = Enum.reduce(results, [], fn(res, acc) ->
+      if res !== nil do
+       section = make_sections(res)
+       acc ++ section
+      end
+   end)
+
+  end
+ ################################## 3
+ def make_sections(res) do
+  chapter_name = Enum.at(res, 0)
+  section_id = Enum.at(res, 1)
+  code_2 = Enum.at(res, 2)
+  name = Enum.at(res, 3)
+
+  categories = get_categories(section_id)
+
+ data = [
+    %{
+      id: Integer.to_string(chapter_name) <> section_id,
+      parentid: Integer.to_string(chapter_name),
+      code: code_2,
+      name: name,
+      children: categories
+    }
+  ]
+
+end
+  ################################## 3
+  def get_categories(section_id) do
+    categories =
+      from(p in Icd10clinical,
+        where: p.section_id ==  ^section_id  and p.is_category == "Y",
+        select: [
+          p.chapter_name,
+          p.section_id,
+          p.icd10cm_code_2,
+          p.long_description
+        ],
+        order_by: p.icd10cm_code_2
+      )
+
+    results = Repo.all(categories)
+    ######################################## 3
+
+    data = Enum.reduce(results, [], fn(res, acc) ->
+      if res !== nil do
+       category = make_category(res)
+       acc ++ category
+      end
+     end)
+  end
+
+  # function
+  #################################### 333
+  def make_category(res) do
+    chapter_name = Enum.at(res, 0)
+    # chapter_description =  Enum.at(res, 1)
+    section_id = Enum.at(res, 1)
+    # section_desc =  Enum.at(res, 3)
+    code_2 = Enum.at(res, 2)
+    name = Enum.at(res, 3)
+
+    subcategories = get_subcategories(code_2)
+
+    data = [
+      %{
+        id: Integer.to_string(chapter_name) <> section_id <> code_2,
+        parentid: Integer.to_string(chapter_name) <> section_id,
+        code: code_2,
+        name: name,
+        children: subcategories
+
+      }
+    ]
+  end
+
+  ###############################################
+
+  #######################3
+  def get_subcategories(code_2) do
+    subcategories =
+      from(p in Icd10clinical,
+        where:  p.icd10cm_code_2 >  ^"#{code_2}"
+          and  ilike(p.icd10cm_code_2, ^"#{code_2}%")
+          and  p.is_subcategory == "Y",
+        #where: ilike(p.icd10cm_code_2, ^"#{code_2}%") and p.is_subcategory == "Y",
+        select: [
+          p.chapter_name,
+         p.section_id,
+          p.icd10cm_code_2,
+          p.long_description
+        ],
+        order_by: p.icd10cm_code_2
+      )
+
+    results = Repo.all(subcategories)
+
+    data = Enum.reduce(results, [], fn(res, acc) ->
+      if res !== nil do
+       category = make_subcategory(res)
+       acc ++ category
+      end
+     end)
+
+    #################################
+  end
+
+  ################################
+  def make_subcategory(res) do
+    chapter_name = Enum.at(res, 0)
+    # chapter_description =  Enum.at(res, 1)
+    section_id = Enum.at(res, 1)
+    # section_desc =  Enum.at(res, 3)
+    code_2 = Enum.at(res, 2)
+    name = Enum.at(res, 3)
+
+    data = [
+      %{
+        id: Integer.to_string(chapter_name) <> section_id <> code_2 <> code_2,
+        parentid: Integer.to_string(chapter_name) <> section_id <> code_2,
+        code: code_2,
+        name: name,
+        #children: nil
+      }
+    ]
+  end
 
   ##################################
-
- end#for chapter
-
-
- results = Agent.get(res_agent, fn res -> res end)
-
-  Agent.stop(res_agent)
-
-  output_file = "/home/jgour/work/icd10cm/data/icd10cm_clinicals.json"
-
-
-  File.open(output_file, [:write])
-  File.write(output_file, Poison.encode!(results), [:binary ])
-  File.close(output_file)
-  #results |> Stream.into( File.stream!(output_file) )
-  #|> Stream.run
-
-
-
-end
-############################
-def get_icd10cm_chapters() do
- chapters =
- from(p in Icd10clinical,
- distinct: p.chapter_name,
- select:  [p.chapter_name, p.chapter_description]
-
- )
-
- Repo.all(chapters)
-
- #IO.puts("------------------chapters-----------------------------------")
- #IO.inspect(results)
-
-end
-##############################Icd10clinical######
-def get_sections(chapter_name) do
-    sections =
-    from(p in Icd10clinical,
-    distinct: p.section_id,
-    where: p.chapter_name == ^chapter_name,
-    select: p.section_id)
-
-    Repo.all(sections)
-
-
-end
-##################################3
-def get_categories(section_id) do
-  categories =
-  from(p in Icd10clinical,
-  where: p.section_id == ^section_id ,
-  select: [
-           p.chapter_name,
-           p.chapter_description,
-           p.section_id,
-           p.section_description,
-           p.icd10cm_code_2,
-           p.long_description],
-  order_by: p.chapter_name
-           )
-
- results =  Repo.all(categories)
-########################################3
-
-data = Enum.reduce(results, [], fn(res, acc) ->
-  if res !== nil do
-   category = make_category(res)
-   acc ++ category
+  def row_to_map(col_nms, vals) do
+    Stream.zip(col_nms, vals)
+    |> Enum.into(Map.new(), & &1)
   end
-end)
 
-end#function
-####################################333
-def make_category(res) do
-  chapter_name =  Enum.at(res, 0)
-  chapter_description =  Enum.at(res, 1)
-  section_id =  Enum.at(res, 2)
-  section_desc =  Enum.at(res, 3)
-  code_2 =  Enum.at(res, 4)
-  name =  Enum.at(res, 5)
+  ###############################################
+  def get_json(filename) do
+    exists = File.exists?(filename)
 
-   data = [ %{"id":  Integer.to_string(chapter_name)  <> section_id <>  code_2,
-            "parentid": Integer.to_string(chapter_name) <> section_id,
-             "code": code_2,
-             "name": name } ]
+    {:ok, result} =
+      case exists do
+        true ->
+          json = File.read(filename)
 
-end
-###############################################
-def row_to_map(col_nms, vals) do
-  Stream.zip(col_nms, vals)
-  |> Enum.into(Map.new(), &(&1))
-end
-###############################################
-def get_json(filename) do
+        false ->
+          IO.puts("--- Sorry File Not Found  ---")
 
- exists = File.exists?(filename)
+        _ ->
+          IO.puts("No Input text")
+      end
 
- {:ok, result} =  case exists do
-    true ->
-     json =  File.read(filename)
-      false ->
-      IO.puts("--- Sorry File Not Found  ---" )
-    _ ->
-      IO.puts("No Input text")
+    result
   end
-  result
 
-end#get_json
+  # get_json
 
-#################################################
+  #################################################
+  def create_object() do
+		obj  = [1, 2, 3]
+		obj
+	end
 
-#################################################3
+	def update_object(obj, new_data) do
+		obj = obj ++ new_data
+		obj
+	end
+
+	def get_object(obj) do
+		IO.inspect 	obj
+		obj
+	end
+  ################################################# 3
 end

@@ -25,14 +25,37 @@ defmodule Icd10cm.Codes.Icd10pcs do
     field :section, :string
     field :section_title, :string
     field :short_description, :string
-
-    end
+  end
 
   @doc false
   def changeset(icd10pcs, attrs) do
     icd10pcs
-    |> cast(attrs, [:order_number, :icd10pcs_code, :icd10pcs_code_2, :icd10pcs_code_2_ltree, :is_header, :short_description, :long_description, :section, :section_title, :body_system, :body_system_title, :root_operation, :root_operation_title, :body_part, :body_part_title, :approach, :approach_title, :device, :device_title, :qualifier, :qualifier_title, :icd10pcs_code_ltree])
+    |> cast(attrs, [
+      :order_number,
+      :icd10pcs_code,
+      :icd10pcs_code_2,
+      :icd10pcs_code_2_ltree,
+      :is_header,
+      :short_description,
+      :long_description,
+      :section,
+      :section_title,
+      :body_system,
+      :body_system_title,
+      :root_operation,
+      :root_operation_title,
+      :body_part,
+      :body_part_title,
+      :approach,
+      :approach_title,
+      :device,
+      :device_title,
+      :qualifier,
+      :qualifier_title,
+      :icd10pcs_code_ltree
+    ])
     |> validate_required([])
-    #|> validate_required([:order_number, :icd10pcs_code, :icd10pcs_code_2, :icd10pcs_code_2_ltree, :is_header, :short_description, :long_description, :section, :section_title, :body_system, :body_system_title, :root_operation, :root_operation_title, :body_part, :body_part_title, :approach, :approach_title, :device, :device_title, :qualifier, :qualifier_title, :icd10pcs_code_ltree])
+
+    # |> validate_required([:order_number, :icd10pcs_code, :icd10pcs_code_2, :icd10pcs_code_2_ltree, :is_header, :short_description, :long_description, :section, :section_title, :body_system, :body_system_title, :root_operation, :root_operation_title, :body_part, :body_part_title, :approach, :approach_title, :device, :device_title, :qualifier, :qualifier_title, :icd10pcs_code_ltree])
   end
 end

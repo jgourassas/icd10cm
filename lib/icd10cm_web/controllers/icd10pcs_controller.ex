@@ -14,8 +14,8 @@ defmodule Icd10cmWeb.Icd10pcsController do
 
     render(conn, "index.html", icd10_pcses: page.entries, page: page)
 
-    #icd10_pcses = Codes.list_icd10_pcses()
-   # render(conn, "index.html", icd10_pcses: icd10_pcses)
+    # icd10_pcses = Codes.list_icd10_pcses()
+    # render(conn, "index.html", icd10_pcses: icd10_pcses)
   end
 
   def new(conn, _params) do
@@ -70,19 +70,15 @@ defmodule Icd10cmWeb.Icd10pcsController do
   end
 
   def search_pcs(
-    conn,
-    %{"search_pcs" => %{"query" => query, "selection" => selection}} = params
-  )
-  do
-trim_query = String.trim(query)
+        conn,
+        %{"search_pcs" => %{"query" => query, "selection" => selection}} = params
+      ) do
+    trim_query = String.trim(query)
 
-page =
-  Icd10cm.Codes.search_pcs(trim_query, selection)
-  |> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
-   render(conn, "index.html", icd10_pcses: page.entries, page: page)
-end
+    page =
+      Icd10cm.Codes.search_pcs(trim_query, selection)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
 
-
-
-
+    render(conn, "index.html", icd10_pcses: page.entries, page: page)
+  end
 end

@@ -3,9 +3,39 @@ defmodule Icd10cmWeb.CtdControllerTest do
 
   alias Icd10cm.Codes
 
-  @create_attrs %{altdiseaseids: "some altdiseaseids", definition: "some definition", diseaseid: "some diseaseid", diseasename: "some diseasename", parentids: "some parentids", parenttreenumbers: "some parenttreenumbers", slimmappings: "some slimmappings", synonyms: "some synonyms", treenumbers: "some treenumbers"}
-  @update_attrs %{altdiseaseids: "some updated altdiseaseids", definition: "some updated definition", diseaseid: "some updated diseaseid", diseasename: "some updated diseasename", parentids: "some updated parentids", parenttreenumbers: "some updated parenttreenumbers", slimmappings: "some updated slimmappings", synonyms: "some updated synonyms", treenumbers: "some updated treenumbers"}
-  @invalid_attrs %{altdiseaseids: nil, definition: nil, diseaseid: nil, diseasename: nil, parentids: nil, parenttreenumbers: nil, slimmappings: nil, synonyms: nil, treenumbers: nil}
+  @create_attrs %{
+    altdiseaseids: "some altdiseaseids",
+    definition: "some definition",
+    diseaseid: "some diseaseid",
+    diseasename: "some diseasename",
+    parentids: "some parentids",
+    parenttreenumbers: "some parenttreenumbers",
+    slimmappings: "some slimmappings",
+    synonyms: "some synonyms",
+    treenumbers: "some treenumbers"
+  }
+  @update_attrs %{
+    altdiseaseids: "some updated altdiseaseids",
+    definition: "some updated definition",
+    diseaseid: "some updated diseaseid",
+    diseasename: "some updated diseasename",
+    parentids: "some updated parentids",
+    parenttreenumbers: "some updated parenttreenumbers",
+    slimmappings: "some updated slimmappings",
+    synonyms: "some updated synonyms",
+    treenumbers: "some updated treenumbers"
+  }
+  @invalid_attrs %{
+    altdiseaseids: nil,
+    definition: nil,
+    diseaseid: nil,
+    diseasename: nil,
+    parentids: nil,
+    parenttreenumbers: nil,
+    slimmappings: nil,
+    synonyms: nil,
+    treenumbers: nil
+  }
 
   def fixture(:ctd) do
     {:ok, ctd} = Codes.create_ctd(@create_attrs)
@@ -75,6 +105,7 @@ defmodule Icd10cmWeb.CtdControllerTest do
     test "deletes chosen ctd", %{conn: conn, ctd: ctd} do
       conn = delete(conn, Routes.ctd_path(conn, :delete, ctd))
       assert redirected_to(conn) == Routes.ctd_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.ctd_path(conn, :show, ctd))
       end

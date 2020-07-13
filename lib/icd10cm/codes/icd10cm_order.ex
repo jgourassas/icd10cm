@@ -9,8 +9,8 @@ defmodule Icd10cm.Codes.Icd10cm_order do
     field :order_number, :integer
     field :short_description, :string
     field(:long_description, :string)
-    #field(:long_description_tsv, :string)
-    #field(:short_description_tsv, :string)
+    # field(:long_description_tsv, :string)
+    # field(:short_description_tsv, :string)
   end
 
   @doc false
@@ -22,9 +22,9 @@ defmodule Icd10cm.Codes.Icd10cm_order do
       :icd10cm_code_2,
       :is_header,
       :short_description,
-      :long_description,
-      #:long_description_tsv,
-      #:short_description_tsv
+      :long_description
+      # :long_description_tsv,
+      # :short_description_tsv
     ])
     |> validate_required([])
 

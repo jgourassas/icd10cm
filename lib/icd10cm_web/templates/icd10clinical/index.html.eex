@@ -129,6 +129,8 @@
       </td>
     ------------------->
       <td>
+    
+ <%= icd10clinical.long_description %>
 <!---------------------
 
       <a class="button small" href="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term=

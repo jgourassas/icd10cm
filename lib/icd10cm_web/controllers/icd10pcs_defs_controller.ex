@@ -9,12 +9,12 @@ defmodule Icd10cmWeb.Icd10pcs_defsController do
 
   def index(conn, params) do
     page =
-    Codes.list_icd10pcs_defs(params)
-    |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+      Codes.list_icd10pcs_defs(params)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
 
-  render(conn, "index.html", icd10pcs_defs: page.entries, page: page)
-    #icd10pcs_defs = Codes.list_icd10pcs_defs()
-    #render(conn, "index.html", icd10pcs_defs: icd10pcs_defs)
+    render(conn, "index.html", icd10pcs_defs: page.entries, page: page)
+    # icd10pcs_defs = Codes.list_icd10pcs_defs()
+    # render(conn, "index.html", icd10pcs_defs: icd10pcs_defs)
   end
 
   def new(conn, _params) do
@@ -67,25 +67,21 @@ defmodule Icd10cmWeb.Icd10pcs_defsController do
     |> put_flash(:info, "Icd10pcs defs deleted successfully.")
     |> redirect(to: Routes.icd10pcs_defs_path(conn, :index))
   end
-##########################
-def search_pcs_defs(
-  conn,
-  %{"search_pcs_defs" => %{"query" => query, "selection" => selection}} = params
-)
-do
-trim_query = String.trim(query)
 
-page =
-Icd10cm.Codes.search_pcs_defs(trim_query, selection)
-|> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
+  ##########################
+  def search_pcs_defs(
+        conn,
+        %{"search_pcs_defs" => %{"query" => query, "selection" => selection}} = params
+      ) do
+    trim_query = String.trim(query)
 
-render(conn, "index.html", icd10pcs_defs: page.entries, page: page)
-end
+    page =
+      Icd10cm.Codes.search_pcs_defs(trim_query, selection)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
 
+    render(conn, "index.html", icd10pcs_defs: page.entries, page: page)
+  end
 
-  #post("/icd10pcs_defs/search_pcs_defs", Icd10pcs_defsController, :search_pcs_defs)
-################################3
-
-
-
+  # post("/icd10pcs_defs/search_pcs_defs", Icd10pcs_defsController, :search_pcs_defs)
+  ################################ 3
 end

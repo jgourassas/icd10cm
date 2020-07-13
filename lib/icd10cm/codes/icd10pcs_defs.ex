@@ -11,17 +11,27 @@ defmodule Icd10cm.Codes.Icd10pcs_defs do
     field :term_explanation, :string
     field :term_includes, :string
     field :term_titles, :string
-    #field :terms, :string
+    # field :terms, :string
     field :terms, :map
     field :title_tsv, :string
-
-    end
+  end
 
   @doc false
   def changeset(icd10pcs_defs, attrs) do
     icd10pcs_defs
-    |> cast(attrs, [:section, :section_title, :axis_code, :axis_title, :terms, :title_tsv, :term_definition, :term_explanation, :term_titles, :term_includes])
-    #|> validate_required([:section, :section_title, :axis_code, :axis_title, :terms, :title_tsv, :term_definition, :term_explanation, :term_titles, :term_includes])
+    |> cast(attrs, [
+      :section,
+      :section_title,
+      :axis_code,
+      :axis_title,
+      :terms,
+      :title_tsv,
+      :term_definition,
+      :term_explanation,
+      :term_titles,
+      :term_includes
+    ])
+    # |> validate_required([:section, :section_title, :axis_code, :axis_title, :terms, :title_tsv, :term_definition, :term_explanation, :term_titles, :term_includes])
     |> validate_required([])
   end
 end

@@ -18,7 +18,7 @@ defmodule Icd10cmWeb.Router do
 
     get("/", PageController, :index)
 
-   get "/page", PageController, :index, as: :pages
+    get "/page", PageController, :index, as: :pages
 
     post("/icd10clinicals/search_clinicals", Icd10clinicalController, :search_clinicals)
     resources("/icd10clinicals", Icd10clinicalController)
@@ -28,17 +28,21 @@ defmodule Icd10cmWeb.Router do
     post("/icd10cm_eindexes/search_eindexes", Icd10cm_eindexController, :search_eindexes)
     resources("/icd10cm_orders", Icd10cm_orderController)
     post("/icd10cm_orders/search_orders", Icd10cm_orderController, :search_orders)
-    resources( "/ctds", CtdController)
+    resources("/ctds", CtdController)
     post("/ctds/search_ctds", CtdController, :search_ctds)
     resources("/icd10cm_dindexes", Icd10cm_dindexController)
     post("/icd10cm_dindexes/search_dindexes", Icd10cm_dindexController, :search_dindexes)
-    resources( "/icd10_pcses", Icd10pcsController, as: :pcs)
+    resources("/icd10_pcses", Icd10pcsController, as: :pcs)
     post("/icd10_pcses/search_pcs", Icd10pcsController, :search_pcs)
-    resources( "/icd10pcs_defs", Icd10pcs_defsController, as: :pcs_defs)
+    resources("/icd10pcs_defs", Icd10pcs_defsController, as: :pcs_defs)
     post("/icd10pcs_defs/search_pcs_defs", Icd10pcs_defsController, :search_pcs_defs)
     resources("/Icd10cm_tree", Icd10cm_treeController, as: :icd10cm_tree)
-    post("/icd10cm_tree/get_icd10cm_clinicals_json", Icd10cm_treeController,:get_icd10cm_clinicals_json)
 
+    post(
+      "/icd10cm_tree/get_icd10cm_clinicals_json",
+      Icd10cm_treeController,
+      :get_icd10cm_clinicals_json
+    )
   end
 
   # Other scopes may use custom stacks.

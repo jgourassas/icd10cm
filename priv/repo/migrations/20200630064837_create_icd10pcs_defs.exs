@@ -16,6 +16,5 @@ defmodule Icd10cm.Repo.Migrations.CreateIcd10pcsDefs do
 
       timestamps()
     end
-
   end
 end

@@ -12,8 +12,6 @@ defmodule Icd10cm.Repo.Migrations.CreateCtds do
       add :parenttreenumbers, :text
       add :synonyms, :text
       add :slimmappings, :text
-
     end
-
   end
 end

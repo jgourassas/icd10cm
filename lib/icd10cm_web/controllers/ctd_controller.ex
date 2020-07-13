@@ -14,8 +14,8 @@ defmodule Icd10cmWeb.CtdController do
 
     render(conn, "index.html", ctds: page.entries, page: page)
 
-    #ctds = Codes.list_ctds()
-    #render(conn, "index.html", ctds: ctds)
+    # ctds = Codes.list_ctds()
+    # render(conn, "index.html", ctds: ctds)
   end
 
   def new(conn, _params) do
@@ -68,11 +68,12 @@ defmodule Icd10cmWeb.CtdController do
     |> put_flash(:info, "Ctd deleted successfully.")
     |> redirect(to: Routes.ctd_path(conn, :index))
   end
+
   ###############
   def search_ctds(
-    conn,
-    %{"search_ctds" => %{"query" => query, "selection" => selection}} = params
-  ) do
+        conn,
+        %{"search_ctds" => %{"query" => query, "selection" => selection}} = params
+      ) do
     trim_query = String.trim(query)
 
     page =
@@ -80,7 +81,7 @@ defmodule Icd10cmWeb.CtdController do
       |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
 
     render(conn, "index.html", ctds: page.entries, page: page)
-
   end
-  ###############33
+
+  ############### 33
 end

@@ -6,8 +6,6 @@ defmodule Icd10cm.Repo.Migrations.CreateIcd10cmDindexes do
       add :title, :string
       add :main_term, :map
       add :title_tsv, :tsvector
-
     end
-
   end
 end

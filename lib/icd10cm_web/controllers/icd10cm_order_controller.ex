@@ -9,11 +9,12 @@ defmodule Icd10cmWeb.Icd10cm_orderController do
 
   def index(conn, params) do
     page =
-    Codes.list_icd10cm_orders(params)
-    |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+      Codes.list_icd10cm_orders(params)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+
     render(conn, "index.html", icd10cm_orders: page.entries, page: page)
-    #icd10cm_orders = Codes.list_icd10cm_orders()
-    #render(conn, "index.html", icd10cm_orders: icd10cm_orders)
+    # icd10cm_orders = Codes.list_icd10cm_orders()
+    # render(conn, "index.html", icd10cm_orders: icd10cm_orders)
   end
 
   def new(conn, _params) do
@@ -66,26 +67,22 @@ defmodule Icd10cmWeb.Icd10cm_orderController do
     |> put_flash(:info, "Icd10cm order deleted successfully.")
     |> redirect(to: Routes.icd10cm_order_path(conn, :index))
   end
-###########################
 
-#############################
-def search_orders(
+  ###########################
 
-    conn,
-    %{"search_orders" => %{"query" => query, "selection" => selection}} = params
-  ) do
-
+  #############################
+  def search_orders(
+        conn,
+        %{"search_orders" => %{"query" => query, "selection" => selection}} = params
+      ) do
     trim_query = String.trim(query)
-
 
     page =
       Icd10cm.Codes.search_orders(trim_query, selection)
-       |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 400)
 
-      render(conn, "index.html", icd10cm_orders: page.entries, page: page)
-
+    render(conn, "index.html", icd10cm_orders: page.entries, page: page)
   end
-
 
   ####################################
 end
