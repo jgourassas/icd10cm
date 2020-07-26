@@ -980,9 +980,9 @@ class Prep_data {
     let graph = this.g.set_graph();
 
 
-   // console.log(" INJURY TEMPLATE: "
-   //   + JSON.stringify(injury_template)
-   //   + " length " + injury_template.length)
+    // console.log(" INJURY TEMPLATE: "
+    //   + JSON.stringify(injury_template)
+    //   + " length " + injury_template.length)
 
     //  console.log("NODES DATA: "+JSON.stringify(nodes_data) + " length " + nodes_data.length)
     /*

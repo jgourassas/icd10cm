@@ -1,0 +1,205 @@
+var d3 = require("d3");
+
+var w = 960,
+    h = 800,
+    i = 0,
+    barHeight = 20,
+    barWidth = w * 0.8,
+    duration = 400,
+    root;
+
+var tree = d3.tree()
+    .size([h, 100]);
+ let diagonal = d3.linkHorizontal()
+  .x(function (d) { return d.y; })
+  .y(function (d) { return d.x; });
+
+ var svg =  {
+    let container = d3.select('#icd10cm_tree_draw_area');
+    let svg = container.append('svg');
+
+    svg.attr('id', 'main_svg');
+    svg.attr('class', 'main_svg');
+    svg.attr({
+      width: '100%',
+      height: '95$%',
+    });
+    svg.attr("viewBox", "0 0 " + width + " " + height);
+    svg.attr('preserveAspectRatio', 'xMidYMid meet');
+    svg.attr('pointer-events', 'all');
+    svg.style('margin-left', '0%');
+    svg.style('margin-right', '0%');
+    svg.style('margin-top', '0%');
+    svg.style('margin-bottom', '0%');
+    svg.style('background-color', '#000');
+    svg.attr("pointer-events", "all")
+    svg.style('cursor', 'move');
+    svg.style('shape-rendering', 'crispEdges');
+    svg.call(this.zoom());
+
+    return svg;
+  } //svg
+
+  zoom() {
+    let a_zoom = d3.zoom().on('zoom', function () {
+      let svg_vis = d3.select('#svg_vis');
+      svg_vis.attr('transform', d3.event.transform);
+    });
+    return a_zoom;
+  } //zoom
+
+var vis = d3.select("#main_svg").append("svg:svg")
+    .attr("width", w)
+    .attr("height", h)
+  .append("svg:g")
+    .attr("transform", "translate(20,30)");
+
+function moveChildren(node) {
+    if(node.children) {
+        node.children.forEach(function(c) { moveChildren(c); });
+        node._children = node.children;
+        node.children = null;
+    }
+}
+let get_data = () => {
+  let field = '';
+
+  let request = $.ajax({
+    url: '/icd10cm_tree/get_icd10cm_clinicals_json',
+    method: 'POST', // whatever You need
+    data: {
+      input: field,
+    }, //
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader("X-CSRF-Token", window.csrf_token);
+    },
+    dataType: 'json',
+    error: function () {
+      console.log('error!');
+    }
+  });
+
+  request.done(function (json) {
+    
+json.x0 = 0;
+  json.y0 = 0;
+  moveChildren(json);
+  update(root = json);
+
+  });//requst
+
+
+};//get_data
+/////////////////////////////////////
+/*
+d3.json("flare.json", function(json) {
+  json.x0 = 0;
+  json.y0 = 0;
+  moveChildren(json);
+  update(root = json);
+});
+*/
+function update(source) {
+
+  // Compute the flattened node list. TODO use d3.layout.hierarchy.
+  var nodes = tree.nodes(root);
+  
+  // Compute the "layout".
+  nodes.forEach(function(n, i) {
+    n.x = i * barHeight;
+  });
+  
+  // Update the nodes…
+  var node = vis.selectAll("g.node")
+      .data(nodes, function(d) { return d.id || (d.id = ++i); });
+  
+  var nodeEnter = node.enter().append("svg:g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
+      .style("opacity", 1e-6);
+
+  // Enter any new nodes at the parent's previous position.
+  nodeEnter.append("svg:rect")
+      .attr("y", -barHeight / 2)
+      .attr("height", barHeight)
+      .attr("width", barWidth)
+      .style("fill", color)
+      .on("click", click);
+  
+  nodeEnter.append("svg:text")
+      .attr("dy", 3.5)
+      .attr("dx", 5.5)
+      .text(function(d) { return d.name; });
+  
+  // Transition nodes to their new position.
+  nodeEnter.transition()
+      .duration(duration)
+      .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+      .style("opacity", 1);
+  
+  node.transition()
+      .duration(duration)
+      .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+      .style("opacity", 1)
+    .select("rect")
+      .style("fill", color);
+  
+  // Transition exiting nodes to the parent's new position.
+  node.exit().transition()
+      .duration(duration)
+      .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+      .style("opacity", 1e-6)
+      .remove();
+  
+  // Update the links…
+  var link = vis.selectAll("path.link")
+      .data(tree.links(nodes), function(d) { return d.target.id; });
+  
+  // Enter any new links at the parent's previous position.
+  link.enter().insert("svg:path", "g")
+      .attr("class", "link")
+      .attr("d", function(d) {
+        var o = {x: source.x0, y: source.y0};
+        return diagonal({source: o, target: o});
+      })
+    .transition()
+      .duration(duration)
+      .attr("d", diagonal);
+  
+  // Transition links to their new position.
+  link.transition()
+      .duration(duration)
+      .attr("d", diagonal);
+  
+  // Transition exiting nodes to the parent's new position.
+  link.exit().transition()
+      .duration(duration)
+      .attr("d", function(d) {
+        var o = {x: source.x, y: source.y};
+        return diagonal({source: o, target: o});
+      })
+      .remove();
+  
+  // Stash the old positions for transition.
+  nodes.forEach(function(d) {
+    d.x0 = d.x;
+    d.y0 = d.y;
+  });
+}
+
+// Toggle children on click.
+function click(d) {
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
+  update(d);
+}
+
+function color(d) {
+  return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+}
+
