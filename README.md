@@ -1,8 +1,13 @@
 ## Icd10cm
 
-ICD10 is an open source software web application developed in Elixir - Phoenix - Zurb Foundation
+### ICD10 is an open source software web application developed in Elixir - Phoenix - Zurb Foundation
 
-This module uses the ICD-10-CM (USA) and ICD-10-PCS
+* This module uses the ICD-10-CM (USA) and ICD-10-PCS.
+
+* Additions:
+ ** Graphical view of ICD-10-CM  
+
+
  
 
 We take no father responsibility. The software is provided as it is

@@ -7,10 +7,10 @@
 <h5>Show ICD-10-CM GRAPHICAL </h5>
 </div>
 
- <div style="background-color:yellow;" class= "large-12 columns" id="icd10cm_tree_draw_button">
+ <div style="background-color:#dde;" class= "large-12 columns" id="icd10cm_tree_draw_button">
  </div>
 
- <div  style="background-color:green;" class="large-12 columns" id="icd10cm_tree_draw_area" >
+ <div  style="background-color:eee;" class="large-12 columns" id="icd10cm_tree_draw_area" >
   </div>
 
 

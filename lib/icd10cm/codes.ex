@@ -101,7 +101,7 @@ defmodule Icd10cm.Codes do
 
   def list_icd10clinicals(_params) do
     ####### ugly to make json file in data dir ######################
-    #make_icd10cm_json()
+    make_icd10cm_json()
     ##############################
     _page =
       Icd10clinical
@@ -1710,9 +1710,8 @@ end#end icd
 
 
     for chapter <- chapters do
-      chapter_name = Enum.at(chapter, 0)
-      chapter_desctiption = Enum.at(chapter, 1)
-
+      chapter_name = chapter.id
+      chapter_desctiption = chapter.name
 
       sections = get_sections(chapter_name)
 
@@ -1722,7 +1721,7 @@ end#end icd
           [
             %{
               id: Integer.to_string(chapter_name),
-              parentid: "",
+              parentid: "start",
               code: Integer.to_string(chapter_name),
               name: chapter_desctiption,
               children: sections
@@ -1732,10 +1731,10 @@ end#end icd
 
       for section <- sections do
        # select: [p.chapter_name, p.section_id, p.icd10cm_code_2, p.section_description],
-        section_id = Enum.at(section, 1)
-        section_description = Enum.at(section, 3)
+       section_id = section.section_id
+       section_description  = section.section_description
 
-        categories = get_categories(section_id)
+       categories = get_categories(section_id)
 
         Agent.update(res_agent, fn res ->
           res ++
@@ -1754,8 +1753,8 @@ end#end icd
         for category <- categories do
           #select: [p.chapter_name, p.section_id, p.icd10cm_code_2,p.long_description]
 
-          category_code_2 = Enum.at(category, 2)
-          category_name = Enum.at(category, 3)
+          category_code_2 = category.icd10cm_code_2
+          category_name = category.long_description
 
          subcategories = get_subcategories(category_code_2)
 
@@ -1775,12 +1774,8 @@ end#end icd
 
           for subcategory <-  subcategories do
             #select: [ p.chapter_name,  p.section_id, p.icd10cm_code_2, p.long_description],
-            #chapter_name = Enum.at(subcategory, 0)
-            #section_id = Enum.at(subcategory, 1)
-            sub_code_2 = Enum.at(subcategory, 2)
-            sub_name = Enum.at(subcategory, 3)
-
-
+            sub_code_2 = subcategory.cd10cm_code_2
+            sub_name =  subcategory.long_description
 
             Agent.update(res_agent, fn res ->
               res ++
@@ -1790,7 +1785,7 @@ end#end icd
                     parentid: Integer.to_string(chapter_name) <> section_id <> category_code_2,
                     code: sub_code_2,
                     name: sub_name,
-                    children: ""
+                    children: nil
                     }
                 ]
             end)
@@ -1805,8 +1800,8 @@ end#end icd
       # sections
      IO.puts("------- A  chapter------------------------------------")
      IO.inspect(chapter_name)
-      Process.sleep(3000)
-      :erlang.garbage_collect()
+      #Process.sleep(3000)
+      #:erlang.garbage_collect()
     end
     # end chapters
 
@@ -1833,8 +1828,8 @@ end#end icd
   def get_icd10cm_chapters() do
     query =
       from(p in Icd10clinical,
-        distinct: [p.chapter_name, p.chapter_description],
-        where: p.chapter_name < 5,
+        distinct: [p.chapter_name],
+        where: p.chapter_name < 2,
         select: [p.chapter_name, p.chapter_description],
         order_by: p.chapter_name
       )
@@ -1865,14 +1860,16 @@ def make_chapters(res) do
   ]
 
 end
-##########################3
+####### ###################
+
   def get_sections(chapter_name) do
+
     sections =
       from(p in Icd10clinical,
-        distinct: [p.chapter_name, p.section_id, p.section_description],
-        where: p.chapter_name == ^chapter_name,
-        select: [p.chapter_name, p.section_id, p.icd10cm_code_2, p.section_description],
-        order_by: p.section_id
+      distinct: [p.chapter_name, p.section_id, p.section_description],
+       where: p.chapter_name == ^chapter_name,
+       select: [p.chapter_name, p.section_id, p.icd10cm_code_2, p.section_description],
+       order_by: p.section_id
       )
 
     results = Repo.all(sections)
@@ -1887,12 +1884,13 @@ end
   end
  ################################## 3
  def make_sections(res) do
+
   chapter_name = Enum.at(res, 0)
   section_id = Enum.at(res, 1)
   code_2 = Enum.at(res, 2)
   name = Enum.at(res, 3)
 
-  categories = get_categories(section_id)
+  #categories = get_categories(section_id)
 
  data = [
     %{
@@ -1940,7 +1938,7 @@ end
     code_2 = Enum.at(res, 2)
     name = Enum.at(res, 3)
 
-    subcategories = get_subcategories(code_2)
+   # subcategories = get_subcategories(code_2)
 
     data = [
       %{
@@ -1966,7 +1964,7 @@ end
         #where: ilike(p.icd10cm_code_2, ^"#{code_2}%") and p.is_subcategory == "Y",
         select: [
           p.chapter_name,
-         p.section_id,
+          p.section_id,
           p.icd10cm_code_2,
           p.long_description
         ],
@@ -1987,10 +1985,11 @@ end
 
   ################################
   def make_subcategory(res) do
+    IO.puts("========res ============================ ")
+    IO.inspect res
+
     chapter_name = Enum.at(res, 0)
-    # chapter_description =  Enum.at(res, 1)
     section_id = Enum.at(res, 1)
-    # section_desc =  Enum.at(res, 3)
     code_2 = Enum.at(res, 2)
     name = Enum.at(res, 3)
 
@@ -2000,7 +1999,7 @@ end
         parentid: Integer.to_string(chapter_name) <> section_id <> code_2,
         code: code_2,
         name: name,
-        #children: nil
+        children: nil
       }
     ]
   end

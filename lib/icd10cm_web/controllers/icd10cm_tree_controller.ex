@@ -10,8 +10,8 @@ defmodule Icd10cmWeb.Icd10cm_treeController do
 
   ##########################
   def get_icd10cm_clinicals_json(conn, %{"input" => input}) do
-   # results =  Icd10cm.Codes.get_json('data/icd10cm_clinicals.json')
-     results = Icd10cm.Codes.get_json('data/icd10cm_2013.json')
+   results =  Icd10cm.Codes.get_json('data/icd10cm_clinicals.json')
+    #results = Icd10cm.Codes.get_json('data/icd10cm_2013.json')
     text(conn, results)
   end
 
