@@ -1651,159 +1651,90 @@ defmodule Icd10cm.Codes do
       limit: 10
   end
 
-####################################
-def make_icd10cm_json() do
-  ###########################
-  {:ok, res_agent} = Agent.start_link(fn -> [] end)
-
-  chapters = get_icd10cm_chapters()
-
-
-
-
-  Enum.each(chapters, fn(chapter) ->
-    chapter_name = chapter.id
-    chapter_desctiption = chapter.name
-
-    sections = get_sections(chapter_name)
-
-
-    Agent.update(res_agent, fn res ->
-      res ++
-        [
-          %{
-            id: Integer.to_string(chapter_name),
-            parentid: "start",
-            code: Integer.to_string(chapter_name),
-            name: chapter_desctiption,
-            children: sections
-            }
-        ]
-    end)
-
-
-
-  end )#chapters
-
-#####################
-
-results = Agent.get(res_agent, fn res -> res end)
-
-    Agent.stop(res_agent)
-
-    output_file = "/home/jgour/work/icd10cm/data/icd10cm_clinicals.json"
-
-    File.open(output_file, [:write])
-    File.write(output_file, Poison.encode!(results), [:binary])
-    File.close(output_file)
-    IO.puts("-------making json has finished------------------------------------")
-
-
-end#end icd
-
-########################################
-  def make_icd10cm_json_1() do
-    ###########################
+  ####################################
+  def make_icd10cm_json() do
     {:ok, res_agent} = Agent.start_link(fn -> [] end)
+
+    data = []
+
+    chapters = get_icd10cm_chapters()
 
     chapters = get_icd10cm_chapters()
 
 
-    for chapter <- chapters do
+
+    Enum.each(chapters, fn chapter ->
       chapter_name = chapter.id
       chapter_desctiption = chapter.name
 
       sections = get_sections(chapter_name)
 
 
-      Agent.update(res_agent, fn res ->
-        res ++
-          [
-            %{
-              id: Integer.to_string(chapter_name),
-              parentid: "start",
-              code: Integer.to_string(chapter_name),
-              name: chapter_desctiption,
-              children: sections
-              }
-          ]
-      end)
+      ##################
+      Enum.each(sections, fn section ->
+        #      chapter_name = chapter.id
+        section_id = section.code
+        section_description  = section.name
+        categories = get_categories(section_id)
 
-      for section <- sections do
-       # select: [p.chapter_name, p.section_id, p.icd10cm_code_2, p.section_description],
-       section_id = section.section_id
-       section_description  = section.section_description
+        #all_data = data ++ [ %{children:  sections},  %{children: categories}]
 
-       categories = get_categories(section_id)
+        all_data = data ++ [ %{children:  sections},  %{children: categories}]
+       #nested_map = %{ name: %{ first_name: "blackode"} }
+       #first_name = get_in(nested_map, [:name, :first_name])  # Retrieving the Key
 
-        Agent.update(res_agent, fn res ->
-          res ++
-            [
-              %{
-                id: Integer.to_string(chapter_name) <>  section_id,
-                parentid: Integer.to_string(chapter_name),
-                name: section_description,
-                code: section_id,
-                children: categories
-                }
-            ]
+      #update
 
-        end)
-
-        for category <- categories do
-          #select: [p.chapter_name, p.section_id, p.icd10cm_code_2,p.long_description]
-
-          category_code_2 = category.icd10cm_code_2
-          category_name = category.long_description
-
-         subcategories = get_subcategories(category_code_2)
-
-          Agent.update(res_agent, fn res ->
-            res ++
-              [
-                %{
-                  id: Integer.to_string(chapter_name) <> section_id <> category_code_2,
-                  parentid: Integer.to_string(chapter_name) <>  section_id,
-                  code: category_code_2,
-                  name: category_name,
-                  children: subcategories
-
-                }
-              ]
-          end)
-
-          for subcategory <-  subcategories do
-            #select: [ p.chapter_name,  p.section_id, p.icd10cm_code_2, p.long_description],
-            sub_code_2 = subcategory.cd10cm_code_2
-            sub_name =  subcategory.long_description
-
-            Agent.update(res_agent, fn res ->
-              res ++
-                [
-                  %{
-                    id: Integer.to_string(chapter_name) <> section_id <> sub_code_2 <> sub_code_2,
-                    parentid: Integer.to_string(chapter_name) <> section_id <> category_code_2,
-                    code: sub_code_2,
-                    name: sub_name,
-                    children: nil
-                    }
-                ]
-            end)
-
-          end#for subcategory
+        data_map = Stream.zip(Stream.iterate(0, &(&1+1)), all_data) |> Enum.into(%{})
 
 
-        end
-        # categories
 
-      end
-      # sections
-     IO.puts("------- A  chapter------------------------------------")
-     IO.inspect(chapter_name)
-      #Process.sleep(3000)
-      #:erlang.garbage_collect()
-    end
-    # end chapters
+
+
+        IO.puts("----------------data-------------")
+        IO.inspect all_data
+        IO.puts("----------------end data-------------")
+
+        add_categories = Map.merge(section, %{  children: categories})
+
+
+        #################
+Agent.update(res_agent, fn res ->
+  res ++
+    [
+      %{
+        id: Integer.to_string(chapter_name),
+        level: "chapter",
+        parentid: "0",
+        code: Integer.to_string(chapter_name),
+        name: chapter_desctiption,
+        children: data_map
+
+
+
+      }
+
+
+
+        ]
+
+end)
+
+
+      end) #sections
+
+
+      #IO.puts("--------------------------------------------------------")
+      #IO.inspect sections
+
+    #################33
+
+    #update aggent
+
+  ########################
+  ###################
+    end)
+    # chapter
 
     results = Agent.get(res_agent, fn res -> res end)
 
@@ -1816,98 +1747,239 @@ end#end icd
     File.close(output_file)
     IO.puts("-------making json has finished------------------------------------")
 
-    ##########################
+    IO.puts(
+      ' PLEASE ADD AT THE BEGINING {"id":"0","parentid":0,"code":"Start","name":"ICD10-CM (By J.G.)","children":'
+    )
+
+    ####################
   end
 
-  # end make_icdcm_json
+  ####################################
+  def make_icd10cm_json_2() do
+    ###########################
+    {:ok, res_agent} = Agent.start_link(fn -> [] end)
 
-  ######################################
+    chapters = get_icd10cm_chapters()
 
+    Enum.each(chapters, fn chapter ->
+      chapter_name = chapter.id
+      chapter_desctiption = chapter.name
 
-  ############################
+      sections = get_sections(chapter_name)
+
+      title = %{
+        id: "start",
+        parentid: 0,
+        code: "Start",
+        name: "ICD10-CM (By J.G.)"
+      }
+
+      add_chapters = Map.merge(title, %{children: chapters})
+
+      Agent.update(res_agent, fn res ->
+        res ++
+          [
+            %{
+              id: Integer.to_string(chapter_name),
+              level: "chapter",
+              parentid: "0",
+              code: Integer.to_string(chapter_name),
+              name: chapter_desctiption,
+              children: sections
+            }
+          ]
+      end)
+
+      ##### new ##sections ############################
+
+      Enum.each(sections, fn section ->
+        #      chapter_name = chapter.id
+        section_id = section.code
+        #      section_description  = section.name
+        categories = get_categories(section_id)
+        #
+        #
+        add_categories = Map.merge(section, %{children: categories})
+
+        Agent.update(res_agent, fn res ->
+          res ++
+            [
+              add_categories
+
+              # %{
+              #   id: Integer.to_string(chapter_name) <>  section_id,
+              #   level: "section",
+              #   parentid: Integer.to_string(chapter_name),
+              #   name: section_description,
+              #   code: section_id,
+              #   #children: categories
+              #   }
+            ]
+        end)
+
+        ### categories #################
+        # for category <- categories do
+        #   category_code_2 = category.code
+        #   category_name = category.name
+        # subcategories = get_subcategories(category_code_2)
+
+        # add_subcategories  = Map.merge(category, %{children: subcategories} )
+
+        # Agent.update(res_agent, fn res ->
+        #   res ++
+        #      [
+        #       add_subcategories
+        # %{
+        #   id: Integer.to_string(chapter_name) <> section_id <> category_code_2,
+        #   level: "category",
+        #   parentid: Integer.to_string(chapter_name) <>  section_id,
+        #   code: category_code_2,
+        #   name: category_name,
+        #   #children: subcategories
+        #    children: nil
+
+        # }
+        #       ]
+        #   end)
+        ############ subctecory #########
+
+        # for subcategory <-  subcategories do
+        # sub_code_2 = subcategory.code
+        # sub_name =  subcategory.name
+        # add_sub_categories  = Map.merge(category, %{children: subcategories} )
+        # Agent.update(res_agent, fn res ->
+        #   res ++
+        #     [
+        #       %{
+        #         add_sub_categories
+
+        #         id: Integer.to_string(chapter_name) <> section_id <> sub_code_2 <> sub_code_2,
+        #         level: sub_category,
+        #         parentid: Integer.to_string(chapter_name) <> section_id <> category_code_2,
+        #         code: sub_code_2,
+        #         name: sub_name,
+        #         children: nil
+        #         }
+        #     ]
+        # end)
+        # end#subcategory
+        ######################
+
+        # end#for category
+        ############ subctecory #########
+
+        ######################
+      end)
+
+      # sections
+    end)
+
+    # chapters
+
+    #####################
+
+    results = Agent.get(res_agent, fn res -> res end)
+
+    Agent.stop(res_agent)
+
+    output_file = "/home/jgour/work/icd10cm/data/icd10cm_clinicals.json"
+
+    File.open(output_file, [:write])
+    File.write(output_file, Poison.encode!(results), [:binary])
+    File.close(output_file)
+    IO.puts("-------making json has finished------------------------------------")
+
+    IO.puts(
+      ' PLEASE ADD AT THE BEGINING {"id":"0","parentid":0,"code":"Start","name":"ICD10-CM (By J.G.)","children":'
+    )
+  end
+
+  # end icd
+
+  ########################################
+
   def get_icd10cm_chapters() do
     query =
       from(p in Icd10clinical,
         distinct: [p.chapter_name],
-        where: p.chapter_name < 2,
+        where: p.chapter_name < 3,
         select: [p.chapter_name, p.chapter_description],
         order_by: p.chapter_name
       )
 
-   chapters =  Repo.all(query)
+    chapters = Repo.all(query)
 
-    data = Enum.reduce(chapters, [], fn(res, acc) ->
-      if res !== nil do
-       chapter = make_chapters(res)
-       acc ++ chapter
-      end
-   end)
+    data =
+      Enum.reduce(chapters, [], fn res, acc ->
+        if res !== nil do
+          chapter = make_chapters(res)
+          acc ++ chapter
+        end
+      end)
   end
 
   ############################## Icd10clinical######
-def make_chapters(res) do
-  chapter_name = Enum.at(res, 0)
+  def make_chapters(res) do
+    chapter_name = Enum.at(res, 0)
 
-  name = Enum.at(res, 1)
+    name = Enum.at(res, 1)
+    # title =  {"id":"0","parentid":0,"code":"Start","name":"ICD10-CM (By J.G.)","children":
+    data = [
+      %{
+        id: chapter_name,
+        parentid: "0",
+        level: "chapter",
+        code: chapter_name,
+        name: name
+      }
+    ]
+  end
 
- data = [
-    %{
-      id: chapter_name,
-      parentid: "start",
-      code: chapter_name,
-      name: name,
-    }
-  ]
-
-end
-####### ###################
+  ####### ###################
 
   def get_sections(chapter_name) do
-
     sections =
       from(p in Icd10clinical,
-      distinct: [p.chapter_name, p.section_id, p.section_description],
-       where: p.chapter_name == ^chapter_name,
-       select: [p.chapter_name, p.section_id, p.icd10cm_code_2, p.section_description],
-       order_by: p.section_id
+        distinct: p.section_id,
+        where: p.chapter_name == ^chapter_name,
+        select: [p.chapter_name, p.section_id, p.icd10cm_code_2, p.section_description],
+        order_by: p.section_id
       )
 
     results = Repo.all(sections)
 
- data = Enum.reduce(results, [], fn(res, acc) ->
-      if res !== nil do
-       section = make_sections(res)
-       acc ++ section
-      end
-   end)
-
+    data =
+      Enum.reduce(results, [], fn res, acc ->
+        if res !== nil do
+          section = make_sections(res)
+          acc ++ section
+        end
+      end)
   end
- ################################## 3
- def make_sections(res) do
 
-  chapter_name = Enum.at(res, 0)
-  section_id = Enum.at(res, 1)
-  code_2 = Enum.at(res, 2)
-  name = Enum.at(res, 3)
+  ################################## 3
+  def make_sections(res) do
+    chapter_name = Enum.at(res, 0)
+    section_id = Enum.at(res, 1)
+    code_2 = Enum.at(res, 2)
+    name = Enum.at(res, 3)
 
-  #categories = get_categories(section_id)
+    data = [
+      %{
+        id: Integer.to_string(chapter_name) <> section_id,
+        parentid: Integer.to_string(chapter_name),
+        level: "section",
+        code: section_id,
+        name: name
+      }
+    ]
+  end
 
- data = [
-    %{
-      id: Integer.to_string(chapter_name) <> section_id,
-      parentid: Integer.to_string(chapter_name),
-      code: code_2,
-      name: name,
-      children: categories
-    }
-  ]
-
-end
   ################################## 3
   def get_categories(section_id) do
     categories =
       from(p in Icd10clinical,
-        where: p.section_id ==  ^section_id  and p.is_category == "Y",
+        where: p.section_id == ^section_id and p.is_category == "Y",
         select: [
           p.chapter_name,
           p.section_id,
@@ -1920,48 +1992,44 @@ end
     results = Repo.all(categories)
     ######################################## 3
 
-    data = Enum.reduce(results, [], fn(res, acc) ->
-      if res !== nil do
-       category = make_category(res)
-       acc ++ category
-      end
-     end)
+    data =
+      Enum.reduce(results, [], fn res, acc ->
+        if res !== nil do
+          category = make_category(res)
+          acc ++ category
+        end
+      end)
   end
 
   # function
   #################################### 333
   def make_category(res) do
     chapter_name = Enum.at(res, 0)
-    # chapter_description =  Enum.at(res, 1)
     section_id = Enum.at(res, 1)
-    # section_desc =  Enum.at(res, 3)
     code_2 = Enum.at(res, 2)
     name = Enum.at(res, 3)
-
-   # subcategories = get_subcategories(code_2)
 
     data = [
       %{
         id: Integer.to_string(chapter_name) <> section_id <> code_2,
         parentid: Integer.to_string(chapter_name) <> section_id,
+        level: "category",
         code: code_2,
-        name: name,
-        children: subcategories
-
+        name: name
       }
     ]
   end
 
   ###############################################
 
-  #######################3
+  ####################### 3
   def get_subcategories(code_2) do
     subcategories =
       from(p in Icd10clinical,
-        where:  p.icd10cm_code_2 >  ^"#{code_2}"
-          and  ilike(p.icd10cm_code_2, ^"#{code_2}%")
-          and  p.is_subcategory == "Y",
-        #where: ilike(p.icd10cm_code_2, ^"#{code_2}%") and p.is_subcategory == "Y",
+        # where:  p.icd10cm_code_2 >  ^"#{code_2}"
+        #  and  ilike(p.icd10cm_code_2, ^"#{code_2}%")
+        #  and  p.is_subcategory == "Y",
+        where: ilike(p.icd10cm_code_2, ^"#{code_2}%") and p.is_subcategory == "Y",
         select: [
           p.chapter_name,
           p.section_id,
@@ -1973,21 +2041,19 @@ end
 
     results = Repo.all(subcategories)
 
-    data = Enum.reduce(results, [], fn(res, acc) ->
-      if res !== nil do
-       category = make_subcategory(res)
-       acc ++ category
-      end
-     end)
+    data =
+      Enum.reduce(results, [], fn res, acc ->
+        if res !== nil do
+          category = make_subcategory(res)
+          acc ++ category
+        end
+      end)
 
     #################################
   end
 
   ################################
   def make_subcategory(res) do
-    IO.puts("========res ============================ ")
-    IO.inspect res
-
     chapter_name = Enum.at(res, 0)
     section_id = Enum.at(res, 1)
     code_2 = Enum.at(res, 2)
@@ -1997,9 +2063,9 @@ end
       %{
         id: Integer.to_string(chapter_name) <> section_id <> code_2 <> code_2,
         parentid: Integer.to_string(chapter_name) <> section_id <> code_2,
+        level: "subcategory",
         code: code_2,
-        name: name,
-        children: nil
+        name: name
       }
     ]
   end
@@ -2033,18 +2099,19 @@ end
 
   #################################################
   def create_object() do
-		obj  = [1, 2, 3]
-		obj
-	end
+    obj = [1, 2, 3]
+    obj
+  end
 
-	def update_object(obj, new_data) do
-		obj = obj ++ new_data
-		obj
-	end
+  def update_object(obj, new_data) do
+    obj = obj ++ new_data
+    obj
+  end
 
-	def get_object(obj) do
-		IO.inspect 	obj
-		obj
-	end
+  def get_object(obj) do
+    IO.inspect(obj)
+    obj
+  end
+
   ################################################# 3
 end
