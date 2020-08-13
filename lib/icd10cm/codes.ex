@@ -1,3 +1,4 @@
+
 defmodule Icd10cm.Codes do
   @moduledoc """
   The Codes context.
@@ -101,7 +102,8 @@ defmodule Icd10cm.Codes do
 
   def list_icd10clinicals(_params) do
     ####### ugly to make json file in data dir ######################
-    make_icd10cm_json()
+    #make_icd10cm_json()
+    #It was imposible to do it
     ##############################
     _page =
       Icd10clinical
@@ -1655,107 +1657,117 @@ defmodule Icd10cm.Codes do
   def make_icd10cm_json() do
     {:ok, res_agent} = Agent.start_link(fn -> [] end)
 
-    data = []
-
     chapters = get_icd10cm_chapters()
+   Enum.map(chapters, fn(chapter) ->
 
-    chapters = get_icd10cm_chapters()
-
-
-
-    Enum.each(chapters, fn chapter ->
       chapter_name = chapter.id
-      chapter_desctiption = chapter.name
+      chapter_description = chapter.name
 
       sections = get_sections(chapter_name)
 
-
-      ##################
-      Enum.each(sections, fn section ->
-        #      chapter_name = chapter.id
-        section_id = section.code
-        section_description  = section.name
-        categories = get_categories(section_id)
-
-        #all_data = data ++ [ %{children:  sections},  %{children: categories}]
-
-        all_data = data ++ [ %{children:  sections},  %{children: categories}]
-       #nested_map = %{ name: %{ first_name: "blackode"} }
-       #first_name = get_in(nested_map, [:name, :first_name])  # Retrieving the Key
-
-      #update
-
-        data_map = Stream.zip(Stream.iterate(0, &(&1+1)), all_data) |> Enum.into(%{})
+      Agent.update( res_agent, fn res ->
+        res  ++
+           chapters
 
 
+          end)
+
+##########################################
+   Enum.map(sections, fn(section ) ->
+      section_id = section.code
+      section_description = section.name
+
+     categories = get_categories(section_id)
+
+
+      Agent.update(res_agent, fn res ->
+
+        res   ++
+           sections
+
+      end)
+
+
+########################################
+
+Enum.map(categories, fn(category) ->
+      category_code_2 = category.code
+      category_name =  category.name
+
+      subcategories = get_subcategories(category_code_2)
+
+      Agent.update(res_agent, fn res ->
+        res ++
+          categories
+
+           end)
+
+
+      Enum.map(subcategories,  fn(sub) ->
+
+     sub_code_2 = sub.code
+     sub_name = sub.name
+     #[zz |  [subcategories_acc] ]
+
+      Agent.update(res_agent, fn res ->
+         res ++
+          subcategories
+
+
+      end)
+
+    end)#sub
+
+  end)#category
+
+  end) #section
+
+
+  IO.puts(" Chapter Finished-----------: ")
+  inspect_data(chapter_description)
+  IO.puts("chapter Numer: ")
+  inspect_data(chapter_name)
+
+  :timer.sleep(2500)
 
 
 
-        IO.puts("----------------data-------------")
-        IO.inspect all_data
-        IO.puts("----------------end data-------------")
+end) #chapter
 
-        add_categories = Map.merge(section, %{  children: categories})
+results = Agent.get(res_agent, fn res -> res end)
 
+Agent.stop(res_agent)
 
-        #################
-Agent.update(res_agent, fn res ->
-  res ++
-    [
-      %{
-        id: Integer.to_string(chapter_name),
-        level: "chapter",
-        parentid: "0",
-        code: Integer.to_string(chapter_name),
-        name: chapter_desctiption,
-        children: data_map
+  title = [%{
+    parentid: 0,
+    name: "Graphical ICD-10-CM By old J. Gkourasas/Gourassas",
+    level: "start",
+    id: "0",
+    code: "Start"
+}]
 
 
+  #t_results_l  = title ++ results
 
-      }
+  IO.puts("-------start results- trans---------------------")
+  #results_trans = make_children(results)
+  #:timer.sleep(2000)
+  #IO.puts("-------finish to tranform data ... for children---------------")
+  #:timer.sleep(200)
+  json_save(results)
+  IO.puts("-------ready  json save----------------------")
 
-
-
-        ]
-
-end)
-
-
-      end) #sections
-
-
-      #IO.puts("--------------------------------------------------------")
-      #IO.inspect sections
-
-    #################33
-
-    #update aggent
-
-  ########################
-  ###################
-    end)
-    # chapter
-
-    results = Agent.get(res_agent, fn res -> res end)
-
-    Agent.stop(res_agent)
-
+  end#function
+  #######################
+  def json_save(results) do
     output_file = "/home/jgour/work/icd10cm/data/icd10cm_clinicals.json"
-
     File.open(output_file, [:write])
-    File.write(output_file, Poison.encode!(results), [:binary])
+    File.write(output_file, Poison.encode!(results, pretty: true), [:binary])
     File.close(output_file)
     IO.puts("-------making json has finished------------------------------------")
-
-    IO.puts(
-      ' PLEASE ADD AT THE BEGINING {"id":"0","parentid":0,"code":"Start","name":"ICD10-CM (By J.G.)","children":'
-    )
-
-    ####################
   end
-
   ####################################
-  def make_icd10cm_json_2() do
+  def make_icd10cm_json_1() do
     ###########################
     {:ok, res_agent} = Agent.start_link(fn -> [] end)
 
@@ -1885,7 +1897,9 @@ end)
     output_file = "/home/jgour/work/icd10cm/data/icd10cm_clinicals.json"
 
     File.open(output_file, [:write])
-    File.write(output_file, Poison.encode!(results), [:binary])
+    #File.write(output_file, Poison.encode!(results), [:binary])
+    File.write(output_file, Poison.encode!(results, pretty: true), [:binary])
+
     File.close(output_file)
     IO.puts("-------making json has finished------------------------------------")
 
@@ -1902,7 +1916,7 @@ end)
     query =
       from(p in Icd10clinical,
         distinct: [p.chapter_name],
-        where: p.chapter_name < 3,
+        where: p.chapter_name < 5,
         select: [p.chapter_name, p.chapter_description],
         order_by: p.chapter_name
       )
@@ -1916,7 +1930,9 @@ end)
           acc ++ chapter
         end
       end)
-  end
+
+
+    end
 
   ############################## Icd10clinical######
   def make_chapters(res) do
@@ -1930,8 +1946,8 @@ end)
         parentid: "0",
         level: "chapter",
         code: chapter_name,
-        name: name
-      }
+        name: name,
+        }
     ]
   end
 
@@ -1955,6 +1971,7 @@ end)
           acc ++ section
         end
       end)
+
   end
 
   ################################## 3
@@ -1970,7 +1987,7 @@ end)
         parentid: Integer.to_string(chapter_name),
         level: "section",
         code: section_id,
-        name: name
+         name: name
       }
     ]
   end
@@ -2044,8 +2061,8 @@ end)
     data =
       Enum.reduce(results, [], fn res, acc ->
         if res !== nil do
-          category = make_subcategory(res)
-          acc ++ category
+          subcategory = make_subcategory(res)
+          acc ++ subcategory
         end
       end)
 
@@ -2105,13 +2122,112 @@ end)
 
   def update_object(obj, new_data) do
     obj = obj ++ new_data
-    obj
+     obj
   end
 
   def get_object(obj) do
-    IO.inspect(obj)
+    #IO.inspect(obj)
     obj
   end
+###################################3
 
-  ################################################# 3
+defmodule TreeNode do
+  #defstruct id: nil, children: [], parentid: nil
+  defstruct id: nil, children: [], parentid: nil, code: nil, level: nil , name: nil
+
+end
+
+def build_tree(elements) do
+  {tree, []} = build_tree(elements, %TreeNode{id: nil, children: []})
+  tree
+end
+
+defp build_tree([%{parentid: parent, id: id, children: _} | rest],
+                %{id: parent, children: children} = tree) do
+  {node, rest} = build_tree(rest, %TreeNode{id: id, children: []})
+  build_tree(rest, %{tree | children: [node | children]})
+end
+
+# How to create a hierarchical taxonomy (association) in Phoenix
+
+defp build_tree(rest, tree), do: {tree, rest}
+
+#################################################
+defp make_children(data_l) do
+
+
+  ######################
+{:ok, children_agent} = Agent.start_link(fn -> [] end)
+
+  Enum.each(data_l, fn(parent_m) ->
+
+  id = Map.get(parent_m, :id)
+  children_l = get_children(data_l, id)
+  #IO.puts("---START--------")
+
+  #IO.puts("---END--------")
+  #:timer.sleep(500)
+
+  if children_l !== nil do
+     IO.puts("------children_l-----")
+     inspect_data(children_l)
+     :timer.sleep(200)
+    result_m = Map.put(parent_m, :children, children_l)
+    Agent.update(children_agent, fn res ->
+
+    [result_m | [res]]
+    #[[parent_m] ++ [result_m] | [res] ]
+    #[[data_l] ++ [parent_m]++ [result_m] | [res] ]
+    #res ++ [
+       #  result_m
+       # ]
+    end)
+  else
+    nil
+
+  end#if
+end)
+
+data = Agent.get(children_agent, fn res -> res end)
+
+Agent.stop(children_agent)
+
+IO.puts("---END OF MAKE CHILDREN--------")
+data
+
+
+end#function
+############################################################3
+
+defp get_children(data_l, id) do
+  # IO.puts("get_children------------------------------")
+  data =
+   Enum.reduce(data_l,  fn element_m, acc ->
+     parentid = Map.get(element_m, :parentid)
+     if parentid == id do
+       # children = [ [element_m] | acc]
+       [1,2] ++ acc
+
+       #[element_m] ++  acc
+     else
+        nil
+      end#if
+   end)
+
+ #IO.puts("data=======================")
+ #inspect_data(data)
+ data
+
+end
+ ###################################
+defp inspect_data(data) do
+  IO.inspect(data, limit: :infinity, pretty: :true,
+    syntax_colors: [number: :white, atom: :cyan, tuple: :yellow, map: :yellow, list: :green ],
+    width: 0)
+end
+
+
+
+######################
+
 end

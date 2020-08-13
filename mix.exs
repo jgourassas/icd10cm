@@ -49,6 +49,7 @@ defmodule Icd10cm.MixProject do
       {:scrivener_html, "~> 1.8.1", override: true},
       {:scrivener_headers, "~> 3.1.1", override: true},
       {:scrivener_list, "~> 2.0"},
+      #{:rose_tree, "~> 0.2.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end
