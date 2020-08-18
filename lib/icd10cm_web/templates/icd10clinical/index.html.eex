@@ -148,6 +148,21 @@
       <td>
 
       <%= if icd10clinical.includes  !== ""  do %> 
+
+<!------------------------------------
+
+ <div class = "row medium-collapse large-collapse">
+         <div class = "small-6 columns" style = "background-color:#8BD6EE;">
+            Collapse and uncollapse row
+         </div>
+         
+         <div class = "small-6 columns" style = "background-color:#C0B0F0;">
+            Collapse and uncollapse row
+         </div>
+      </div>
+   ---------------------------------------->
+
+
       <span style="color:teal;">Header Includes: </span>
      
      <span>
@@ -160,6 +175,8 @@
     
   
      <%= if icd10clinical.inclusionterm  !== ""  do %> 
+     <span> <i class="fa fa-check"></i>
+     
       <span style="color:teal;">Inclusion Term: </span>
     
     
