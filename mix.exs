@@ -55,6 +55,7 @@ defmodule Icd10cm.MixProject do
       {:qr_code, "~> 2.1.0"},
       {:phoenix_inline_svg, "~> 1.3"},
       #{:rose_tree, "~> 0.2.0"},
+      {:bunt, "~> 0.2.0"},
       {:plug_cowboy, "~> 2.3"}
       #{:plug_cowboy, "~> 2.0"}
     ]

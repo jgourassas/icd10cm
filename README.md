@@ -10,7 +10,7 @@
  
 ### Please View and  in the Screenshot Dir 
 
-We take no father responsibility. The software is provided as it is. Expect changes in The frontend interface, Bugs and  not a very long term support (due to C20 )
+We take no father responsibility. The software is provided as it is. Expect changes in The frontend interface, Bugs and  maybe not very long term support (due to C20 )
 
 
 To start your Phoenix server:

@@ -489,12 +489,24 @@ defmodule Icd10cm.Codes do
   def search_neoplasms(query, selection) do
     case selection do
       "title" -> search_icd10cm_neoplasms_title(query)
+      "primary_code" -> search_icd10cm_neoplasms_primary_code(query)
       "long_desc" -> search_icd10clinicals_long_desc(query)
       _ -> ""
     end
   end
 
   ####################
+  def search_icd10cm_neoplasms_primary_code(query) do
+
+   #SELECT * FROM icd10cm_neoplasms WHERE main_term  -> '0.term_cell_l.0.cell_code' = 'C19'
+   code_q =
+      from p in Icd10cm_neoplasm,
+        order_by: [asc: p.title],
+        where: fragment("? -> ? =  ?  ", p.main_term, "0.term_cell_l.0.cell_code", ^"#{query}"),
+        limit: 10
+      Repo.all(code_q)
+  end
+################################
   def search_icd10cm_neoplasms_title(query) do
     _title_q =
       from p in Icd10cm_neoplasm,
@@ -1722,6 +1734,82 @@ def create_qr(code) do
 
 
 end
+#########################
+def file_existance(file) do
+  exists = File.exists?(file)
+  case exists do
+    true ->
+      colorize_text("info", " Thx. File was found and Loaded. ")
+      File.stream!(file)
+    false ->
+      colorize_text("nofound", "--- Sorry File Not Found  ---" )
+
+    _ ->
+      colorize_text("nofound", "No Input text")
+  end
+
+end
+###############################
+def colorize_text(flag, text) do
+  case flag do
+    "warn" ->
+      [:white, " #{text} "]
+      |> Bunt.puts
+
+    "info" ->
+      [:cyan, " #{text} "]
+      |> Bunt.puts
+
+
+    "nofound" ->
+      [:red, "  #{text} "]
+      |> Bunt.puts
+
+    "alert" ->
+      [:red, " #{text} "]
+      |> Bunt.puts
+
+    #"default" ->
+    #  [:black,  "\t #{text} "]
+    #  |> Bunt.puts
+
+    "default" ->
+      #[:color244,  " #{text} "]
+      [:color230,  " #{text} "]
+      |> Bunt.puts
+
+
+    "default_write" ->
+      [:color244,   " #{text} "]
+      |> Bunt.write
+
+    "success" ->
+      [:darkgreen, " #{text} "]
+      |> Bunt.puts
+
+    "success_write" ->
+      [:darkgreen, " #{text} "]
+      |> Bunt.write
+
+    "main_term" ->
+      [:color243,  " #{text} "]
+      |> Bunt.puts
+
+    "dash" ->
+      [:color27,  " #{text} "]
+      |> Bunt.puts
+
+    "main_term_write" ->
+      [:black,  " #{text} "]
+      |> Bunt.write
+
+    _ ->
+      [:red, "  #{text}  "]
+      |> Bunt.puts
+
+  end
+end
+#######################
 
 ######################
 

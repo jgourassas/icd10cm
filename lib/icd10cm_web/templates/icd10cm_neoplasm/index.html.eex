@@ -12,6 +12,7 @@
                 <div class="large-4 small-9 columns">
                     <%=  select(f, :selection,
                         ["Title": "title",
+                         "Primary Code": "primary_code"
                         ],
                         prompt: "---Select---",   required: true,
                         class: "form-control f-dropdown"  ) %>
@@ -48,8 +49,8 @@
       <th>Secondary </th>
       <th>Ca in situ</th>
        <th>Benign</th>
-        <th>Uncertain Beh </th> 
-           <th>Unspecified Beh</th> 
+        <th>Uncertain Behavior </th> 
+           <th>Unspecified Behevior</th> 
       <th>Show</th>
     </tr>
   </thead>
@@ -66,7 +67,7 @@
       
       <td>
        <% title = icd10cm_neoplasm.title %>
-        <span style="color:#000;padding:5px;">
+        <span style="color:#000000;padding:5px;font-weight:700;">
       <%= Codes.find_neoplasm_code(title, "primary") %>
       </span>
       </td>
