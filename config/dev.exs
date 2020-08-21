@@ -74,3 +74,5 @@ config :elixir, ansi_enabled: true
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+#config :phoenix_inline_svg, dir: "/tmp/"

@@ -1,29 +1,44 @@
-
+<% alias Icd10cm.Codes %>
 <div class="title_form">
 <h4>Show Icd-10-PCS</h4>
 </div>
-<ul  class = "no-bullet frame_1">
 
+<div class= "row">
+
+<ul  class = "no-bullet">
+ <div class="columns small-2 large-6 frame_1"> 
+ 
   <li>
     <strong>Order number:</strong>
     <%= @icd10pcs.order_number %>
   </li>
 
-  <li>
-    <strong>Icd10pcs code:</strong>
-    <%= @icd10pcs.icd10pcs_code %>
-  </li>
-
-  <li>
-    <strong>Icd10pcs code 2:</strong>
+  
+  <li  class="element_info ">
+  
+    <strong> Code:</strong>
     <%= @icd10pcs.icd10pcs_code_2 %>
   </li>
 
-  <li>
-    <strong>Icd10pcs code 2 ltree:</strong>
-    <%= @icd10pcs.icd10pcs_code_2_ltree %>
+
+<li>
+ 
+      <% code_2 =  @icd10pcs.icd10pcs_code_2 %>
+      <%   Codes.create_qr(code_2) %>
+    
+      <%=  PhoenixInlineSvg.Helpers.svg_image(@conn,  "#{code_2}", class: "qr_code") %>
+      
+ </li>
+ <li class ="title_form" >
+    <%= @icd10pcs.long_description %>
   </li>
 
+
+ </div><!-----LEFT COUMN-------------->
+
+ <div class="columns small-2 large-6 frame_1"> 
+ 
+  
   <li>
     <strong>Is header:</strong>
     <%= @icd10pcs.is_header %>
@@ -34,11 +49,7 @@
     <%= @icd10pcs.short_description %>
   </li>
 
-  <li>
-    <strong>Long description:</strong>
-    <%= @icd10pcs.long_description %>
-  </li>
-
+ 
   <li>
     <strong>Section:</strong>
     <%= @icd10pcs.section %>
@@ -109,13 +120,11 @@
     <%= @icd10pcs.qualifier_title %>
   </li>
 
-  <li>
-    <strong>Icd10pcs code ltree:</strong>
-    <%= @icd10pcs.icd10pcs_code_ltree %>
-  </li>
 
+
+</div><!-----RIG COUMN-------------->
 </ul>
 
-<span><%#= link "Edit", to: Routes.icd10pcs_path(@conn, :edit, @icd10pcs) %></span>
+</div><!----row------------------------>
 <span><%= link "Back To PCS Index", 
 to: Routes.pcs_path(@conn, :index) ,  class: " primary button expanded" %></span>

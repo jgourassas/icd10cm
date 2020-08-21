@@ -2,15 +2,15 @@
 
 ### ICD10 is an open source software web application developed in Elixir - Phoenix - Zurb Foundation
 
-* This module uses the ICD-10-CM (USA) and ICD-10-PCS.
+* This software uses the ICD-10-CM  and ICD-10-PCS (USA).
 
-* Additions:
- ** Graphical view of ICD-10-CM  
-
-
+### Additions:
+ * Graphical view of ICD-10-CM (D3.js)  
+ * QR-Codes for ICD-10 codes
  
+### Please View and  in the Screenshot Dir 
 
-We take no father responsibility. The software is provided as it is
+We take no father responsibility. The software is provided as it is. Expect changes in The frontend interface, Bugs and  not a very long term support (due to C20 )
 
 
 To start your Phoenix server:

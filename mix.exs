@@ -20,7 +20,10 @@ defmodule Icd10cm.MixProject do
   def application do
     [
       mod: {Icd10cm.Application, []},
-      extra_applications: [:logger, :runtime_tools, :scrivener_html, :scrivener_ecto]
+      extra_applications: [:logger,
+                           :runtime_tools,
+                           :scrivener_html,
+                           :scrivener_ecto]
     ]
   end
 
@@ -49,8 +52,11 @@ defmodule Icd10cm.MixProject do
       {:scrivener_html, "~> 1.8.1", override: true},
       {:scrivener_headers, "~> 3.1.1", override: true},
       {:scrivener_list, "~> 2.0"},
+      {:qr_code, "~> 2.1.0"},
+      {:phoenix_inline_svg, "~> 1.3"},
       #{:rose_tree, "~> 0.2.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.3"}
+      #{:plug_cowboy, "~> 2.0"}
     ]
   end
 

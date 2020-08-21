@@ -1,5 +1,6 @@
 <% alias Icd10cm.Codes %>
 <% alias Icd10cm.Repo %>
+<% import PhoenixInlineSvg.Helpers %>
 
 <div class="element_info"><h5>ICD-10-CM CLINICAL</h5> </div>
 
@@ -87,7 +88,7 @@
   </thead>
   <tbody>
    <%= for {icd10clinical, index} <- Enum.with_index(@icd10clinicals) do %>
-<%#= for icd10clinical <- @icd10clinicals do %>
+  <%#= for icd10clinical <- @icd10clinicals do %>
     <tr>
     
      <td> <%= index + 1  %></td>
@@ -113,13 +114,18 @@
     title= "<%= icd10clinical.icd10cm_code_2 %>" 
    --
 </span>
-           <strong><%= icd10clinical.icd10cm_code_2 %></strong>
+  
+       <strong><%= icd10clinical.icd10cm_code_2 %></strong>
+      <br/>
+      
       </span>
   
    
      <% end %>
+      
+    
 
-      </td>
+       </td>
      <!---------------------------------     
      <td>
       <%# query = icd10clinical.icd10cm_code_2  %>

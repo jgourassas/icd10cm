@@ -8,6 +8,7 @@ defmodule Icd10cm.Codes do
   alias Icd10cm.Repo
 
   alias Icd10cm.Codes.Icd10clinical
+  alias QRCode.{QR, Svg, SvgSettings}
 
   @doc """
   Returns the list of icd10clinicals.
@@ -173,7 +174,7 @@ defmodule Icd10cm.Codes do
       )
 
     res = Repo.all(query)
-    str_split = List.to_string(res)
+    _str_split = List.to_string(res)
   end
 
   ######################
@@ -202,7 +203,7 @@ defmodule Icd10cm.Codes do
       )
 
     res = Repo.all(query)
-    str_split = List.to_string(res)
+    _str_split = List.to_string(res)
   end
 
   ######################
@@ -216,7 +217,7 @@ defmodule Icd10cm.Codes do
       )
 
     res = Repo.all(query)
-    str_split = List.to_string(res)
+    _str_split = List.to_string(res)
   end
 
   #########################
@@ -246,7 +247,7 @@ defmodule Icd10cm.Codes do
       )
 
     res = Repo.all(query)
-    str_split = List.to_string(res)
+    _str_split = List.to_string(res)
   end
 
   #########################
@@ -260,7 +261,7 @@ defmodule Icd10cm.Codes do
       )
 
     res = Repo.all(query)
-    str_split = List.to_string(res)
+    _str_split = List.to_string(res)
   end
 
   ##########################
@@ -1707,6 +1708,20 @@ defp inspect_data(data) do
 end
 
 
+
+#######################
+def create_qr(code) do
+  #qr_settings = %QRCode.SvgSettings{qrcode_color: {17, 170, 136}}
+  qr_settings = %QRCode.SvgSettings{qrcode_color: "#000000"}
+
+
+  code
+  |> QRCode.create()
+  |> Result.and_then(&QRCode.Svg.save_as(&1,"priv/static/svg/generic/" <> code <> ".svg", qr_settings))
+  {:ok, "priv/static/svg/generic/"  <> code <> ".svg"}
+
+
+end
 
 ######################
 

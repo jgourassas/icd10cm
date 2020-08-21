@@ -41,6 +41,15 @@ defmodule Icd10cmWeb do
     end
   end
 
+  #########################
+
+def view do
+  quote do
+    use PhoenixInlineSvg.Helpers, otp_app: :icd10cm
+  end
+end
+###########################
+
   def router do
     quote do
       use Phoenix.Router
