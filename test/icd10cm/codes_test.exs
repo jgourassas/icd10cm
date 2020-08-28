@@ -965,4 +965,101 @@ defmodule Icd10cm.CodesTest do
       assert %Ecto.Changeset{} = Codes.change_icd10pcs_defs(icd10pcs_defs)
     end
   end
+
+  describe "ndc_products" do
+    alias Icd10cm.Codes.Ndc_product
+
+    @valid_attrs %{ACTIVE_INGRED_UNIT: "some ACTIVE_INGRED_UNIT", ACTIVE_NUMERATOR_STRENGTH: "some ACTIVE_NUMERATOR_STRENGTH", APPLICATIONNUMBER: "some APPLICATIONNUMBER", DEASCHEDULE: "some DEASCHEDULE", DOSAGEFORMNAME: "some DOSAGEFORMNAME", ENDMARKETINGDATE: "some ENDMARKETINGDATE", LABELERNAME: "some LABELERNAME", LISTING_RECORD_CERTIFIED_THROUGH: "some LISTING_RECORD_CERTIFIED_THROUGH", MARKETINGCATEGORYNAME: "some MARKETINGCATEGORYNAME", NDC_EXCLUDE_FLAG: "some NDC_EXCLUDE_FLAG", NONPROPRIETARYNAME: "some NONPROPRIETARYNAME", PHARM_CLASSES: "some PHARM_CLASSES", PRODUCTID: "some PRODUCTID", PRODUCTNDC: "some PRODUCTNDC", PRODUCTTYPENAME: "some PRODUCTTYPENAME", PROPRIETARYNAME: "some PROPRIETARYNAME", PROPRIETARYNAMESUFFIX: "some PROPRIETARYNAMESUFFIX", ROUTENAME: "some ROUTENAME", STARTMARKETINGDATE: "some STARTMARKETINGDATE", SUBSTANCENAME: "some SUBSTANCENAME"}
+    @update_attrs %{ACTIVE_INGRED_UNIT: "some updated ACTIVE_INGRED_UNIT", ACTIVE_NUMERATOR_STRENGTH: "some updated ACTIVE_NUMERATOR_STRENGTH", APPLICATIONNUMBER: "some updated APPLICATIONNUMBER", DEASCHEDULE: "some updated DEASCHEDULE", DOSAGEFORMNAME: "some updated DOSAGEFORMNAME", ENDMARKETINGDATE: "some updated ENDMARKETINGDATE", LABELERNAME: "some updated LABELERNAME", LISTING_RECORD_CERTIFIED_THROUGH: "some updated LISTING_RECORD_CERTIFIED_THROUGH", MARKETINGCATEGORYNAME: "some updated MARKETINGCATEGORYNAME", NDC_EXCLUDE_FLAG: "some updated NDC_EXCLUDE_FLAG", NONPROPRIETARYNAME: "some updated NONPROPRIETARYNAME", PHARM_CLASSES: "some updated PHARM_CLASSES", PRODUCTID: "some updated PRODUCTID", PRODUCTNDC: "some updated PRODUCTNDC", PRODUCTTYPENAME: "some updated PRODUCTTYPENAME", PROPRIETARYNAME: "some updated PROPRIETARYNAME", PROPRIETARYNAMESUFFIX: "some updated PROPRIETARYNAMESUFFIX", ROUTENAME: "some updated ROUTENAME", STARTMARKETINGDATE: "some updated STARTMARKETINGDATE", SUBSTANCENAME: "some updated SUBSTANCENAME"}
+    @invalid_attrs %{ACTIVE_INGRED_UNIT: nil, ACTIVE_NUMERATOR_STRENGTH: nil, APPLICATIONNUMBER: nil, DEASCHEDULE: nil, DOSAGEFORMNAME: nil, ENDMARKETINGDATE: nil, LABELERNAME: nil, LISTING_RECORD_CERTIFIED_THROUGH: nil, MARKETINGCATEGORYNAME: nil, NDC_EXCLUDE_FLAG: nil, NONPROPRIETARYNAME: nil, PHARM_CLASSES: nil, PRODUCTID: nil, PRODUCTNDC: nil, PRODUCTTYPENAME: nil, PROPRIETARYNAME: nil, PROPRIETARYNAMESUFFIX: nil, ROUTENAME: nil, STARTMARKETINGDATE: nil, SUBSTANCENAME: nil}
+
+    def ndc_product_fixture(attrs \\ %{}) do
+      {:ok, ndc_product} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Codes.create_ndc_product()
+
+      ndc_product
+    end
+
+    test "list_ndc_products/0 returns all ndc_products" do
+      ndc_product = ndc_product_fixture()
+      assert Codes.list_ndc_products() == [ndc_product]
+    end
+
+    test "get_ndc_product!/1 returns the ndc_product with given id" do
+      ndc_product = ndc_product_fixture()
+      assert Codes.get_ndc_product!(ndc_product.id) == ndc_product
+    end
+
+    test "create_ndc_product/1 with valid data creates a ndc_product" do
+      assert {:ok, %Ndc_product{} = ndc_product} = Codes.create_ndc_product(@valid_attrs)
+      assert ndc_product.ACTIVE_INGRED_UNIT == "some ACTIVE_INGRED_UNIT"
+      assert ndc_product.ACTIVE_NUMERATOR_STRENGTH == "some ACTIVE_NUMERATOR_STRENGTH"
+      assert ndc_product.APPLICATIONNUMBER == "some APPLICATIONNUMBER"
+      assert ndc_product.DEASCHEDULE == "some DEASCHEDULE"
+      assert ndc_product.DOSAGEFORMNAME == "some DOSAGEFORMNAME"
+      assert ndc_product.ENDMARKETINGDATE == "some ENDMARKETINGDATE"
+      assert ndc_product.LABELERNAME == "some LABELERNAME"
+      assert ndc_product.LISTING_RECORD_CERTIFIED_THROUGH == "some LISTING_RECORD_CERTIFIED_THROUGH"
+      assert ndc_product.MARKETINGCATEGORYNAME == "some MARKETINGCATEGORYNAME"
+      assert ndc_product.NDC_EXCLUDE_FLAG == "some NDC_EXCLUDE_FLAG"
+      assert ndc_product.NONPROPRIETARYNAME == "some NONPROPRIETARYNAME"
+      assert ndc_product.PHARM_CLASSES == "some PHARM_CLASSES"
+      assert ndc_product.PRODUCTID == "some PRODUCTID"
+      assert ndc_product.PRODUCTNDC == "some PRODUCTNDC"
+      assert ndc_product.PRODUCTTYPENAME == "some PRODUCTTYPENAME"
+      assert ndc_product.PROPRIETARYNAME == "some PROPRIETARYNAME"
+      assert ndc_product.PROPRIETARYNAMESUFFIX == "some PROPRIETARYNAMESUFFIX"
+      assert ndc_product.ROUTENAME == "some ROUTENAME"
+      assert ndc_product.STARTMARKETINGDATE == "some STARTMARKETINGDATE"
+      assert ndc_product.SUBSTANCENAME == "some SUBSTANCENAME"
+    end
+
+    test "create_ndc_product/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Codes.create_ndc_product(@invalid_attrs)
+    end
+
+    test "update_ndc_product/2 with valid data updates the ndc_product" do
+      ndc_product = ndc_product_fixture()
+      assert {:ok, %Ndc_product{} = ndc_product} = Codes.update_ndc_product(ndc_product, @update_attrs)
+      assert ndc_product.ACTIVE_INGRED_UNIT == "some updated ACTIVE_INGRED_UNIT"
+      assert ndc_product.ACTIVE_NUMERATOR_STRENGTH == "some updated ACTIVE_NUMERATOR_STRENGTH"
+      assert ndc_product.APPLICATIONNUMBER == "some updated APPLICATIONNUMBER"
+      assert ndc_product.DEASCHEDULE == "some updated DEASCHEDULE"
+      assert ndc_product.DOSAGEFORMNAME == "some updated DOSAGEFORMNAME"
+      assert ndc_product.ENDMARKETINGDATE == "some updated ENDMARKETINGDATE"
+      assert ndc_product.LABELERNAME == "some updated LABELERNAME"
+      assert ndc_product.LISTING_RECORD_CERTIFIED_THROUGH == "some updated LISTING_RECORD_CERTIFIED_THROUGH"
+      assert ndc_product.MARKETINGCATEGORYNAME == "some updated MARKETINGCATEGORYNAME"
+      assert ndc_product.NDC_EXCLUDE_FLAG == "some updated NDC_EXCLUDE_FLAG"
+      assert ndc_product.NONPROPRIETARYNAME == "some updated NONPROPRIETARYNAME"
+      assert ndc_product.PHARM_CLASSES == "some updated PHARM_CLASSES"
+      assert ndc_product.PRODUCTID == "some updated PRODUCTID"
+      assert ndc_product.PRODUCTNDC == "some updated PRODUCTNDC"
+      assert ndc_product.PRODUCTTYPENAME == "some updated PRODUCTTYPENAME"
+      assert ndc_product.PROPRIETARYNAME == "some updated PROPRIETARYNAME"
+      assert ndc_product.PROPRIETARYNAMESUFFIX == "some updated PROPRIETARYNAMESUFFIX"
+      assert ndc_product.ROUTENAME == "some updated ROUTENAME"
+      assert ndc_product.STARTMARKETINGDATE == "some updated STARTMARKETINGDATE"
+      assert ndc_product.SUBSTANCENAME == "some updated SUBSTANCENAME"
+    end
+
+    test "update_ndc_product/2 with invalid data returns error changeset" do
+      ndc_product = ndc_product_fixture()
+      assert {:error, %Ecto.Changeset{}} = Codes.update_ndc_product(ndc_product, @invalid_attrs)
+      assert ndc_product == Codes.get_ndc_product!(ndc_product.id)
+    end
+
+    test "delete_ndc_product/1 deletes the ndc_product" do
+      ndc_product = ndc_product_fixture()
+      assert {:ok, %Ndc_product{}} = Codes.delete_ndc_product(ndc_product)
+      assert_raise Ecto.NoResultsError, fn -> Codes.get_ndc_product!(ndc_product.id) end
+    end
+
+    test "change_ndc_product/1 returns a ndc_product changeset" do
+      ndc_product = ndc_product_fixture()
+      assert %Ecto.Changeset{} = Codes.change_ndc_product(ndc_product)
+    end
+  end
 end

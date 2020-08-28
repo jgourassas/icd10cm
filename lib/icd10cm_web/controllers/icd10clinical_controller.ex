@@ -3,7 +3,7 @@ defmodule Icd10cmWeb.Icd10clinicalController do
 
   alias Icd10cm.Codes
   alias Icd10cm.Codes.Icd10clinical
-  alias Icd10cm.Repo
+  #alias Icd10cm.Repo
 
   import Ecto.Query, warn: false
 

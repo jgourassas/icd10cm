@@ -1,0 +1,92 @@
+<%alias Icd10cm.Codes %>
+<div class="element_info"><h5>Listing Ndc product  </h5> </div>
+ 
+ <div class="search_form">
+
+ <div class="large-6 medium-6 small-6 large-centered columns">
+    <ul class="has-form">
+
+               <%= form_for @conn, Routes.ndc_product_path(@conn, :search_ndc),
+                   [as: :search_ndc], fn f -> %>
+            <div class="row collapse">
+           
+                <div class="large-4 small-9 columns">
+                    <%=  select(f, :selection,
+                        ["Proprietary Name": "proprietaryname",
+                          "SubstanceName": "substancename",
+                          #"Chapter Description": "chapter"
+                        ],
+                        prompt: "---Select---",   required: true,
+                        class: "form-control f-dropdown"  ) %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-6 medium-6 small-9 columns">
+                    <%= text_input f, :query, placeholder: "Your Query",
+                    class: "form-control ",
+                    minLength: 3 %>
+                </div><!--large-8 small-9 columns-->
+
+                <div class="large-2 small-9 columns">
+                    <%= submit "Search", class: "button primary expanded"  %>
+
+                </div><!--large-4 small-9 columns-->
+
+
+            </div><!--row collapse-->
+
+
+    <% end %>
+             </ul>
+
+      </div><!-- small-6 large-centered columns -->
+
+      </div><!------searchform----------------------------->
+
+
+<table class= "table responsive hover stack table-scroll frame_1">
+  <thead>
+    <tr>
+    <th>Product Ndc</th>
+     <th>Substance</th>
+      <th>RouteName</th>
+     <th>Strength</th>
+      <th>Product Name</th>
+      <th>Propr Name / DEA</th>
+       <th>Label</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for ndc_product <- @ndc_products do %>
+    <tr>
+    <td>
+    
+    <%= ndc_product.productndc %>
+    
+    </td>
+    
+     <td><%= ndc_product.substancename %></td>
+    <td><%= ndc_product.routename %></td>
+    <td><%= ndc_product.active_numerator_strength %></td>
+      <td><%= ndc_product.producttypename%></td>
+      <td><%= ndc_product.proprietaryname %>
+      
+     <em> <%= ndc_product.deaschedule %> </em>
+      </td>
+      <td><%= ndc_product.labelname %></td>
+      <td>
+        <span><%= link "Show", to: Routes.ndc_product_path(@conn, :show, ndc_product),
+         class: "button small expanded"
+         %></span>
+        <span><%#= link "Edit", to: Routes.ndc_product_path(@conn, :edit, ndc_product) %></span>
+        <span><%#= link "Delete", to: Routes.ndc_product_path(@conn, :delete, ndc_product), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+</table>
+<div class="pagination text-center" role="navigation" aria-label="Pagination">
+     <%= pagination_links @page %>
+    </div>
+<span><%#= link "New Ndc product", to: Routes.ndc_product_path(@conn, :new) %></span>

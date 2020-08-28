@@ -37,6 +37,8 @@ defmodule Icd10cmWeb.Router do
     resources("/icd10pcs_defs", Icd10pcs_defsController, as: :pcs_defs)
     post("/icd10pcs_defs/search_pcs_defs", Icd10pcs_defsController, :search_pcs_defs)
     resources("/Icd10cm_tree", Icd10cm_treeController, as: :icd10cm_tree)
+    resources( "/ndc_products", Ndc_productController)
+    post("/ndc_products/search_ndc", Ndc_productController, :search_ndc)
 
     post(
       "/icd10cm_tree/get_icd10cm_clinicals_json",

@@ -1,0 +1,17 @@
+<div class="title_form">
+<h4>Show Ndc product </h4>
+</div>
+<ul class = "no-bullet frame_1" >
+  <li>
+    <strong>Productid:</strong>
+    <%= @ndc_product.productid %>
+  </li>
+
+  <li>
+    <strong>Productndc:</strong>
+    <%= @ndc_product.productndc %>
+  </li>
+</ul>
+
+<span><%#= link "Edit", to: Routes.ndc_product_path(@conn, :edit, @ndc_product) %></span>
+<span><%= link "Back", to: Routes.ndc_product_path(@conn, :index), class: "large button expanded" %></span>

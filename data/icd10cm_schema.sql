@@ -400,6 +400,58 @@ ALTER SEQUENCE public.iicd10cm_orders_id_seq OWNED BY public.icd10cm_orders.id;
 
 
 --
+-- Name: ndc_products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.ndc_products (
+    id bigint NOT NULL,
+    productid text,
+    productndc text,
+    producttypename text,
+    proprietaryname text,
+    proprietarynamesuffix text,
+    nonproprietaryname text,
+    dosageforname text,
+    routename text,
+    startmarketingdate text,
+    endmargetingdate text,
+    marketingcategoryname text,
+    applicationnumber text,
+    labelname text,
+    substancename text,
+    active_numerator_strength text,
+    active_ingred_unit text,
+    pharm_classes text,
+    deaschedule text,
+    ndc_exlude_flag text,
+    listing_record_certified_through text
+);
+
+
+ALTER TABLE public.ndc_products OWNER TO postgres;
+
+--
+-- Name: ndc_products_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.ndc_products_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.ndc_products_id_seq OWNER TO postgres;
+
+--
+-- Name: ndc_products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.ndc_products_id_seq OWNED BY public.ndc_products.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -468,6 +520,13 @@ ALTER TABLE ONLY public.icd10pcs_defs ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: ndc_products id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ndc_products ALTER COLUMN id SET DEFAULT nextval('public.ndc_products_id_seq'::regclass);
+
+
+--
 -- Name: ctds ctds_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -529,6 +588,14 @@ ALTER TABLE ONLY public.icd10cm_eindexes
 
 ALTER TABLE ONLY public.icd10cm_orders
     ADD CONSTRAINT iicd10cm_orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ndc_products ndc_products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ndc_products
+    ADD CONSTRAINT ndc_products_pkey PRIMARY KEY (id);
 
 
 --

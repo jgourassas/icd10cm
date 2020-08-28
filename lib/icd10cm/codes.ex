@@ -155,7 +155,7 @@ defmodule Icd10cm.Codes do
 
   ######################
   def search_icd10clinicals_chapter(query) do
-    query =
+    _query =
       from(
         p in Icd10clinical,
         where: fragment("(?) @@ plainto_tsquery(?)", p.chapter_description, ^query),
@@ -1812,5 +1812,137 @@ end
 #######################
 
 ######################
+
+
+  alias Icd10cm.Codes.Ndc_product
+
+  @doc """
+  Returns the list of ndc_products.
+
+  ## Examples
+
+      iex> list_ndc_products()
+      [%Ndc_product{}, ...]
+
+  """
+  def list_ndc_products(_params) do
+ _page =
+ Ndc_product
+ |> order_by([p], [p.substancename])
+
+ #Repo.all(Ndc_product)
+  end
+
+  @doc """
+  Gets a single ndc_product.
+
+  Raises `Ecto.NoResultsError` if the Ndc product does not exist.
+
+  ## Examples
+
+      iex> get_ndc_product!(123)
+      %Ndc_product{}
+
+      iex> get_ndc_product!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_ndc_product!(id), do: Repo.get!(Ndc_product, id)
+
+  @doc """
+  Creates a ndc_product.
+
+  ## Examples
+
+      iex> create_ndc_product(%{field: value})
+      {:ok, %Ndc_product{}}
+
+      iex> create_ndc_product(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_ndc_product(attrs \\ %{}) do
+    %Ndc_product{}
+    |> Ndc_product.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a ndc_product.
+
+  ## Examples
+
+      iex> update_ndc_product(ndc_product, %{field: new_value})
+      {:ok, %Ndc_product{}}
+
+      iex> update_ndc_product(ndc_product, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_ndc_product(%Ndc_product{} = ndc_product, attrs) do
+    ndc_product
+    |> Ndc_product.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a ndc_product.
+
+  ## Examples
+
+      iex> delete_ndc_product(ndc_product)
+      {:ok, %Ndc_product{}}
+
+      iex> delete_ndc_product(ndc_product)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_ndc_product(%Ndc_product{} = ndc_product) do
+    Repo.delete(ndc_product)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking ndc_product changes.
+
+  ## Examples
+
+      iex> change_ndc_product(ndc_product)
+      %Ecto.Changeset{data: %Ndc_product{}}
+
+  """
+  def change_ndc_product(%Ndc_product{} = ndc_product, attrs \\ %{}) do
+    Ndc_product.changeset(ndc_product, attrs)
+  end
+
+ #####################################
+ def search_ndc(query, selection) do
+  case selection do
+    "proprietaryname" -> search_ndc_proprietaryname(query)
+    "substancename" -> search_ndc_substancename(query)
+    _ -> ""
+  end
+end
+ ########################################
+def search_ndc_proprietaryname(query) do
+_query =
+from(
+  p in Ndc_product,
+  where: fragment("(?) @@ plainto_tsquery(?)", p.proprietaryname, ^query),
+  order_by: [asc: p.proprietaryname]
+)
+end
+ ###############################
+ def search_ndc_substancename(query) do
+  _query =
+  from(
+    p in Ndc_product,
+    where: fragment("(?) @@ plainto_tsquery(?)", p.substancename, ^query),
+    order_by: [asc: p.substancename]
+  )
+  end
+   ###############################
+
+
+
 
 end

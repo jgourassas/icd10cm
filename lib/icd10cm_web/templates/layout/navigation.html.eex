@@ -66,6 +66,15 @@
 
     </ul>
   </li>
+  <li>
+    <a href="#">NDC - Drugs</a>
+    <ul class="vertical menu">
+     <li>
+     <span><%= link "NCD - Drugs", to: Routes.ndc_product_path(@conn, :index) %></span>
+     </li>
+
+    </ul>
+  </li>
 <!------
   <li>
     <a href="#">Utilities</a>

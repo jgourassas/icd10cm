@@ -1,0 +1,5 @@
+<h1>Edit Ndc product</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.ndc_product_path(@conn, :update, @ndc_product)) %>
+
+<span><%= link "Back", to: Routes.ndc_product_path(@conn, :index) %></span>

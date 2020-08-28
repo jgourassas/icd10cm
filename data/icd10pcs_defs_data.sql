@@ -5,7 +5,7 @@
 -- Dumped from database version 9.6.13
 -- Dumped by pg_dump version 9.6.13
 
--- Started on 2020-06-30 15:23:16 EEST
+-- Started on 2020-08-27 15:57:49 EEST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 2522 (class 0 OID 58990)
+-- TOC entry 2528 (class 0 OID 58990)
 -- Dependencies: 203
 -- Data for Name: icd10pcs_defs; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -819,7 +819,7 @@ INSERT INTO public.icd10pcs_defs (id, section, section_title, axis_code, axis_ti
 
 
 --
--- TOC entry 2528 (class 0 OID 0)
+-- TOC entry 2534 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: icd10pcs_defs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
@@ -827,7 +827,7 @@ INSERT INTO public.icd10pcs_defs (id, section, section_title, axis_code, axis_ti
 SELECT pg_catalog.setval('public.icd10pcs_defs_id_seq', 792, true);
 
 
--- Completed on 2020-06-30 15:23:16 EEST
+-- Completed on 2020-08-27 15:57:49 EEST
 
 --
 -- PostgreSQL database dump complete
