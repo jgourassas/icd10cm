@@ -1062,4 +1062,77 @@ defmodule Icd10cm.CodesTest do
       assert %Ecto.Changeset{} = Codes.change_ndc_product(ndc_product)
     end
   end
+
+  describe "ndc_packages" do
+    alias Icd10cm.Codes.Ndc_package
+
+    @valid_attrs %{endmarketingdate: "some endmarketingdate", ndc_exclude_flag: "some ndc_exclude_flag", ndcpackagecode: "some ndcpackagecode", packagedescription: "some packagedescription", productid: "some productid", productndc: "some productndc", sample_package: "some sample_package", startmarketingdate: "some startmarketingdate"}
+    @update_attrs %{endmarketingdate: "some updated endmarketingdate", ndc_exclude_flag: "some updated ndc_exclude_flag", ndcpackagecode: "some updated ndcpackagecode", packagedescription: "some updated packagedescription", productid: "some updated productid", productndc: "some updated productndc", sample_package: "some updated sample_package", startmarketingdate: "some updated startmarketingdate"}
+    @invalid_attrs %{endmarketingdate: nil, ndc_exclude_flag: nil, ndcpackagecode: nil, packagedescription: nil, productid: nil, productndc: nil, sample_package: nil, startmarketingdate: nil}
+
+    def ndc_package_fixture(attrs \\ %{}) do
+      {:ok, ndc_package} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Codes.create_ndc_package()
+
+      ndc_package
+    end
+
+    test "list_ndc_packages/0 returns all ndc_packages" do
+      ndc_package = ndc_package_fixture()
+      assert Codes.list_ndc_packages() == [ndc_package]
+    end
+
+    test "get_ndc_package!/1 returns the ndc_package with given id" do
+      ndc_package = ndc_package_fixture()
+      assert Codes.get_ndc_package!(ndc_package.id) == ndc_package
+    end
+
+    test "create_ndc_package/1 with valid data creates a ndc_package" do
+      assert {:ok, %Ndc_package{} = ndc_package} = Codes.create_ndc_package(@valid_attrs)
+      assert ndc_package.endmarketingdate == "some endmarketingdate"
+      assert ndc_package.ndc_exclude_flag == "some ndc_exclude_flag"
+      assert ndc_package.ndcpackagecode == "some ndcpackagecode"
+      assert ndc_package.packagedescription == "some packagedescription"
+      assert ndc_package.productid == "some productid"
+      assert ndc_package.productndc == "some productndc"
+      assert ndc_package.sample_package == "some sample_package"
+      assert ndc_package.startmarketingdate == "some startmarketingdate"
+    end
+
+    test "create_ndc_package/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Codes.create_ndc_package(@invalid_attrs)
+    end
+
+    test "update_ndc_package/2 with valid data updates the ndc_package" do
+      ndc_package = ndc_package_fixture()
+      assert {:ok, %Ndc_package{} = ndc_package} = Codes.update_ndc_package(ndc_package, @update_attrs)
+      assert ndc_package.endmarketingdate == "some updated endmarketingdate"
+      assert ndc_package.ndc_exclude_flag == "some updated ndc_exclude_flag"
+      assert ndc_package.ndcpackagecode == "some updated ndcpackagecode"
+      assert ndc_package.packagedescription == "some updated packagedescription"
+      assert ndc_package.productid == "some updated productid"
+      assert ndc_package.productndc == "some updated productndc"
+      assert ndc_package.sample_package == "some updated sample_package"
+      assert ndc_package.startmarketingdate == "some updated startmarketingdate"
+    end
+
+    test "update_ndc_package/2 with invalid data returns error changeset" do
+      ndc_package = ndc_package_fixture()
+      assert {:error, %Ecto.Changeset{}} = Codes.update_ndc_package(ndc_package, @invalid_attrs)
+      assert ndc_package == Codes.get_ndc_package!(ndc_package.id)
+    end
+
+    test "delete_ndc_package/1 deletes the ndc_package" do
+      ndc_package = ndc_package_fixture()
+      assert {:ok, %Ndc_package{}} = Codes.delete_ndc_package(ndc_package)
+      assert_raise Ecto.NoResultsError, fn -> Codes.get_ndc_package!(ndc_package.id) end
+    end
+
+    test "change_ndc_package/1 returns a ndc_package changeset" do
+      ndc_package = ndc_package_fixture()
+      assert %Ecto.Changeset{} = Codes.change_ndc_package(ndc_package)
+    end
+  end
 end

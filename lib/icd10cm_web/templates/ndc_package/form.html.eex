@@ -1,0 +1,43 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :productid %>
+  <%= textarea f, :productid %>
+  <%= error_tag f, :productid %>
+
+  <%= label f, :productndc %>
+  <%= textarea f, :productndc %>
+  <%= error_tag f, :productndc %>
+
+  <%= label f, :ndcpackagecode %>
+  <%= textarea f, :ndcpackagecode %>
+  <%= error_tag f, :ndcpackagecode %>
+
+  <%= label f, :packagedescription %>
+  <%= textarea f, :packagedescription %>
+  <%= error_tag f, :packagedescription %>
+
+  <%= label f, :startmarketingdate %>
+  <%= textarea f, :startmarketingdate %>
+  <%= error_tag f, :startmarketingdate %>
+
+  <%= label f, :endmarketingdate %>
+  <%= textarea f, :endmarketingdate %>
+  <%= error_tag f, :endmarketingdate %>
+
+  <%= label f, :ndc_exclude_flag %>
+  <%= textarea f, :ndc_exclude_flag %>
+  <%= error_tag f, :ndc_exclude_flag %>
+
+  <%= label f, :sample_package %>
+  <%= textarea f, :sample_package %>
+  <%= error_tag f, :sample_package %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

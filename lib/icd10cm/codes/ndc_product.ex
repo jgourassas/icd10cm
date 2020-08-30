@@ -24,6 +24,13 @@ defmodule Icd10cm.Codes.Ndc_product do
       field :ndc_exlude_flag, :string
       field :listing_record_certified_through, :string
 
+      has_many(
+        :ndc_packages,
+        Icd10cm.Codes.Ndc_package,
+        #foreign_key: :ndc_product_id
+        foreign_key: :productndc
+      )
+
 
     #timestamps()
   end

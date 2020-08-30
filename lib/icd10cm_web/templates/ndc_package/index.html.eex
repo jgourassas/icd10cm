@@ -1,0 +1,40 @@
+<h1>Listing Ndc packages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Productid</th>
+      <th>Productndc</th>
+      <th>Ndcpackagecode</th>
+      <th>Packagedescription</th>
+      <th>Startmarketingdate</th>
+      <th>Endmarketingdate</th>
+      <th>Ndc exclude flag</th>
+      <th>Sample package</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for ndc_package <- @ndc_packages do %>
+    <tr>
+      <td><%= ndc_package.productid %></td>
+      <td><%= ndc_package.productndc %></td>
+      <td><%= ndc_package.ndcpackagecode %></td>
+      <td><%= ndc_package.packagedescription %></td>
+      <td><%= ndc_package.startmarketingdate %></td>
+      <td><%= ndc_package.endmarketingdate %></td>
+      <td><%= ndc_package.ndc_exclude_flag %></td>
+      <td><%= ndc_package.sample_package %></td>
+
+      <td>
+        <span><%#= link "Show", to: Routes.ndc_package_path(@conn, :show, ndc_package) %></span>
+        <span><%#= link "Edit", to: Routes.ndc_package_path(@conn, :edit, ndc_package) %></span>
+        <span><%#= link "Delete", to: Routes.ndc_package_path(@conn, :delete, ndc_package), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%#= link "New Ndc package", to: Routes.ndc_package_path(@conn, :new) %></span>

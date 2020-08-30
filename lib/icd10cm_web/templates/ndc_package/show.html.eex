@@ -1,0 +1,48 @@
+<h1>Show Ndc package</h1>
+
+<ul>
+
+  <li>
+    <strong>Productid:</strong>
+    <%= @ndc_package.productid %>
+  </li>
+
+  <li>
+    <strong>Productndc:</strong>
+    <%= @ndc_package.productndc %>
+  </li>
+
+  <li>
+    <strong>Ndcpackagecode:</strong>
+    <%= @ndc_package.ndcpackagecode %>
+  </li>
+
+  <li>
+    <strong>Packagedescription:</strong>
+    <%= @ndc_package.packagedescription %>
+  </li>
+
+  <li>
+    <strong>Startmarketingdate:</strong>
+    <%= @ndc_package.startmarketingdate %>
+  </li>
+
+  <li>
+    <strong>Endmarketingdate:</strong>
+    <%= @ndc_package.endmarketingdate %>
+  </li>
+
+  <li>
+    <strong>Ndc exclude flag:</strong>
+    <%= @ndc_package.ndc_exclude_flag %>
+  </li>
+
+  <li>
+    <strong>Sample package:</strong>
+    <%= @ndc_package.sample_package %>
+  </li>
+
+</ul>
+
+<span><%#= link "Edit", to: Routes.ndc_package_path(@conn, :edit, @ndc_package) %></span>
+<span><%#= link "Back", to: Routes.ndc_product_pack_path(@conn, :index) %></span>

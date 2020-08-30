@@ -1945,4 +1945,166 @@ end
 
 
 
+
+  alias Icd10cm.Codes.Ndc_package
+
+  @doc """
+  Returns the list of ndc_packages.
+
+  ## Examples
+
+      iex> list_ndc_packages()
+      [%Ndc_package{}, ...]
+
+  """
+  def list_ndc_packages(conn) do
+   # Repo.all(Ecto.assoc(conn.assigns[:ndc_product], :ndc_packages))
+
+    #Repo.all(Ndc_package)
+  end
+
+  @doc """
+  Gets a single ndc_package.
+
+  Raises `Ecto.NoResultsError` if the Ndc package does not exist.
+
+  ## Examples
+
+      iex> get_ndc_package!(123)
+      %Ndc_package{}
+
+      iex> get_ndc_package!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_ndc_package!(id), do: Repo.get!(Ndc_package, id)
+
+  @doc """
+  Creates a ndc_package.
+
+  ## Examples
+
+      iex> create_ndc_package(%{field: value})
+      {:ok, %Ndc_package{}}
+
+      iex> create_ndc_package(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_ndc_package(attrs \\ %{}) do
+    %Ndc_package{}
+    |> Ndc_package.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a ndc_package.
+
+  ## Examples
+
+      iex> update_ndc_package(ndc_package, %{field: new_value})
+      {:ok, %Ndc_package{}}
+
+      iex> update_ndc_package(ndc_package, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_ndc_package(%Ndc_package{} = ndc_package, attrs) do
+    ndc_package
+    |> Ndc_package.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a ndc_package.
+
+  ## Examples
+
+      iex> delete_ndc_package(ndc_package)
+      {:ok, %Ndc_package{}}
+
+      iex> delete_ndc_package(ndc_package)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_ndc_package(%Ndc_package{} = ndc_package) do
+    Repo.delete(ndc_package)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking ndc_package changes.
+
+  ## Examples
+
+      iex> change_ndc_package(ndc_package)
+      %Ecto.Changeset{data: %Ndc_package{}}
+
+  """
+  def change_ndc_package(%Ndc_package{} = ndc_package, attrs \\ %{}) do
+    Ndc_package.changeset(ndc_package, attrs)
+  end
+##############################
+
+def show_ndc_packages_1(productndc) do
+
+  query =
+ from(
+   p in Ndc_package,
+   where: p.productndc == ^"#{productndc}",
+   select: [p.packagedescription],
+   order_by: [asc: p.productid]
+ )
+
+records= Repo.all(query)
+
+format_result =
+      Enum.map(records, fn item ->
+        str_item = List.to_string(item)
+        "<td>" <>
+          str_item <>
+          "</td>"
+      end)
+
+    l_format = List.to_string(format_result)
+
+    _form =
+      "<table class='table responsive hover stack table-scroll'>" <>
+        "<tr row medium-collapse large-collapse  style='background-color:#edf8e9;'>" <>
+        l_format <>
+        "</tr>" <>
+        "</table>"
+
+
+end
+#####################3
+
+def show_ndc_packages(productndc) do
+
+  query =
+ from(
+   p in Ndc_package,
+   where: p.productndc == ^"#{productndc}",
+   select: [p.packagedescription],
+   order_by: [asc: p.productid]
+ )
+
+records= Repo.all(query)
+
+format_result =
+      Enum.map(records, fn item ->
+        str_item = List.to_string(item)
+        "<span > " <>
+        "<i class='fa fa-caret-right' style='font-size:20px;color:#1b9e77;''></i>" <>
+        " " <>
+        str_item <>
+        "&nbsp;&nbsp;&nbsp;&nbsp;" <>
+        "<br/>" <>
+        "</span>"
+
+      end)
+
+
+end
+
+#####################3
 end

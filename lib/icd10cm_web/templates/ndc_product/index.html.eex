@@ -46,34 +46,35 @@
 <table class= "table responsive hover stack table-scroll frame_1">
   <thead>
     <tr>
-    <th>Product Ndc</th>
      <th>Substance</th>
       <th>RouteName</th>
      <th>Strength</th>
       <th>Product Name</th>
-      <th>Propr Name / DEA</th>
+      <th>Propriatary Name / DEA</th>
        <th>Label</th>
-      <th></th>
+      <th>Packages</th>
+      <th>Show </th>
     </tr>
   </thead>
   <tbody>
 <%= for ndc_product <- @ndc_products do %>
     <tr>
-    <td>
-    
-    <%= ndc_product.productndc %>
-    
-    </td>
-    
      <td><%= ndc_product.substancename %></td>
     <td><%= ndc_product.routename %></td>
     <td><%= ndc_product.active_numerator_strength %></td>
       <td><%= ndc_product.producttypename%></td>
-      <td><%= ndc_product.proprietaryname %>
-      
-     <em> <%= ndc_product.deaschedule %> </em>
+    
+      <td>
+      <em> <%= ndc_product.proprietaryname %> </em>
+       <em> <%= ndc_product.deaschedule %> </em>
       </td>
+    
       <td><%= ndc_product.labelname %></td>
+      <td>
+       <span>
+      <%= raw  Codes.show_ndc_packages(ndc_product.productndc) %>
+       </span>
+       </td>  
       <td>
         <span><%= link "Show", to: Routes.ndc_product_path(@conn, :show, ndc_product),
          class: "button small expanded"

@@ -8,3 +8,4 @@ pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_
 pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_dev  -t icd10_pcses  > icd10_pcses_data.sql 
 pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_dev  -t icd10pcs_defs  > icd10pcs_defs_data.sql
 pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_dev  -t ndc_products  > ndc_products_data.sql
+pg_dump --attribute-inserts  --no-owner --data-only --no-privileges  -v icd10cm_dev  -t ndc_packages > ndc_packages_data.sql
