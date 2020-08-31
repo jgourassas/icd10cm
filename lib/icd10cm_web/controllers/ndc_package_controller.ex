@@ -24,7 +24,7 @@ defmodule Icd10cmWeb.Ndc_packageController do
       {:ok, ndc_package} ->
         conn
         |> put_flash(:info, "Ndc package created successfully.")
-        |> redirect(to: Routes.ndc_package_path(conn, :show, ndc_package))
+       # |> redirect(to: Routes.ndc_product_pack_path(conn, :show, ndc_package))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -49,7 +49,7 @@ defmodule Icd10cmWeb.Ndc_packageController do
       {:ok, ndc_package} ->
         conn
         |> put_flash(:info, "Ndc package updated successfully.")
-        |> redirect(to: Routes.ndc_package_path(conn, :show, ndc_package))
+        |> redirect(to: Routes.ndc_product_pack_path(conn, :show, ndc_package))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", ndc_package: ndc_package, changeset: changeset)
@@ -58,11 +58,11 @@ defmodule Icd10cmWeb.Ndc_packageController do
 
   def delete(conn, %{"id" => id}) do
     ndc_package = Codes.get_ndc_package!(id)
-    {:ok, _ndc_package} = Codes.delete_ndc_package(ndc_package)
+    #{:ok, _ndc_package} = Codes.delete_ndc_package(,ndc_package)
 
     conn
     |> put_flash(:info, "Ndc package deleted successfully.")
-    |> redirect(to: Routes.ndc_package_path(conn, :index))
+    #|> redirect(to: Routes.ndc_product_pack_path(conn, :index))
   end
 ###############################333
 def assign_ndc_products(conn, _opts) do
@@ -74,7 +74,7 @@ def assign_ndc_products(conn, _opts) do
         #IO.puts("---------------------------------------------------------" )
         #IO.inspect ndc_product
           assign(conn, :ndc_product, ndc_product)
-      end 
+      end
 
     _ ->
       conn

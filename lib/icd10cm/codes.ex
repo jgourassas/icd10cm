@@ -20,20 +20,6 @@ defmodule Icd10cm.Codes do
 
   """
 
-  @doc """
-  Gets a single icd10clinical.
-
-  Raises `Ecto.NoResultsError` if the Icd10clinical does not exist.
-
-  ## Examples
-
-      iex> get_icd10clinical!(123)
-      %Icd10clinical{}
-
-      iex> get_icd10clinical!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_icd10clinical!(id), do: Repo.get!(Icd10clinical, id)
 
   @doc """
@@ -111,8 +97,34 @@ defmodule Icd10cm.Codes do
       |> order_by([p], [p.icd10cm_code_2])
   end
 
-  ########################### 3
+  ###########################
   def format_column(text) do
+    result = String.split(text, "^")
+
+    corrected = List.delete_at(result, 0)
+
+   format_result =
+      Enum.map(corrected, fn item ->
+
+        "<li>" <>
+        "<i class= 'fa  fa-chevron-right' style='color:#377eb8;margin-top:5px;'' ></i> " <>
+          item <>
+          "</li>"
+      end)
+
+   l_format = List.to_string(format_result)
+    _form =
+      "<ul class='no-bullet'>" <>
+       l_format <>
+       "</ul>"
+
+
+
+      end
+
+  #################
+ ################################
+  def format_column_2(text) do
     result = String.split(text, "^")
 
     corrected = List.delete_at(result, 0)
@@ -189,7 +201,7 @@ defmodule Icd10cm.Codes do
       )
 
     res = Repo.all(query)
-    str_split = List.to_string(res)
+    _str_split = List.to_string(res)
   end
 
   ######################
@@ -232,7 +244,7 @@ defmodule Icd10cm.Codes do
       )
 
     res = Repo.all(query)
-    str_split = List.to_string(res)
+    _str_split = List.to_string(res)
   end
 
   #########################
@@ -644,7 +656,7 @@ defmodule Icd10cm.Codes do
 
   ##########################################
   def search_icd10cm_eindex_title(title) do
-    query =
+    _query =
       from(
         p in Icd10cm_eindex,
         where: ilike(p.title, ^"#{title}%"),
@@ -690,7 +702,7 @@ defmodule Icd10cm.Codes do
       main_see_tab = Enum.map(l, fn x -> x["main_see_tab"] end)
       main_use_probe = Enum.map(l, fn x -> x["main_use"] end)
 
-      formated =
+      _formated =
         "main title " <>
           "#{main_title}" <>
           "main_code " <>
@@ -1713,7 +1725,7 @@ defmodule Icd10cm.Codes do
   end
 ###################################3
  ###################################
-defp inspect_data(data) do
+def inspect_data(data) do
   IO.inspect(data, limit: :infinity, pretty: :true,
     syntax_colors: [number: :white, atom: :cyan, tuple: :yellow, map: :yellow, list: :green ],
     width: 0)
@@ -2090,7 +2102,7 @@ def show_ndc_packages(productndc) do
 
 records= Repo.all(query)
 
-format_result =
+_format_result =
       Enum.map(records, fn item ->
         str_item = List.to_string(item)
         "<span > " <>
