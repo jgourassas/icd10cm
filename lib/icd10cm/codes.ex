@@ -1171,7 +1171,7 @@ defmodule Icd10cm.Codes do
   end
 
   ####################### 3
-  def search_ctds_definitions(orders_long_description) do
+  def search_ctds_definitions(_orders_long_description) do
     # defs = from(
     #  d in Ctd,
     #  where: fragment("(?) @@ plainto_tsquery(?)", d.diseasename, ^"#{orders_long_description}"),
@@ -1969,7 +1969,7 @@ end
       [%Ndc_package{}, ...]
 
   """
-  def list_ndc_packages(conn) do
+  def list_ndc_packages(_conn) do
    # Repo.all(Ecto.assoc(conn.assigns[:ndc_product], :ndc_packages))
 
     #Repo.all(Ndc_package)

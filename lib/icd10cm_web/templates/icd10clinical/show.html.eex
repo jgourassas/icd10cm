@@ -2,16 +2,21 @@
 <div class="title_form">
 <h4>Show Icd-10-CM Clinical </h4>
 </div>
-<ul  class = "no-bullet">
+
+
 
 <div class= "row">
 
 <div class="columns small-2 large-6 frame_1"> 
 
+<ul  class = "no-bullet">
+
 <li class="element_info ">
     <strong>Icd10cm code:</strong>
     <%= @icd10clinical.icd10cm_code_2 %>
   </li>
+
+
 <li>
        <% code_2 = @icd10clinical.icd10cm_code_2 %>
       <%   Codes.create_qr(code_2) %>
@@ -107,5 +112,6 @@
 
 </div><!----RIGTH  COLLUM--------------------------->
 </div><!-----row--------------------->
-<span><%= link "ICD10-Clinicals", to: Routes.icd10clinical_path(@conn, :index),
-  class: " primary button expanded"%></span>
+
+<span><%= link "To ICD10-Clinicals List", to: Routes.icd10clinical_path(@conn, :index),
+  class: " primary large button expanded"%></span>
