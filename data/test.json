@@ -1,13 +1,3 @@
-[
-  {"name":"Andy Hunt",
-   "title":"Big Boss",
-   "age": 68,
-   "bonus": true
-  },
-  {"name":"Charles Mack",
-   "title":"Jr Dev",
-   "age":24,
-   "bonus": false
-  }
- ]
- 
+version https://git-lfs.github.com/spec/v1
+oid sha256:b003280d135af9472dbebb3668d71054557725398308393f22ac08fb6fb315c3
+size 170
