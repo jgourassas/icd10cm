@@ -12,9 +12,10 @@
 
 We take no father responsibility. The software is provided as it is. Expect changes in The frontend interface, Bugs and  maybe not very long term support (due to C20 )
 
+Before Download: get git-lfs for your system
 
 To start your Phoenix server:
-
+  * In assets dir npm install
   * Setup the project with `mix setup`
   * Please Find out how to setup the data files (Are Located in data dir)
   * Start Phoenix endpoint with `mix phx.server`

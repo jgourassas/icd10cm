@@ -1,68 +1,68 @@
 <div class="top-bar">
 
-<div class="top-bar-title">
+  <div class="top-bar-title">
     <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
-     <button class="menu-icon dark" type="button" data-toggle></button>
+      <button class="menu-icon dark" type="button" data-toggle></button>
     </span>
     <strong>ICD-10</strong>
   </div>
 
-<ul class="vertical medium-horizontal menu" data-responsive-menu="drilldown medium-dropdown">
-   <li><a href="/">Home</a></li>
-
-  <li>
-    <a href="#">ICD-10-CM</a>
-    <ul class="vertical menu">
-      
-        <ul class="vertical menu">
+  <ul class="vertical medium-horizontal menu" data-responsive-menu="drilldown medium-dropdown">
+    <li><a href="/">Home</a></li>
 
     <li>
-                     <%= link "ICD10-Clinicals",  to: Routes.icd10clinical_path(@conn, :index) %>
-                    </li>
-                    
-                    <li>
-                     <%= link "ICD10-Neoplasms",  to: Routes.icd10cm_neoplasm_path(@conn, :index) %>
-                     </li>
-                     <li>
-                        <%= link "ICD10-CM Drugs",  to: Routes.icd10cm_dindex_path(@conn, :index) %>
-                     </li>
-                     <li>
-                        <%= link "ICD10-External Injuries",  to: Routes.icd10cm_eindex_path(@conn, :index) %>
-                     </li>
-                     <li>
-                        <%= link "ICD-10-CM Ordered List",  
-                        to: Routes.icd10cm_order_path(@conn, :index) %>
-                     </li>
-                     <li>
-                        <%= link "ICD-10-CM GRAPHICAL",  
-                        to: Routes.icd10cm_tree_path(@conn, :index) %>
-                     </li>
-                  
-        </ul>
-      
-      </ul>
-  </li>
-  <li>
-    <a href="#">ICD-10-PCS</a>
-    <ul class="vertical menu">
+      <a href="#">ICD-10-CM</a>
+      <ul class="vertical menu">
 
-       <li> 
-        <%= link "ICD-10-PCS", to: Routes.pcs_path(@conn, :index) %>
-         
-         <li> 
-        <%= link "ICD-10-PCS Definitions", to: Routes.pcs_defs_path(@conn, :index) %>
-       </li>
-       
-       </li>
-    </ul>
+        <ul class="vertical menu">
+
+          <li>
+            <%= link "ICD10-Clinicals",  to: Routes.icd10clinical_path(@conn, :index) %>
+          </li>
+
+          <li>
+            <%= link "ICD10-Neoplasms",  to: Routes.icd10cm_neoplasm_path(@conn, :index) %>
+          </li>
+          <li>
+            <%= link "ICD10-CM Drugs",  to: Routes.icd10cm_dindex_path(@conn, :index) %>
+          </li>
+          <li>
+            <%= link "ICD10-External Injuries",  to: Routes.icd10cm_eindex_path(@conn, :index) %>
+          </li>
+          <li>
+            <%= link "ICD-10-CM Ordered List",  
+                        to: Routes.icd10cm_order_path(@conn, :index) %>
+          </li>
+          <li>
+            <%= link "ICD-10-CM GRAPHICAL",  
+                        to: Routes.icd10cm_tree_path(@conn, :index) %>
+          </li>
+
+        </ul>
+
+      </ul>
+    </li>
+    <li>
+      <a href="#">ICD-10-PCS</a>
+      <ul class="vertical menu">
+
+        <li>
+          <%= link "ICD-10-PCS", to: Routes.pcs_path(@conn, :index) %>
+
+        <li>
+          <%= link "ICD-10-PCS Definitions", to: Routes.pcs_defs_path(@conn, :index) %>
+        </li>
+
+    </li>
+  </ul>
   </li>
- 
- <li>
+
+  <li>
     <a href="#">NDC - Drugs</a>
     <ul class="vertical menu">
-     <li>
-     <span><%= link "NCD - Drugs", to: Routes.ndc_product_path(@conn, :index) %></span>
-     </li>
+      <li>
+        <span><%= link "NCD - Drugs", to: Routes.ndc_product_path(@conn, :index) %></span>
+      </li>
 
     </ul>
   </li>
@@ -70,15 +70,15 @@
   <li>
     <a href="#">Utilities</a>
     <ul class="vertical menu">
-     <li>
-     <%= link "For Synonyms. Comparative Toxicogenomics Database",  to: Routes.ctd_path(@conn, :index) %>
-     </li>
+      <li>
+        <%= link "For Synonyms. Comparative Toxicogenomics Database",  to: Routes.ctd_path(@conn, :index) %>
+      </li>
 
     </ul>
   </li>
-  
- 
-<!------
+
+
+  <!------
   <li>
     <a href="#">Utilities</a>
     <ul class="vertical menu">
@@ -87,14 +87,15 @@
     </ul>
   </li>
   -->
-</ul>
+  </ul>
 
- 
 
-</div><!----class top-bar-------------------------------->
+
+</div>
+<!----class top-bar-------------------------------->
 <script>
-     // $(document).ready(function() {
-     //   console.log("jQuery is working");
-    //  });
-   //   $(document).foundation();
-    </script>
+  // $(document).ready(function() {
+  //   console.log("jQuery is working");
+  //  });
+  //   $(document).foundation();
+</script>

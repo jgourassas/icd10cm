@@ -5,7 +5,7 @@ defmodule Icd10cm.MixProject do
     [
       app: :icd10cm,
       version: "0.1.0",
-      elixir: "~> 1.11.2",
+      elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -36,7 +36,7 @@ defmodule Icd10cm.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.9", override: true},
+      {:phoenix, "~> 1.5.1", override: true},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
@@ -52,13 +52,11 @@ defmodule Icd10cm.MixProject do
       {:scrivener_html, "~> 1.8.1", override: true},
       {:scrivener_headers, "~> 3.1.1", override: true},
       {:scrivener_list, "~> 2.0"},
-      #{:qr_code, "~> 2.1.0"},
-      {:qr_code, "~> 2.2"},
-      #{:phoenix_inline_svg, "~> 1.3"},
-      {:phoenix_inline_svg, "~> 1.4"},
+      {:qr_code, "~> 2.1.0"},
+      {:phoenix_inline_svg, "~> 1.3"},
       #{:rose_tree, "~> 0.2.0"},
       {:bunt, "~> 0.2.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.3"}
       #{:plug_cowboy, "~> 2.0"}
     ]
   end

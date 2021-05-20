@@ -1,40 +1,41 @@
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-     <title>ICD10!</title>
-    <meta name="description" content="">
-    <meta name="author" content="John Gourassas">
-    <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
-  </head>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ICD10!</title>
+  <meta name="description" content="">
+  <meta name="author" content="John Gourassas">
+  <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
+</head>
 
 
 
-  <body>
-    <header>
-      <section class="container">
-        
-        <%= render "navigation.html", conn: @conn %>
-  
-        </section>
-        <div class="separator">
-    </header>
-    
-     <main role="main" class="section">
+<body>
+  <header>
+    <section class="container">
 
-      <%= unless is_nil(get_flash(@conn, :info)) do %>
+      <%= render "navigation.html", conn: @conn %>
+
+    </section>
+    <div class="separator">
+  </header>
+
+  <main role="main" class="section">
+
+    <%= unless is_nil(get_flash(@conn, :info)) do %>
     <div class="notification is-info" role="alert"><%= get_flash(@conn, :info) %></div>
-  <% end %>
+    <% end %>
 
-  <%= unless is_nil(get_flash(@conn, :error)) do %>
+    <%= unless is_nil(get_flash(@conn, :error)) do %>
     <div class="notification is-danger" role="alert"><%= get_flash(@conn, :error) %></div>
-  <% end %>
-     <%= @inner_content %>
+    <% end %>
+    <%= @inner_content %>
 
   </main>
-  
-  </body>
+
+</body>
 
 <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
 
@@ -42,12 +43,13 @@
 
 
 <div class="footer">
-   <span> <i class="fa fa-check">  By old J. Gkourasas   &nbsp;&nbsp;</i>
-    </span>
-</div><!-----footer-------------------------->
+  <span> <i class="fa fa-check"> By old M.D  J. Gkourasas &nbsp;&nbsp;</i>
+  </span>
+</div>
+<!-----footer-------------------------->
 
 </html>
 
 <script type="text/javascript">
-  window.csrf_token = <%= raw Poison.encode!(Plug.CSRFProtection.get_csrf_token()) %>;
+  window.csrf_token = < %= raw Poison.encode!(Plug.CSRFProtection.get_csrf_token()) % > ;
 </script>

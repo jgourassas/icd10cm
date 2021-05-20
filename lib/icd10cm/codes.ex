@@ -1,4 +1,3 @@
-
 defmodule Icd10cm.Codes do
   @moduledoc """
   The Codes context.
@@ -89,8 +88,8 @@ defmodule Icd10cm.Codes do
 
   def list_icd10clinicals(_params) do
     ####### ugly to make json file in data dir ######################
-    #make_icd10cm_json()
-    #It was imposible to do it
+    # make_icd10cm_json()
+    # It was imposible to do it
     ##############################
     _page =
       Icd10clinical
@@ -103,27 +102,24 @@ defmodule Icd10cm.Codes do
 
     corrected = List.delete_at(result, 0)
 
-   format_result =
+    format_result =
       Enum.map(corrected, fn item ->
-
         "<li>" <>
-        "<i class= 'fa  fa-chevron-right' style='color:#377eb8;margin-top:5px;'' ></i> " <>
+          "<i class= 'fa  fa-chevron-right' style='color:#377eb8;margin-top:5px;'' ></i> " <>
           item <>
           "</li>"
       end)
 
-   l_format = List.to_string(format_result)
+    l_format = List.to_string(format_result)
+
     _form =
       "<ul class='no-bullet'>" <>
-       l_format <>
-       "</ul>"
-
-
-
-      end
+        l_format <>
+        "</ul>"
+  end
 
   #################
- ################################
+  ################################
   def format_column_2(text) do
     result = String.split(text, "^")
 
@@ -509,16 +505,17 @@ defmodule Icd10cm.Codes do
 
   ####################
   def search_icd10cm_neoplasms_primary_code(query) do
-
-   #SELECT * FROM icd10cm_neoplasms WHERE main_term  -> '0.term_cell_l.0.cell_code' = 'C19'
-   code_q =
+    # SELECT * FROM icd10cm_neoplasms WHERE main_term  -> '0.term_cell_l.0.cell_code' = 'C19'
+    code_q =
       from p in Icd10cm_neoplasm,
         order_by: [asc: p.title],
         where: fragment("? -> ? =  ?  ", p.main_term, "0.term_cell_l.0.cell_code", ^"#{query}"),
         limit: 10
-      Repo.all(code_q)
+
+    Repo.all(code_q)
   end
-################################
+
+  ################################
   def search_icd10cm_neoplasms_title(query) do
     _title_q =
       from p in Icd10cm_neoplasm,
@@ -1716,115 +1713,117 @@ defmodule Icd10cm.Codes do
 
   def update_object(obj, new_data) do
     obj = obj ++ new_data
-     obj
+    obj
   end
 
   def get_object(obj) do
-    #IO.inspect(obj)
+    # IO.inspect(obj)
     obj
   end
-###################################3
- ###################################
-def inspect_data(data) do
-  IO.inspect(data, limit: :infinity, pretty: :true,
-    syntax_colors: [number: :white, atom: :cyan, tuple: :yellow, map: :yellow, list: :green ],
-    width: 0)
-end
 
-
-
-#######################
-def create_qr(code) do
-  #qr_settings = %QRCode.SvgSettings{qrcode_color: {17, 170, 136}}
-  qr_settings = %QRCode.SvgSettings{qrcode_color: "#000000"}
-
-
-  code
-  |> QRCode.create()
-  |> Result.and_then(&QRCode.Svg.save_as(&1,"priv/static/svg/generic/" <> code <> ".svg", qr_settings))
-  {:ok, "priv/static/svg/generic/"  <> code <> ".svg"}
-
-
-end
-#########################
-def file_existance(file) do
-  exists = File.exists?(file)
-  case exists do
-    true ->
-      colorize_text("info", " Thx. File was found and Loaded. ")
-      File.stream!(file)
-    false ->
-      colorize_text("nofound", "--- Sorry File Not Found  ---" )
-
-    _ ->
-      colorize_text("nofound", "No Input text")
+  ################################### 3
+  ###################################
+  def inspect_data(data) do
+    IO.inspect(data,
+      limit: :infinity,
+      pretty: true,
+      syntax_colors: [number: :white, atom: :cyan, tuple: :yellow, map: :yellow, list: :green],
+      width: 0
+    )
   end
 
-end
-###############################
-def colorize_text(flag, text) do
-  case flag do
-    "warn" ->
-      [:white, " #{text} "]
-      |> Bunt.puts
+  #######################
+  def create_qr(code) do
+    # qr_settings = %QRCode.SvgSettings{qrcode_color: {17, 170, 136}}
+    qr_settings = %QRCode.SvgSettings{qrcode_color: "#000000"}
 
-    "info" ->
-      [:cyan, " #{text} "]
-      |> Bunt.puts
+    code
+    |> QRCode.create()
+    |> Result.and_then(
+      &QRCode.Svg.save_as(&1, "priv/static/svg/generic/" <> code <> ".svg", qr_settings)
+    )
 
-
-    "nofound" ->
-      [:red, "  #{text} "]
-      |> Bunt.puts
-
-    "alert" ->
-      [:red, " #{text} "]
-      |> Bunt.puts
-
-    #"default" ->
-    #  [:black,  "\t #{text} "]
-    #  |> Bunt.puts
-
-    "default" ->
-      #[:color244,  " #{text} "]
-      [:color230,  " #{text} "]
-      |> Bunt.puts
-
-
-    "default_write" ->
-      [:color244,   " #{text} "]
-      |> Bunt.write
-
-    "success" ->
-      [:darkgreen, " #{text} "]
-      |> Bunt.puts
-
-    "success_write" ->
-      [:darkgreen, " #{text} "]
-      |> Bunt.write
-
-    "main_term" ->
-      [:color243,  " #{text} "]
-      |> Bunt.puts
-
-    "dash" ->
-      [:color27,  " #{text} "]
-      |> Bunt.puts
-
-    "main_term_write" ->
-      [:black,  " #{text} "]
-      |> Bunt.write
-
-    _ ->
-      [:red, "  #{text}  "]
-      |> Bunt.puts
-
+    {:ok, "priv/static/svg/generic/" <> code <> ".svg"}
   end
-end
-#######################
 
-######################
+  #########################
+  def file_existance(file) do
+    exists = File.exists?(file)
 
+    case exists do
+      true ->
+        colorize_text("info", " Thx. File was found and Loaded. ")
+        File.stream!(file)
+
+      false ->
+        colorize_text("nofound", "--- Sorry File Not Found  ---")
+
+      _ ->
+        colorize_text("nofound", "No Input text")
+    end
+  end
+
+  ###############################
+  def colorize_text(flag, text) do
+    case flag do
+      "warn" ->
+        [:white, " #{text} "]
+        |> Bunt.puts()
+
+      "info" ->
+        [:cyan, " #{text} "]
+        |> Bunt.puts()
+
+      "nofound" ->
+        [:red, "  #{text} "]
+        |> Bunt.puts()
+
+      "alert" ->
+        [:red, " #{text} "]
+        |> Bunt.puts()
+
+      # "default" ->
+      #  [:black,  "\t #{text} "]
+      #  |> Bunt.puts
+
+      "default" ->
+        # [:color244,  " #{text} "]
+        [:color230, " #{text} "]
+        |> Bunt.puts()
+
+      "default_write" ->
+        [:color244, " #{text} "]
+        |> Bunt.write()
+
+      "success" ->
+        [:darkgreen, " #{text} "]
+        |> Bunt.puts()
+
+      "success_write" ->
+        [:darkgreen, " #{text} "]
+        |> Bunt.write()
+
+      "main_term" ->
+        [:color243, " #{text} "]
+        |> Bunt.puts()
+
+      "dash" ->
+        [:color27, " #{text} "]
+        |> Bunt.puts()
+
+      "main_term_write" ->
+        [:black, " #{text} "]
+        |> Bunt.write()
+
+      _ ->
+        [:red, "  #{text}  "]
+        |> Bunt.puts()
+    end
+  end
+
+  #######################
+
+  ######################
 
   alias Icd10cm.Codes.Ndc_product
 
@@ -1838,11 +1837,11 @@ end
 
   """
   def list_ndc_products(_params) do
- _page =
- Ndc_product
- |> order_by([p], [p.substancename])
+    _page =
+      Ndc_product
+      |> order_by([p], [p.substancename])
 
- #Repo.all(Ndc_product)
+    # Repo.all(Ndc_product)
   end
 
   @doc """
@@ -1926,37 +1925,36 @@ end
     Ndc_product.changeset(ndc_product, attrs)
   end
 
- #####################################
- def search_ndc(query, selection) do
-  case selection do
-    "proprietaryname" -> search_ndc_proprietaryname(query)
-    "substancename" -> search_ndc_substancename(query)
-    _ -> ""
+  #####################################
+  def search_ndc(query, selection) do
+    case selection do
+      "proprietaryname" -> search_ndc_proprietaryname(query)
+      "substancename" -> search_ndc_substancename(query)
+      _ -> ""
+    end
   end
-end
- ########################################
-def search_ndc_proprietaryname(query) do
-_query =
-from(
-  p in Ndc_product,
-  where: fragment("(?) @@ plainto_tsquery(?)", p.proprietaryname, ^query),
-  order_by: [asc: p.proprietaryname]
-)
-end
- ###############################
- def search_ndc_substancename(query) do
-  _query =
-  from(
-    p in Ndc_product,
-    where: fragment("(?) @@ plainto_tsquery(?)", p.substancename, ^query),
-    order_by: [asc: p.substancename]
-  )
+
+  ########################################
+  def search_ndc_proprietaryname(query) do
+    _query =
+      from(
+        p in Ndc_product,
+        where: fragment("(?) @@ plainto_tsquery(?)", p.proprietaryname, ^query),
+        order_by: [asc: p.proprietaryname]
+      )
   end
-   ###############################
 
+  ###############################
+  def search_ndc_substancename(query) do
+    _query =
+      from(
+        p in Ndc_product,
+        where: fragment("(?) @@ plainto_tsquery(?)", p.substancename, ^query),
+        order_by: [asc: p.substancename]
+      )
+  end
 
-
-
+  ###############################
 
   alias Icd10cm.Codes.Ndc_package
 
@@ -1970,9 +1968,9 @@ end
 
   """
   def list_ndc_packages(_conn) do
-   # Repo.all(Ecto.assoc(conn.assigns[:ndc_product], :ndc_packages))
+    # Repo.all(Ecto.assoc(conn.assigns[:ndc_product], :ndc_packages))
 
-    #Repo.all(Ndc_package)
+    # Repo.all(Ndc_package)
   end
 
   @doc """
@@ -2055,23 +2053,24 @@ end
   def change_ndc_package(%Ndc_package{} = ndc_package, attrs \\ %{}) do
     Ndc_package.changeset(ndc_package, attrs)
   end
-##############################
 
-def show_ndc_packages_1(productndc) do
+  ##############################
 
-  query =
- from(
-   p in Ndc_package,
-   where: p.productndc == ^"#{productndc}",
-   select: [p.packagedescription],
-   order_by: [asc: p.productid]
- )
+  def show_ndc_packages_1(productndc) do
+    query =
+      from(
+        p in Ndc_package,
+        where: p.productndc == ^"#{productndc}",
+        select: [p.packagedescription],
+        order_by: [asc: p.productid]
+      )
 
-records= Repo.all(query)
+    records = Repo.all(query)
 
-format_result =
+    format_result =
       Enum.map(records, fn item ->
         str_item = List.to_string(item)
+
         "<td>" <>
           str_item <>
           "</td>"
@@ -2085,38 +2084,34 @@ format_result =
         l_format <>
         "</tr>" <>
         "</table>"
+  end
 
+  ##################### 3
 
-end
-#####################3
+  def show_ndc_packages(productndc) do
+    query =
+      from(
+        p in Ndc_package,
+        where: p.productndc == ^"#{productndc}",
+        select: [p.packagedescription],
+        order_by: [asc: p.productid]
+      )
 
-def show_ndc_packages(productndc) do
+    records = Repo.all(query)
 
-  query =
- from(
-   p in Ndc_package,
-   where: p.productndc == ^"#{productndc}",
-   select: [p.packagedescription],
-   order_by: [asc: p.productid]
- )
-
-records= Repo.all(query)
-
-_format_result =
+    _format_result =
       Enum.map(records, fn item ->
         str_item = List.to_string(item)
+
         "<span > " <>
-        "<i class='fa fa-caret-right' style='font-size:20px;color:#1b9e77;''></i>" <>
-        " " <>
-        str_item <>
-        "&nbsp;&nbsp;&nbsp;&nbsp;" <>
-        "<br/>" <>
-        "</span>"
-
+          "<i class='fa fa-caret-right' style='font-size:20px;color:#636363;''></i>" <>
+          " " <>
+          str_item <>
+          "&nbsp;&nbsp;&nbsp;&nbsp;" <>
+          "<br/>" <>
+          "</span>"
       end)
+  end
 
-
-end
-
-#####################3
+  ##################### 3
 end
