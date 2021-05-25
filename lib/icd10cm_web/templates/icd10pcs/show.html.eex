@@ -9,8 +9,10 @@
  <div class="columns small-2 large-6 frame_1"> 
  
   <li>
-    <strong>Order number:</strong>
-    <%= @icd10pcs.order_number %>
+    <strong>
+    Order number: <%= @icd10pcs.order_number %>
+  </strong>
+
   </li>
 
   
@@ -24,9 +26,9 @@
 <li>
  
       <% code_2 =  @icd10pcs.icd10pcs_code_2 %>
-      <%   Codes.create_qr(code_2) %>
+      <%#   Codes.create_qr(code_2) %>
     
-      <%=  PhoenixInlineSvg.Helpers.svg_image(@conn,  "#{code_2}", class: "qr_code") %>
+      <%#=  PhoenixInlineSvg.Helpers.svg_image(@conn,  "#{code_2}", class: "qr_code") %>
       
  </li>
  <li class ="title_form" >
@@ -126,5 +128,5 @@
 </ul>
 
 </div><!----row------------------------>
-<span><%= link "Back To PCS Index", 
-to: Routes.pcs_path(@conn, :index) ,  class: " primary button expanded" %></span>
+<span><%= link "Back To Procedural Codes  Index", 
+to: Routes.pcs_path(@conn, :index) ,  class: " large primary button expanded" %></span>

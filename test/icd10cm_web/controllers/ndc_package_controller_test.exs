@@ -3,9 +3,36 @@ defmodule Icd10cmWeb.Ndc_packageControllerTest do
 
   alias Icd10cm.Codes
 
-  @create_attrs %{endmarketingdate: "some endmarketingdate", ndc_exclude_flag: "some ndc_exclude_flag", ndcpackagecode: "some ndcpackagecode", packagedescription: "some packagedescription", productid: "some productid", productndc: "some productndc", sample_package: "some sample_package", startmarketingdate: "some startmarketingdate"}
-  @update_attrs %{endmarketingdate: "some updated endmarketingdate", ndc_exclude_flag: "some updated ndc_exclude_flag", ndcpackagecode: "some updated ndcpackagecode", packagedescription: "some updated packagedescription", productid: "some updated productid", productndc: "some updated productndc", sample_package: "some updated sample_package", startmarketingdate: "some updated startmarketingdate"}
-  @invalid_attrs %{endmarketingdate: nil, ndc_exclude_flag: nil, ndcpackagecode: nil, packagedescription: nil, productid: nil, productndc: nil, sample_package: nil, startmarketingdate: nil}
+  @create_attrs %{
+    endmarketingdate: "some endmarketingdate",
+    ndc_exclude_flag: "some ndc_exclude_flag",
+    ndcpackagecode: "some ndcpackagecode",
+    packagedescription: "some packagedescription",
+    productid: "some productid",
+    productndc: "some productndc",
+    sample_package: "some sample_package",
+    startmarketingdate: "some startmarketingdate"
+  }
+  @update_attrs %{
+    endmarketingdate: "some updated endmarketingdate",
+    ndc_exclude_flag: "some updated ndc_exclude_flag",
+    ndcpackagecode: "some updated ndcpackagecode",
+    packagedescription: "some updated packagedescription",
+    productid: "some updated productid",
+    productndc: "some updated productndc",
+    sample_package: "some updated sample_package",
+    startmarketingdate: "some updated startmarketingdate"
+  }
+  @invalid_attrs %{
+    endmarketingdate: nil,
+    ndc_exclude_flag: nil,
+    ndcpackagecode: nil,
+    packagedescription: nil,
+    productid: nil,
+    productndc: nil,
+    sample_package: nil,
+    startmarketingdate: nil
+  }
 
   def fixture(:ndc_package) do
     {:ok, ndc_package} = Codes.create_ndc_package(@create_attrs)
@@ -56,7 +83,9 @@ defmodule Icd10cmWeb.Ndc_packageControllerTest do
     setup [:create_ndc_package]
 
     test "redirects when data is valid", %{conn: conn, ndc_package: ndc_package} do
-      conn = put(conn, Routes.ndc_package_path(conn, :update, ndc_package), ndc_package: @update_attrs)
+      conn =
+        put(conn, Routes.ndc_package_path(conn, :update, ndc_package), ndc_package: @update_attrs)
+
       assert redirected_to(conn) == Routes.ndc_package_path(conn, :show, ndc_package)
 
       conn = get(conn, Routes.ndc_package_path(conn, :show, ndc_package))
@@ -64,7 +93,9 @@ defmodule Icd10cmWeb.Ndc_packageControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, ndc_package: ndc_package} do
-      conn = put(conn, Routes.ndc_package_path(conn, :update, ndc_package), ndc_package: @invalid_attrs)
+      conn =
+        put(conn, Routes.ndc_package_path(conn, :update, ndc_package), ndc_package: @invalid_attrs)
+
       assert html_response(conn, 200) =~ "Edit Ndc package"
     end
   end
@@ -75,6 +106,7 @@ defmodule Icd10cmWeb.Ndc_packageControllerTest do
     test "deletes chosen ndc_package", %{conn: conn, ndc_package: ndc_package} do
       conn = delete(conn, Routes.ndc_package_path(conn, :delete, ndc_package))
       assert redirected_to(conn) == Routes.ndc_package_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.ndc_package_path(conn, :show, ndc_package))
       end

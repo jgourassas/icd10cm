@@ -87,12 +87,13 @@ defmodule Icd10cm.Codes do
   end
 
   def list_icd10clinicals(_params) do
+
     ####### ugly to make json file in data dir ######################
     # make_icd10cm_json()
     # It was imposible to do it
     ##############################
     _page =
-      Icd10clinical
+     Icd10clinical
       |> order_by([p], [p.icd10cm_code_2])
   end
 
@@ -167,7 +168,8 @@ defmodule Icd10cm.Codes do
       from(
         p in Icd10clinical,
         where: fragment("(?) @@ plainto_tsquery(?)", p.chapter_description, ^query),
-        order_by: [asc: p.chapter_description]
+        order_by: [asc: p.chapter_description],
+        limit: 20
       )
   end
 
@@ -289,6 +291,7 @@ defmodule Icd10cm.Codes do
       d in Icd10clinical,
       where: fragment("(?) @@ plainto_tsquery(?)", d.long_description_tsv, ^query),
       or_where: ilike(d.long_description, ^"#{query}%"),
+      limit: 30,
       order_by: [asc: d.long_description]
     )
   end
@@ -1734,8 +1737,8 @@ defmodule Icd10cm.Codes do
 
   #######################
   def create_qr(code) do
-    # qr_settings = %QRCode.SvgSettings{qrcode_color: {17, 170, 136}}
-    qr_settings = %QRCode.SvgSettings{qrcode_color: "#000000"}
+    qr_settings = %QRCode.SvgSettings{qrcode_color: {17, 170, 136}}
+    # qr_settings = %QRCode.SvgSettings{qrcode_color: "#000000"}
 
     code
     |> QRCode.create()

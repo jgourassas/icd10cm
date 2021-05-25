@@ -6,11 +6,12 @@ defmodule Icd10cmWeb.Ndc_productController do
 
   def index(conn, params) do
     page =
-    Codes.list_ndc_products(params)
-    |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+      Codes.list_ndc_products(params)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
+
     render(conn, "index.html", ndc_products: page.entries, page: page)
-    #ndc_products = Codes.list_ndc_products()
-    #render(conn, "index.html", ndc_products: ndc_products)
+    # ndc_products = Codes.list_ndc_products()
+    # render(conn, "index.html", ndc_products: ndc_products)
   end
 
   def new(conn, _params) do
@@ -64,18 +65,19 @@ defmodule Icd10cmWeb.Ndc_productController do
     |> redirect(to: Routes.ndc_product_path(conn, :index))
   end
 
-#####################
-def search_ndc(
-  conn,
-  %{"search_ndc" => %{"query" => query, "selection" => selection}} = params
-) do
-trim_query = String.trim(query)
+  #####################
+  def search_ndc(
+        conn,
+        %{"search_ndc" => %{"query" => query, "selection" => selection}} = params
+      ) do
+    trim_query = String.trim(query)
 
-page =
-Icd10cm.Codes.search_ndc(trim_query, selection)
-|> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
+    page =
+      Icd10cm.Codes.search_ndc(trim_query, selection)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
 
-render(conn, "index.html", ndc_products: page.entries, page: page)
-end
-#########################
+    render(conn, "index.html", ndc_products: page.entries, page: page)
+  end
+
+  #########################
 end

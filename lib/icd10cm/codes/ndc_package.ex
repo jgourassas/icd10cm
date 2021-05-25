@@ -11,25 +11,26 @@ defmodule Icd10cm.Codes.Ndc_package do
     field :productndc, :string
     field :sample_package, :string
     field :startmarketingdate, :string
-    #field :ndc_pruduct_id, :integer
+    # field :ndc_pruduct_id, :integer
 
-
- 
-    #timestamps()
+    # timestamps()
   end
 
   @doc false
   def changeset(ndc_package, attrs) do
     ndc_package
-    |> cast(attrs, [:productid,
-    :productndc,
-    :ndcpackagecode,
-    :packagedescription,
-    :startmarketingdate,
-    :endmarketingdate,
-    :ndc_exclude_flag,
-   # :ndc_pruduct_id,
-    :sample_package])
-    #|> validate_required([:productid, :productndc, :ndcpackagecode, :packagedescription, :startmarketingdate, :endmarketingdate, :ndc_exclude_flag, :sample_package])
+    |> cast(attrs, [
+      :productid,
+      :productndc,
+      :ndcpackagecode,
+      :packagedescription,
+      :startmarketingdate,
+      :endmarketingdate,
+      :ndc_exclude_flag,
+      # :ndc_pruduct_id,
+      :sample_package
+    ])
+
+    # |> validate_required([:productid, :productndc, :ndcpackagecode, :packagedescription, :startmarketingdate, :endmarketingdate, :ndc_exclude_flag, :sample_package])
   end
 end

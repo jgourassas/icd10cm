@@ -16,15 +16,14 @@
     <%= @icd10clinical.icd10cm_code_2 %>
   </li>
 
-
+<!-------------------
 <li>
-       <% code_2 = @icd10clinical.icd10cm_code_2 %>
+  <% code_2 = @icd10clinical.icd10cm_code_2 %>
       <%   Codes.create_qr(code_2) %>
-  
       <%=  PhoenixInlineSvg.Helpers.svg_image(@conn,  "#{code_2}", class: "qr_code") %>
       
  </li>
-  
+ ---->
 
   <li class ="title_form">
      <%= @icd10clinical.long_description %>

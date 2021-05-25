@@ -6,18 +6,27 @@ import { Background_grid } from "../common/background_grid.js"
 
 var d3 = require("d3");
 
+let margin = {top: 30, right: 30, bottom: 50, left: 50},
+  width = 1100 - margin.left - margin.right,
+  height = 1526 - margin.top - margin.bottom;
 
-let margin = {
+/*
+  let margin = {
   top: 30,
   right: 20,
   bottom: 50,
   left: 50,
 }
 
-
+*/
+/*
 let width = 1100 - margin.left - margin.right;
 let height = 1526 - margin.top - margin.bottom;
 let barHeight = 24;
+
+*/
+let barHeight = 24;
+
 let barWidth = (width - margin.left - margin.right) * 0.9;
 
 let icd10cm_duration = 500;
@@ -34,8 +43,9 @@ let opacity_high = 0.8;
 let opacity_very_high = 1;
 
 var treemap = d3.tree()
-  .size([height, 160])
-//.nodeSize([0, 28]);
+    .size([height, 160])
+
+  //.nodeSize([0, 28]);
 /*
 let tree = data => {
   const root = d3.hierarchy(data);
@@ -116,9 +126,9 @@ let traverse_tree = (value) => {
   
 
   my_nodes.forEach(function (d) {
-   // console.log("my nodes ---> " + d.data.code);
+    //console.log("my nodes ---> " + d.data.code);
     if (d.data.code == value) {
-        console.log(d.data.code);
+       // console.log(d.data.code);
       //  display_message((20+(unit_size*1)),((icd10pcs_as_force_h/6) + unit_size*9 ),d.name)
       console.log(d.data.name)
       //click(d);
@@ -137,20 +147,24 @@ let get_data = (vis) => {
     data: {
       input: field,
     }, //
-    beforeSend: function (xhr) {
+    beforeSend: function(xhr) {
       xhr.setRequestHeader("X-CSRF-Token", window.csrf_token);
     },
     dataType: 'json',
     error: function () {
       console.log('error!');
     }
+
   });
 
   request.done(function (json_data) {
-
     let json_data_hierarchy = d3.hierarchy(json_data, function (d) {
-      return d.children
+     //console.log(d.data.children);
+      //return d.children
+      return d.children;
+
     });
+
 
     /////////////////////    
     vis_icd10cm = vis;
@@ -398,6 +412,7 @@ class Draw {
 
 class Set_sketch {
   constructor() { }
+
   svg() {
     let container = d3.select('#icd10cm_tree_draw_area');
     let svg = container.append('svg');
@@ -406,7 +421,7 @@ class Set_sketch {
     svg.attr('class', 'main_svg');
     svg.attr({
       width: '100%',
-      height: '95$%',
+      height: '95%',
     });
     svg.attr("viewBox", "0 0 " + width + " " + height);
     svg.attr('preserveAspectRatio', 'xMidYMid meet');
@@ -415,7 +430,7 @@ class Set_sketch {
     svg.style('margin-right', '0%');
     svg.style('margin-top', '0%');
     svg.style('margin-bottom', '0%');
-    svg.style('background-color', '#000');
+    svg.style('background-color', '#5e3c99');
     svg.attr("pointer-events", "all")
     svg.style('cursor', 'move');
     svg.style('shape-rendering', 'crispEdges');
@@ -424,13 +439,22 @@ class Set_sketch {
     return svg;
   } //svg
 
+ 
+
+ // const zoom = d3.zoom()
+  //  .on('zoom', (event) => {
+  //    map.attr('transform', event.transform);
+  //  })
+
   zoom() {
-    let a_zoom = d3.zoom().on('zoom', function () {
+    let a_zoom = d3.zoom().on('zoom', function (event) {
       let svg_vis = d3.select('#svg_vis');
-      svg_vis.attr('transform', d3.event.transform);
+          //svg_vis.attr('transform', d3.event.transform);
+          svg_vis.attr('transform', event.transform );
     });
-    return a_zoom;
+     return a_zoom;
   } //zoom
+
 
   vis() {
     let svg_vis = this.svg();

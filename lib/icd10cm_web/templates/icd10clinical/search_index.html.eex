@@ -1,55 +1,8 @@
 <% alias Icd10cm.Codes %>
 <% alias Icd10cm.Repo %>
-<%# alias Icd10cmWeb.Router.Helpers%>
 <% import PhoenixInlineSvg.Helpers %>
 
-<div class="element_info"><h5>ICD-10-CM CLINICAL</h5> </div>
-
-
-  
- <div class="search_form">
-
- <div class="large-6 medium-6 small-6 large-centered columns">
-    <ul class="has-form">
-
-               <%= form_for @conn, Routes.icd10clinical_path(@conn, :search_clinicals),
-                   [as: :search_clinicals], fn f -> %>
-            <div class="row collapse">
-           
-                <div class="large-4 small-9 columns">
-                    <%=  select(f, :selection,
-                        ["Codes": "codes",
-                          "Long Description": "long_desc",
-                          "Chapter Description": "chapter"
-                        ],
-                        prompt: "---Select---",   required: true,
-                        class: "form-control f-dropdown"  ) %>
-                </div><!--large-8 small-9 columns-->
-
-                <div class="large-6 medium-6 small-9 columns">
-                    <%= text_input f, :query, placeholder: "Type Your Query",
-                    class: "form-control ",
-                    minLength: 3 %>
-                </div><!--large-8 small-9 columns-->
-
-                <div class="large-2 small-9 columns">
-                    <%= submit "Search", class: "button primary expanded"  %>
-
-                </div><!--large-4 small-9 columns-->
-
-
-            </div><!--row collapse-->
-
-
-    <% end %>
-             </ul>
-
-      </div><!-- small-6 large-centered columns -->
-
-      </div><!------searchform----------------------------->
-
-
-
+<div class="element_info"><h5>ICD-10-CM CLINICAL SEARCH RESULTS</h5> </div>
  <table class="table responsive  stack table-scroll frame_1" >
 
   <thead>
@@ -281,10 +234,9 @@
 </table>
 </div><!-------table container---------------->
 
-<div class="pagination text-center" role="navigation" aria-label="Pagination">
- <%#= pagination_links @conn, @page,  next: "Next", previous: "Prev" %>
 
-<span>
+<div class="pagination text-center" role="navigation" aria-label="Pagination">
+         <span>
   <%= link "Prev Page",
       class: "large primary button expanded",
       disabled: @page.page_number < 2,
@@ -297,18 +249,5 @@
       disabled: @page.page_number >= @page.total_pages,
       to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number + 1) %>
 </span>
-  </div>
-
-<!--------------
-  <div class="pagination text-center" role="navigation" aria-label="Pagination">
-         <%#= pagination_links @conn, @page,  next: "Next", previous: "Prev" %>
+         <%= pagination_links @conn, @page,  next: "Next", previous: "Prev" %>
     </div>
-
------>
-
-</div>
-
-</div>
-
-</div>
-

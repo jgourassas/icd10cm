@@ -1,6 +1,6 @@
 defmodule Icd10cmWeb.Icd10cm_treeController do
   use Icd10cmWeb, :controller
-  #alias Icd10cm.Codes
+  # alias Icd10cm.Codes
 
   def index(conn, params) do
     # info_coronary_id = params["info_coronary_id"]
@@ -9,8 +9,10 @@ defmodule Icd10cmWeb.Icd10cm_treeController do
 
   ##########################
   def get_icd10cm_clinicals_json(conn, %{"input" => input}) do
-   #results =  Icd10cm.Codes.get_json('data/icd10cm_clinicals.json')
+    # results =  Icd10cm.Codes.get_json('data/icd10cm_clinicals.json')
     results = Icd10cm.Codes.get_json('data/icd10cm_2013.json')
+    # results = Icd10cm.Codes.get_json('data/flare.json')
+
     text(conn, results)
   end
 

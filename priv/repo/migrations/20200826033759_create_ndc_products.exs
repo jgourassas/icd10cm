@@ -24,8 +24,7 @@ defmodule Icd10cm.Repo.Migrations.CreateNdcProducts do
       add :ndc_exlude_flag, :text
       add :listing_record_certified_through, :text
 
-      #timestamps()
+      # timestamps()
     end
-
   end
 end

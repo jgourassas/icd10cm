@@ -21,6 +21,7 @@ defmodule Icd10cmWeb.Router do
     get "/page", PageController, :index, as: :pages
 
     post("/icd10clinicals/search_clinicals", Icd10clinicalController, :search_clinicals)
+    #resources("/icd10clinicals/search_clinicals", Icd10clinicalController, :search_clinicals)
     resources("/icd10clinicals", Icd10clinicalController)
     resources("/icd10cm_neoplasms", Icd10cm_neoplasmController)
     post("/icd10cm_neoplasms/search_neoplasms", Icd10cm_neoplasmController, :search_neoplasms)
@@ -37,12 +38,12 @@ defmodule Icd10cmWeb.Router do
     resources("/icd10pcs_defs", Icd10pcs_defsController, as: :pcs_defs)
     post("/icd10pcs_defs/search_pcs_defs", Icd10pcs_defsController, :search_pcs_defs)
     resources("/Icd10cm_tree", Icd10cm_treeController, as: :icd10cm_tree)
-    resources( "/ndc_products", Ndc_productController) do
-      resources( "/ndc_packages", Ndc_packageController, as: :pack)
-    end
- 
-    post("/ndc_products/search_ndc", Ndc_productController, :search_ndc)
 
+    resources("/ndc_products", Ndc_productController) do
+      resources("/ndc_packages", Ndc_packageController, as: :pack)
+    end
+
+    post("/ndc_products/search_ndc", Ndc_productController, :search_ndc)
 
     post(
       "/icd10cm_tree/get_icd10cm_clinicals_json",

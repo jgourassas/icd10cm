@@ -17,7 +17,8 @@
         <ul class="vertical menu">
 
           <li>
-            <%= link "ICD10-Clinicals",  to: Routes.icd10clinical_path(@conn, :index) %>
+            <%= link "ICD10-Clinicals",  
+                 to: Routes.icd10clinical_path(@conn, :index) %>
           </li>
 
           <li>

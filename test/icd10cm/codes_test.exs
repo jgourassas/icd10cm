@@ -969,9 +969,72 @@ defmodule Icd10cm.CodesTest do
   describe "ndc_products" do
     alias Icd10cm.Codes.Ndc_product
 
-    @valid_attrs %{ACTIVE_INGRED_UNIT: "some ACTIVE_INGRED_UNIT", ACTIVE_NUMERATOR_STRENGTH: "some ACTIVE_NUMERATOR_STRENGTH", APPLICATIONNUMBER: "some APPLICATIONNUMBER", DEASCHEDULE: "some DEASCHEDULE", DOSAGEFORMNAME: "some DOSAGEFORMNAME", ENDMARKETINGDATE: "some ENDMARKETINGDATE", LABELERNAME: "some LABELERNAME", LISTING_RECORD_CERTIFIED_THROUGH: "some LISTING_RECORD_CERTIFIED_THROUGH", MARKETINGCATEGORYNAME: "some MARKETINGCATEGORYNAME", NDC_EXCLUDE_FLAG: "some NDC_EXCLUDE_FLAG", NONPROPRIETARYNAME: "some NONPROPRIETARYNAME", PHARM_CLASSES: "some PHARM_CLASSES", PRODUCTID: "some PRODUCTID", PRODUCTNDC: "some PRODUCTNDC", PRODUCTTYPENAME: "some PRODUCTTYPENAME", PROPRIETARYNAME: "some PROPRIETARYNAME", PROPRIETARYNAMESUFFIX: "some PROPRIETARYNAMESUFFIX", ROUTENAME: "some ROUTENAME", STARTMARKETINGDATE: "some STARTMARKETINGDATE", SUBSTANCENAME: "some SUBSTANCENAME"}
-    @update_attrs %{ACTIVE_INGRED_UNIT: "some updated ACTIVE_INGRED_UNIT", ACTIVE_NUMERATOR_STRENGTH: "some updated ACTIVE_NUMERATOR_STRENGTH", APPLICATIONNUMBER: "some updated APPLICATIONNUMBER", DEASCHEDULE: "some updated DEASCHEDULE", DOSAGEFORMNAME: "some updated DOSAGEFORMNAME", ENDMARKETINGDATE: "some updated ENDMARKETINGDATE", LABELERNAME: "some updated LABELERNAME", LISTING_RECORD_CERTIFIED_THROUGH: "some updated LISTING_RECORD_CERTIFIED_THROUGH", MARKETINGCATEGORYNAME: "some updated MARKETINGCATEGORYNAME", NDC_EXCLUDE_FLAG: "some updated NDC_EXCLUDE_FLAG", NONPROPRIETARYNAME: "some updated NONPROPRIETARYNAME", PHARM_CLASSES: "some updated PHARM_CLASSES", PRODUCTID: "some updated PRODUCTID", PRODUCTNDC: "some updated PRODUCTNDC", PRODUCTTYPENAME: "some updated PRODUCTTYPENAME", PROPRIETARYNAME: "some updated PROPRIETARYNAME", PROPRIETARYNAMESUFFIX: "some updated PROPRIETARYNAMESUFFIX", ROUTENAME: "some updated ROUTENAME", STARTMARKETINGDATE: "some updated STARTMARKETINGDATE", SUBSTANCENAME: "some updated SUBSTANCENAME"}
-    @invalid_attrs %{ACTIVE_INGRED_UNIT: nil, ACTIVE_NUMERATOR_STRENGTH: nil, APPLICATIONNUMBER: nil, DEASCHEDULE: nil, DOSAGEFORMNAME: nil, ENDMARKETINGDATE: nil, LABELERNAME: nil, LISTING_RECORD_CERTIFIED_THROUGH: nil, MARKETINGCATEGORYNAME: nil, NDC_EXCLUDE_FLAG: nil, NONPROPRIETARYNAME: nil, PHARM_CLASSES: nil, PRODUCTID: nil, PRODUCTNDC: nil, PRODUCTTYPENAME: nil, PROPRIETARYNAME: nil, PROPRIETARYNAMESUFFIX: nil, ROUTENAME: nil, STARTMARKETINGDATE: nil, SUBSTANCENAME: nil}
+    @valid_attrs %{
+      ACTIVE_INGRED_UNIT: "some ACTIVE_INGRED_UNIT",
+      ACTIVE_NUMERATOR_STRENGTH: "some ACTIVE_NUMERATOR_STRENGTH",
+      APPLICATIONNUMBER: "some APPLICATIONNUMBER",
+      DEASCHEDULE: "some DEASCHEDULE",
+      DOSAGEFORMNAME: "some DOSAGEFORMNAME",
+      ENDMARKETINGDATE: "some ENDMARKETINGDATE",
+      LABELERNAME: "some LABELERNAME",
+      LISTING_RECORD_CERTIFIED_THROUGH: "some LISTING_RECORD_CERTIFIED_THROUGH",
+      MARKETINGCATEGORYNAME: "some MARKETINGCATEGORYNAME",
+      NDC_EXCLUDE_FLAG: "some NDC_EXCLUDE_FLAG",
+      NONPROPRIETARYNAME: "some NONPROPRIETARYNAME",
+      PHARM_CLASSES: "some PHARM_CLASSES",
+      PRODUCTID: "some PRODUCTID",
+      PRODUCTNDC: "some PRODUCTNDC",
+      PRODUCTTYPENAME: "some PRODUCTTYPENAME",
+      PROPRIETARYNAME: "some PROPRIETARYNAME",
+      PROPRIETARYNAMESUFFIX: "some PROPRIETARYNAMESUFFIX",
+      ROUTENAME: "some ROUTENAME",
+      STARTMARKETINGDATE: "some STARTMARKETINGDATE",
+      SUBSTANCENAME: "some SUBSTANCENAME"
+    }
+    @update_attrs %{
+      ACTIVE_INGRED_UNIT: "some updated ACTIVE_INGRED_UNIT",
+      ACTIVE_NUMERATOR_STRENGTH: "some updated ACTIVE_NUMERATOR_STRENGTH",
+      APPLICATIONNUMBER: "some updated APPLICATIONNUMBER",
+      DEASCHEDULE: "some updated DEASCHEDULE",
+      DOSAGEFORMNAME: "some updated DOSAGEFORMNAME",
+      ENDMARKETINGDATE: "some updated ENDMARKETINGDATE",
+      LABELERNAME: "some updated LABELERNAME",
+      LISTING_RECORD_CERTIFIED_THROUGH: "some updated LISTING_RECORD_CERTIFIED_THROUGH",
+      MARKETINGCATEGORYNAME: "some updated MARKETINGCATEGORYNAME",
+      NDC_EXCLUDE_FLAG: "some updated NDC_EXCLUDE_FLAG",
+      NONPROPRIETARYNAME: "some updated NONPROPRIETARYNAME",
+      PHARM_CLASSES: "some updated PHARM_CLASSES",
+      PRODUCTID: "some updated PRODUCTID",
+      PRODUCTNDC: "some updated PRODUCTNDC",
+      PRODUCTTYPENAME: "some updated PRODUCTTYPENAME",
+      PROPRIETARYNAME: "some updated PROPRIETARYNAME",
+      PROPRIETARYNAMESUFFIX: "some updated PROPRIETARYNAMESUFFIX",
+      ROUTENAME: "some updated ROUTENAME",
+      STARTMARKETINGDATE: "some updated STARTMARKETINGDATE",
+      SUBSTANCENAME: "some updated SUBSTANCENAME"
+    }
+    @invalid_attrs %{
+      ACTIVE_INGRED_UNIT: nil,
+      ACTIVE_NUMERATOR_STRENGTH: nil,
+      APPLICATIONNUMBER: nil,
+      DEASCHEDULE: nil,
+      DOSAGEFORMNAME: nil,
+      ENDMARKETINGDATE: nil,
+      LABELERNAME: nil,
+      LISTING_RECORD_CERTIFIED_THROUGH: nil,
+      MARKETINGCATEGORYNAME: nil,
+      NDC_EXCLUDE_FLAG: nil,
+      NONPROPRIETARYNAME: nil,
+      PHARM_CLASSES: nil,
+      PRODUCTID: nil,
+      PRODUCTNDC: nil,
+      PRODUCTTYPENAME: nil,
+      PROPRIETARYNAME: nil,
+      PROPRIETARYNAMESUFFIX: nil,
+      ROUTENAME: nil,
+      STARTMARKETINGDATE: nil,
+      SUBSTANCENAME: nil
+    }
 
     def ndc_product_fixture(attrs \\ %{}) do
       {:ok, ndc_product} =
@@ -1001,7 +1064,10 @@ defmodule Icd10cm.CodesTest do
       assert ndc_product.DOSAGEFORMNAME == "some DOSAGEFORMNAME"
       assert ndc_product.ENDMARKETINGDATE == "some ENDMARKETINGDATE"
       assert ndc_product.LABELERNAME == "some LABELERNAME"
-      assert ndc_product.LISTING_RECORD_CERTIFIED_THROUGH == "some LISTING_RECORD_CERTIFIED_THROUGH"
+
+      assert ndc_product.LISTING_RECORD_CERTIFIED_THROUGH ==
+               "some LISTING_RECORD_CERTIFIED_THROUGH"
+
       assert ndc_product.MARKETINGCATEGORYNAME == "some MARKETINGCATEGORYNAME"
       assert ndc_product.NDC_EXCLUDE_FLAG == "some NDC_EXCLUDE_FLAG"
       assert ndc_product.NONPROPRIETARYNAME == "some NONPROPRIETARYNAME"
@@ -1022,7 +1088,10 @@ defmodule Icd10cm.CodesTest do
 
     test "update_ndc_product/2 with valid data updates the ndc_product" do
       ndc_product = ndc_product_fixture()
-      assert {:ok, %Ndc_product{} = ndc_product} = Codes.update_ndc_product(ndc_product, @update_attrs)
+
+      assert {:ok, %Ndc_product{} = ndc_product} =
+               Codes.update_ndc_product(ndc_product, @update_attrs)
+
       assert ndc_product.ACTIVE_INGRED_UNIT == "some updated ACTIVE_INGRED_UNIT"
       assert ndc_product.ACTIVE_NUMERATOR_STRENGTH == "some updated ACTIVE_NUMERATOR_STRENGTH"
       assert ndc_product.APPLICATIONNUMBER == "some updated APPLICATIONNUMBER"
@@ -1030,7 +1099,10 @@ defmodule Icd10cm.CodesTest do
       assert ndc_product.DOSAGEFORMNAME == "some updated DOSAGEFORMNAME"
       assert ndc_product.ENDMARKETINGDATE == "some updated ENDMARKETINGDATE"
       assert ndc_product.LABELERNAME == "some updated LABELERNAME"
-      assert ndc_product.LISTING_RECORD_CERTIFIED_THROUGH == "some updated LISTING_RECORD_CERTIFIED_THROUGH"
+
+      assert ndc_product.LISTING_RECORD_CERTIFIED_THROUGH ==
+               "some updated LISTING_RECORD_CERTIFIED_THROUGH"
+
       assert ndc_product.MARKETINGCATEGORYNAME == "some updated MARKETINGCATEGORYNAME"
       assert ndc_product.NDC_EXCLUDE_FLAG == "some updated NDC_EXCLUDE_FLAG"
       assert ndc_product.NONPROPRIETARYNAME == "some updated NONPROPRIETARYNAME"
@@ -1066,9 +1138,36 @@ defmodule Icd10cm.CodesTest do
   describe "ndc_packages" do
     alias Icd10cm.Codes.Ndc_package
 
-    @valid_attrs %{endmarketingdate: "some endmarketingdate", ndc_exclude_flag: "some ndc_exclude_flag", ndcpackagecode: "some ndcpackagecode", packagedescription: "some packagedescription", productid: "some productid", productndc: "some productndc", sample_package: "some sample_package", startmarketingdate: "some startmarketingdate"}
-    @update_attrs %{endmarketingdate: "some updated endmarketingdate", ndc_exclude_flag: "some updated ndc_exclude_flag", ndcpackagecode: "some updated ndcpackagecode", packagedescription: "some updated packagedescription", productid: "some updated productid", productndc: "some updated productndc", sample_package: "some updated sample_package", startmarketingdate: "some updated startmarketingdate"}
-    @invalid_attrs %{endmarketingdate: nil, ndc_exclude_flag: nil, ndcpackagecode: nil, packagedescription: nil, productid: nil, productndc: nil, sample_package: nil, startmarketingdate: nil}
+    @valid_attrs %{
+      endmarketingdate: "some endmarketingdate",
+      ndc_exclude_flag: "some ndc_exclude_flag",
+      ndcpackagecode: "some ndcpackagecode",
+      packagedescription: "some packagedescription",
+      productid: "some productid",
+      productndc: "some productndc",
+      sample_package: "some sample_package",
+      startmarketingdate: "some startmarketingdate"
+    }
+    @update_attrs %{
+      endmarketingdate: "some updated endmarketingdate",
+      ndc_exclude_flag: "some updated ndc_exclude_flag",
+      ndcpackagecode: "some updated ndcpackagecode",
+      packagedescription: "some updated packagedescription",
+      productid: "some updated productid",
+      productndc: "some updated productndc",
+      sample_package: "some updated sample_package",
+      startmarketingdate: "some updated startmarketingdate"
+    }
+    @invalid_attrs %{
+      endmarketingdate: nil,
+      ndc_exclude_flag: nil,
+      ndcpackagecode: nil,
+      packagedescription: nil,
+      productid: nil,
+      productndc: nil,
+      sample_package: nil,
+      startmarketingdate: nil
+    }
 
     def ndc_package_fixture(attrs \\ %{}) do
       {:ok, ndc_package} =
@@ -1107,7 +1206,10 @@ defmodule Icd10cm.CodesTest do
 
     test "update_ndc_package/2 with valid data updates the ndc_package" do
       ndc_package = ndc_package_fixture()
-      assert {:ok, %Ndc_package{} = ndc_package} = Codes.update_ndc_package(ndc_package, @update_attrs)
+
+      assert {:ok, %Ndc_package{} = ndc_package} =
+               Codes.update_ndc_package(ndc_package, @update_attrs)
+
       assert ndc_package.endmarketingdate == "some updated endmarketingdate"
       assert ndc_package.ndc_exclude_flag == "some updated ndc_exclude_flag"
       assert ndc_package.ndcpackagecode == "some updated ndcpackagecode"
