@@ -96,8 +96,12 @@
    <%= for {icd10clinical, index} <- Enum.with_index(@icd10clinicals) do %>
   <%#= for icd10clinical <- @icd10clinicals do %>
     <tr>
-    
-     <td> <%= index + 1  %></td>
+   
+     <td>
+      <span class="label primary">
+      <%= index + 1  %> 
+      </span>
+     </td>
   
       <td>
       <% is_category = icd10clinical.is_category%>

@@ -58,16 +58,6 @@ html, body {
    }
 
 
-//////////////zurb settings///////////////
-//$table-head-background:#000;//
-//$table-foot-font-color:#fff;
-//$table-border-style: solid;
-//$table-border-size: 12px;
-//$table-border-color: #000;
-
-//////////////////////////////
-
-
 
     
 .content {
@@ -156,7 +146,6 @@ td {
     margin-top: rem-calc(25);
   
   }
- 
 
   .top-bar{
     background-color: $grayCadet;
@@ -165,12 +154,15 @@ td {
     margin-right: auto;
     margin-bottom: rem-calc(25);
     margin-top: rem-calc(25);
+    .menu{
+      background-color: #deebf7;
+    }
   }
   
 
 
+
 .search_form {
-  //background-color:#91a3b0 ;//#FFFF66;//$orangered;//#000 ;
   background-color:#46b5d1;//#70B8FF;//#86c9ef ;// $orangered;//#000 ;
   color:#fff;
   padding: 10px 8px 10px 8px;
@@ -182,8 +174,6 @@ td {
     inset 0 -0.188em rgba(0, 0, 0, 0.15);
 }
 .title_form {
-  //border-left: 2.5rem outset #7b3294;//#ff0090;//darkblue;//$danger;
-  //border-right: 1.5rem outset #990000;//#7b3294;//#ff0090;//darkblue;//$danger;
   background-color:  #e0e0e0 ;//#ccccff; //#FFFFCC;//#ddd;//"yellow" ;
   border-radius: 12px;
   font: bold italic 1rem sans-serif;

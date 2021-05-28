@@ -4,7 +4,7 @@ use Icd10cmWeb, :controller
 alias Icd10cm.Codes
 
 alias Icd10cm.Codes.Icd10clinical
-alias Icd10cm.Repo
+#alias Icd10cm.Repo
 
 import Ecto.Query, warn: false
 
@@ -14,11 +14,12 @@ plug(:scrub_params, "icd10clinical" when action in [:create, :update])
 def index(conn, params) do
 page =
 Codes.list_icd10clinicals(params)
-|> Icd10cm.Repo.paginate(page: params["page"], page_size: 10)
+|> Icd10cm.Repo.paginate(page: params["page"], page_size: 30)
 render(conn, "index.html", icd10clinicals: page.entries, page: page)
 
 end
-##########################
+
+###########################
 def search_index(conn, params) do
 
 IO.puts("============================")
@@ -80,23 +81,19 @@ end
 
 ###########################
 
-############################# 3
-def search_clinicals(
-conn,
-%{"search_clinicals" => %{"query" => query, "selection" => selection}} = params
-) do
-
+############################# 
+def search_clinicals(conn,
+                    %{"search_clinicals" => %{"query" => query, "selection" => selection}} = params) do
 trim_query = String.trim(query)
-
 page =
 Icd10cm.Codes.search_clinicals(trim_query, selection)
-|> Icd10cm.Repo.paginate(page: params["page"], page_size: 900)
-
-
+|> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
+#IO.puts("------page------------------------")
+#IO.inspect(page)
+#IO.puts("------params ------------------------")
+#IO.inspect(params)
 
 render(conn, "index.html", icd10clinicals: page.entries, page: page)
-
-
 end
 
 #############################

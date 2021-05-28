@@ -232,22 +232,25 @@
 <% end %>
   </tbody>
 </table>
-</div><!-------table container---------------->
+</div>
 
+<!------------------------------------->
 
 <div class="pagination text-center" role="navigation" aria-label="Pagination">
-         <span>
-  <%= link "Prev Page",
+
+  <span>
+  <%#= link "Prev Page",
       class: "large primary button expanded",
       disabled: @page.page_number < 2,
-      to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number - 1) %>
+      to: Routes.icd10clinical_path(@conn, :search_index, page: @page.page_number - 1) %>
 </span>
 
 <span>
-  <%= link "Next Page",
+  <%#= link "Next Page",
       class: "large primary button expanded",
       disabled: @page.page_number >= @page.total_pages,
-      to: Routes.icd10clinical_path(@conn, :index, page: @page.page_number + 1) %>
+      to: Routes.icd10clinical_path(@conn, :search_index, page: @page.page_number + 1) %>
 </span>
-         <%= pagination_links @conn, @page,  next: "Next", previous: "Prev" %>
-    </div>
+         <%#= pagination_links @conn, @page,  next: "Next", previous: "Prev" %>
+
+</div>

@@ -1,6 +1,6 @@
 
 <div class="title_form">
-<h4>ICD-10-CM US  ICD-10-PCS </h4>
+<h4>ICD-10-CM US,  ICD-10-PCS,  LOINC, SYNONYMS</h4>
 </div>
 
 <div class="row">
@@ -13,7 +13,7 @@
  
   <span>
   <i class="fa fa-home"
-    style="font-size:80px;color:#1b9e77;"></i>
+    style="font-size:80px;color:#43a2ca;"></i>
 </span>
   </div>
 </div>

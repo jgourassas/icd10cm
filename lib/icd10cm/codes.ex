@@ -2058,7 +2058,73 @@ defmodule Icd10cm.Codes do
   end
 
   ##############################
+    def color_ndc_dea(deaschedule) do
+       # ['#f1eef6' = lomotil,'#d7b5d8'  = XANAX,'#df65b0',= '#dd1c77' = ,'#980043' = heroin]
+       case deaschedule do
+         "CI" -> 
+          "<span > " <>
+          "<i class='fa fa-caret-right' style='font-size:22px;color:#980043;''></i>" <>
+          "<i class='fa fa-caret-right' style='font-size:22px;color:#980043;''></i>" <>
+          " " <>
+          deaschedule <>
+          ": No medical Use. High potential for abuse."
+          <>
+          "&nbsp;&nbsp;&nbsp;&nbsp;" <>
+          "<br/>" <>
+          "</span>"
 
+          "CII" -> 
+           "<span > " <>
+          "<i class='fa fa-caret-right' style='font-size:22px;color:#dd1c77;''></i>" <>
+          deaschedule <>
+          ": High potential for abuse."
+          <>
+          "&nbsp;&nbsp;&nbsp;&nbsp;" <>
+          "<br/>" <>
+          "</span>"
+          
+          "CIII" -> 
+         "<span > " <>
+          "<i class='fa fa-caret-right' style='font-size:20px;color:#df65b0;''></i>" <>
+                 
+          deaschedule <>
+          
+          " Moderate to low potential for physical and psychological dependence" <>
+
+          "&nbsp;&nbsp;&nbsp;&nbsp;" <>
+          "<br/>" <>
+          "</span>"
+          
+          "CIV" -> 
+             "<span > " <>
+             "<i class='fa fa-caret-right' style='font-size:20px;color:#d7b5d8;''></i>" <>
+             " " <>
+             deaschedule <>
+             " Low potential for abuse and low risk of dependence" <>
+             "&nbsp;&nbsp;&nbsp;&nbsp;" <>
+             "<br/>" <>
+             "</span>"
+
+           "CV" -> 
+              "<span > " <>
+              "<i class='fa fa-caret-right' style='font-size:20px;color:#a1d99b;''></i>" <>
+              " " <>
+              deaschedule <>
+              " Lower potential for abuse " <>
+              "&nbsp;&nbsp;&nbsp;&nbsp;" <>
+              "<br/>" <>
+              "</span>"
+         _ ->
+          "<span>" <>
+          "<i class='fa fa-check-square' style='font-size:18px;color:#a1d99b;''></i>" <>
+          " No Dea" <>
+          "</span>" 
+          
+       end# case
+
+  
+      end
+  #############################
   def show_ndc_packages_1(productndc) do
     query =
       from(

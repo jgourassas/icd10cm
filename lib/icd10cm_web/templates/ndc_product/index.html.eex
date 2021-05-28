@@ -46,6 +46,7 @@
 <table class= "table responsive hover stack table-scroll frame_1">
   <thead>
     <tr>
+    <th>#</th>
      <th>Substance</th>
       <th>RouteName</th>
      <th>Strength</th>
@@ -57,8 +58,18 @@
     </tr>
   </thead>
   <tbody>
-<%= for ndc_product <- @ndc_products do %>
+   
+   <%= for {ndc_product, index} <- Enum.with_index(@ndc_products) do %>
+
+<%#= for ndc_product <- @ndc_products do %>
     <tr>
+     <td>
+      <span class="label primary">
+      <%= index + 1  %> 
+      </span>
+     </td>
+     
+
      <td><%= ndc_product.substancename %></td>
     <td><%= ndc_product.routename %></td>
     <td><%= ndc_product.active_numerator_strength %></td>
@@ -66,7 +77,12 @@
     
       <td>
       <em> <%= ndc_product.proprietaryname %> </em>
-       <em> <%= ndc_product.deaschedule %> </em>
+      <p/>
+      
+       <em> <%#= ndc_product.deaschedule %> </em>
+         <% dea_color =  Codes.color_ndc_dea(ndc_product.deaschedule) %>
+         <span> <%= raw dea_color %> </span>
+
       </td>
     
       <td><%= ndc_product.labelname %></td>
@@ -88,6 +104,7 @@
 </table>
 </table>
 <div class="pagination text-center" role="navigation" aria-label="Pagination">
-     <%= pagination_links @page %>
+     <%#= pagination_links @page %>
+      <%= pagination_links @conn, @page,  next: "Next", previous: "Prev" %>
     </div>
 <span><%#= link "New Ndc product", to: Routes.ndc_product_path(@conn, :new) %></span>

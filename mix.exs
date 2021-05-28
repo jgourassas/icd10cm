@@ -57,7 +57,6 @@ defmodule Icd10cm.MixProject do
       # {:rose_tree, "~> 0.2.0"},
       {:bunt, "~> 0.2.0"},
       {:plug_cowboy, "~> 2.0"}
-      # {:plug_cowboy, "~> 2.0"}
     ]
   end
 

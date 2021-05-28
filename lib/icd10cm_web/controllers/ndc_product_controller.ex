@@ -74,7 +74,11 @@ defmodule Icd10cmWeb.Ndc_productController do
 
     page =
       Icd10cm.Codes.search_ndc(trim_query, selection)
-      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 800)
+      |> Icd10cm.Repo.paginate(page: params["page"], page_size: 900)
+      
+      #IO.puts("------page---------------------------")
+      #IO.inspect(Enum.count(page))
+
 
     render(conn, "index.html", ndc_products: page.entries, page: page)
   end
